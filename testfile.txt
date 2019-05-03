@@ -1,0 +1,49 @@
+//Testing values 
+Login page 
+**************Admin***************************
+			 
+			
+username: admin456
+password: ADminTop1258
+
+*************Plumber************************
+          
+		  
+username :JohnServer1234
+password :FG123HIJ
+
+username : tomLite123
+password : AB123CDE	
+
+username: LomGot1235
+password: KL123MNO	
+
+***************LocalUser************************
+		
+		
+		
+username : TheoNaidu147
+password : XYZ123Ab
+
+
+
+*********************************************************************************************
+*********************************************************************************************
+
+***********************Data capture form**************************************************
+
+u1589869
+Harry
+Potter
+0782000747
+
+30KL
+SunTank
+25478
+25487469
+
+Jane
+Haggin
+0720007898
+21 Eruditi, Prospect Street, Hatield, Pretoria, Gauteng, 0028
+Yes
