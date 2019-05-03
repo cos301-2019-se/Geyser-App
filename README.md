@@ -7,3 +7,6 @@
 We are using [Ionic Framework version 4.12.0](https://ionicframework.com/)
 
 `inonic serve` will run the development server. Your default browser should open with the representation of the mobile app.
+
+#### Mock 1
+For the demo on the 3rd of May the files can all be located in the mock1 folder and the srs is located in the master branch as well as on overleaf where it shows group member contributions. 
