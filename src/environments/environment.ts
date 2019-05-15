@@ -5,13 +5,13 @@
 export const environment = {
   production: false,
   firebase : {
-    apiKey: "AIzaSyBHGMLxlFq8i0QS1eDm4gckQ9JtJdGXL_g",
-    authDomain: "geyserapp-5ef72.firebaseapp.com",
-    databaseURL: "https://geyserapp-5ef72.firebaseio.com",
-    projectId: "geyserapp-5ef72",
-    storageBucket: "geyserapp-5ef72.appspot.com",
-    messagingSenderId: "303262406186",
-    appId: "1:303262406186:web:97ac0cac3d72b3eb"
+    apiKey: "AIzaSyDibg-oYRpVXU9HqCAOLdxIpYXcZUPpAGM",
+    authDomain: "geyser-74ddf.firebaseapp.com",
+    databaseURL: "https://geyser-74ddf.firebaseio.com",
+    projectId: "geyser-74ddf",
+    storageBucket: "geyser-74ddf.appspot.com",
+    messagingSenderId: "1001903322970",
+    appId: "1:1001903322970:web:a904b91e99d67b22"
   }
 };
 
