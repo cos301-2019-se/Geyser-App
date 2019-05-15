@@ -1,6 +1,6 @@
 # Team Overview
 
-## //__Insert team photo here__
+## ![20190503_111541](https://user-images.githubusercontent.com/48208244/57770074-c4b63100-770f-11e9-9d88-961635d5a179.jpg)
 
 ## Theoveshan Naidu
 |                   	|                                                                   	|
