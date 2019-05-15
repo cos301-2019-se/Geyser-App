@@ -1,5 +1,5 @@
 {
-  "name": "Geyser-App",
+  "name": "IPA",
   "version": "0.0.1",
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/",
@@ -28,7 +28,6 @@
     "cordova-android": "8.0.0",
     "core-js": "^2.5.4",
     "firebase": "^6.0.2",
-    "firebase-admin": "^7.3.0",
     "rxjs": "~6.5.1",
     "tslib": "^1.9.0",
     "zone.js": "~0.8.29"
