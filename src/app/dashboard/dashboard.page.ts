@@ -20,13 +20,13 @@ export class DashboardPage implements OnInit {
 
   ngOnInit(){
     
-    if(this.authService.userDetails()){
+    /*if(this.authService.userDetails()){
       this.userEmail = this.authService.userDetails().email;
     }else{
       this.navCtrl.navigateBack('');
-    }
+    }*/
   }
-
+  /*
   logout(){
     this.authService.logoutUser()
     .then(res => {
@@ -37,4 +37,5 @@ export class DashboardPage implements OnInit {
       console.log(error);
     })
   }
+  */
 }

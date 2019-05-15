@@ -21,7 +21,11 @@ export class LoginPage implements OnInit {
     private formBuilder: FormBuilder
  
   ) { }
- 
+
+  ngOnInit() {
+    
+  }
+ /*
   ngOnInit() {
  
     this.validations_form = this.formBuilder.group({
@@ -63,5 +67,5 @@ export class LoginPage implements OnInit {
   goToRegisterPage(){
     this.navCtrl.navigateForward('/register');
   }
- 
+ */
 }
