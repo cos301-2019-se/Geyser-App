@@ -11,31 +11,28 @@ import { AuthenticationService } from '../services/authentication.service';
 export class DashboardPage implements OnInit {
 
 
-  userEmail: string;
+  userID: string;
 
   constructor(
     private navCtrl: NavController,
     private authService: AuthenticationService
-  ) {}
+  ) { }
+
+  ionViewDidEnter() {
+
+  }
 
   ngOnInit(){
-    
-    /*if(this.authService.userDetails()){
-      this.userEmail = this.authService.userDetails().email;
+    if(this.authService.isUserloggedin()){
+      this.userID = this.authService.getCurrentUser().userID;
     }else{
+      console.log("Thinks I am not logged in");
       this.navCtrl.navigateBack('');
-    }*/
+    }
   }
-  /*
+  
   logout(){
-    this.authService.logoutUser()
-    .then(res => {
-      console.log(res);
-      this.navCtrl.navigateBack('');
-    })
-    .catch(error => {
-      console.log(error);
-    })
+   
   }
-  */
+  
 }

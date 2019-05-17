@@ -22,29 +22,28 @@ export class LoginPage implements OnInit {
  
   ) { }
 
-  ngOnInit() {
+  /* ngOnInit() {
     
-  }
- /*
+  } */
+ 
   ngOnInit() {
  
     this.validations_form = this.formBuilder.group({
-      email: new FormControl('', Validators.compose([
-        Validators.required,
-        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+      userID: new FormControl('testID', Validators.compose([
+        Validators.required
+        //Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
       ])),
-      password: new FormControl('', Validators.compose([
+      password: new FormControl('pudding', Validators.compose([
         Validators.minLength(5),
         Validators.required
       ])),
     });
   }
  
- 
   validation_messages = {
-    'email': [
-      { type: 'required', message: 'Email is required.' },
-      { type: 'pattern', message: 'Please enter a valid email.' }
+    'userID': [
+      { type: 'required', message: 'userID is required.' }
+      //{ type: 'pattern', message: 'Please enter a valid email.' }
     ],
     'password': [
       { type: 'required', message: 'Password is required.' },
@@ -52,20 +51,17 @@ export class LoginPage implements OnInit {
     ]
   };
  
- 
-  loginUser(value){
-    this.authService.loginUser(value)
-    .then(res => {
-      console.log(res);
-      this.errorMessage = "";
-      this.navCtrl.navigateForward('/dashboard');
+  loginUser(value: any){
+    this.authService.loginUser(value).then(successful => {
+      if(successful) {
+        this.navCtrl.navigateForward('/dashboard');
+      } else {
+        this.errorMessage = "UserID or password is incorrect.";
+      }
+
     }, err => {
-      this.errorMessage = err.message;
+      this.errorMessage = "UserID or password is incorrect.";
     })
+    
   }
- 
-  goToRegisterPage(){
-    this.navCtrl.navigateForward('/register');
-  }
- */
 }

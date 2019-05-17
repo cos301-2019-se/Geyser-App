@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection, DocumentReference } from '@angular/fire/firestore';
-import { map, take } from 'rxjs/operators';
-import { observable, Observable } from 'rxjs';
+import { AngularFirestore, DocumentReference, CollectionReference } from '@angular/fire/firestore';
+import { reject } from 'q';
+import { currentUser } from 'src/environments/environment';
 
 export interface User {
   userID: string,
@@ -12,46 +12,61 @@ export interface User {
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
   
-  private users: Observable<User[]>;
-  private userCollection: AngularFirestoreCollection<User>;
+  private collectionRef : CollectionReference;
 
   constructor(private afs: AngularFirestore) { 
-    this.userCollection = this.afs.collection<User>('users');
-    this.users = this.userCollection.snapshotChanges().pipe(
-      map(actions => {
-        return actions.map(a => {
-          const data = a.payload.doc.data();
-          const id = a.payload.doc.id;
-          return { id, ...data };
-        });
-      })
-    );
+    this.collectionRef = this.afs.firestore.collection('users');
   }
 
-  getUsers(): Observable<User[]> {
-    return this.users;
-  }
+  getUser(id: string): Promise<User> {
+    var docRef : DocumentReference = this.collectionRef.doc(id);
+    var user : User = {
+      userID : '',
+      userType : '',
+      password : ''
+    };
 
-  getUser(id: string): Observable<User> {
-    return this.userCollection.doc<User>(id).valueChanges().pipe(
-      take(1),
-      map(user => {
+    return docRef.get().then(doc => {
+      if(doc.exists) {
+        var data = doc.data();
         user.userID = id;
-        return user
-      })
-    );
+        user.password = data['password'];
+        user.userType = data['userType'];
+        return user;
+      } else {
+        return null;
+      }
+    });
   }
 
-  addUser(user: User): Promise<DocumentReference> {
-    return this.userCollection.add(user);
+  checkPassword(pass: string, passToCheck: string) : boolean {
+    return (pass == passToCheck);
   }
 
-  updateUser(user: User): Promise<void> {
-    return this.userCollection.doc(user.userID).update({ password: user.password, userType: user.userType});
+  isUserloggedin() {
+    return (currentUser.userID != '');
   }
 
-  deleteUser(id: string): Promise<void> {
-    return this.userCollection.doc(id).delete();
+  getCurrentUser() {
+    return currentUser;
   }
 
+  loginUser(userToLogin: any) : Promise<boolean> {
+    return this.getUser(userToLogin.userID).then(user => {
+      if(user != null) {
+        var correctPass : boolean = this.checkPassword(user.password, userToLogin.password);
+        if(correctPass) {
+          currentUser.userID = user.userID;
+          currentUser.UserType = user.userType;
+          return true;
+        }
+      }
+      
+      return false;
+    }).catch((err : Error) => {
+      console.log(err.message);
+      return false;
+    });
   }
+
+}
