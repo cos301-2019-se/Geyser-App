@@ -1,5 +1,7 @@
 {
   "name": "Geyser-App",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
