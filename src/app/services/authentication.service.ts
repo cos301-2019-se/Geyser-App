@@ -54,6 +54,7 @@ export class AuthenticationService {
   loginUser(userToLogin: any) : Promise<boolean> {
     return this.getUser(userToLogin.userID).then(user => {
       if(user != null) {
+        //TODO: hash the password
         var correctPass : boolean = this.checkPassword(user.password, userToLogin.password);
         if(correctPass) {
           currentUser.userID = user.userID;
@@ -61,7 +62,7 @@ export class AuthenticationService {
           return true;
         }
       }
-      
+
       return false;
     }).catch((err : Error) => {
       console.log(err.message);
