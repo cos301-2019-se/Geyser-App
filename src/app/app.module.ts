@@ -16,6 +16,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/firestore';
 import { Camera } from '@ionic-native/camera/ngx';
 
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -31,7 +33,11 @@ import { Camera } from '@ionic-native/camera/ngx';
     StatusBar,
     SplashScreen,
     AuthenticationService,
+<<<<<<< HEAD
     Camera,
+=======
+    BarcodeScanner,
+>>>>>>> origin/staging
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: FirestoreSettingsToken, useValue: {} }
   ],
