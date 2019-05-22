@@ -13,5 +13,5 @@ export const environment = {
 
 export var currentUser = {
   userID: "",
-  UserType: ""
+  userType: ""
 };

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, ModalController } from '@ionic/angular';
+import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
@@ -10,29 +10,41 @@ import { AuthenticationService } from '../services/authentication.service';
 
 export class DashboardPage implements OnInit {
 
-
-  userID: string;
+  private userID: string;
+  private userType: string;
+  plumber: boolean = false;
+  //homeOwner: boolean = false;
 
   constructor(
-    private navCtrl: NavController,
+    private router: Router,
     private authService: AuthenticationService
   ) { }
 
-  ionViewDidEnter() {
-
+  ionViewWillEnter() {
+    // stops caching
   }
 
   ngOnInit(){
     if(this.authService.isUserloggedin()){
       this.userID = this.authService.getCurrentUser().userID;
+      this.userType = this.authService.getCurrentUser().userType;
     }else{
-      console.log("Thinks I am not logged in");
-      this.navCtrl.navigateBack('');
+      console.log("Not officially logged in, you should not be in this screen.");
+      this.router.navigate(['login']);
     }
+
+    this.setUserType();
   }
+
+  setUserType(): void {
+    this.plumber = this.userType == "plumber";
+    //this.homeOwner = this.userType == "homeOwner";
+  }
+
+  useless(){}
   
   logout(){
-   
-  }
-  
+    this.authService.logOutUser();
+    this.router.navigate(['login']);
+  }  
 }

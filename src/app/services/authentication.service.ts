@@ -43,11 +43,11 @@ export class AuthenticationService {
     return (pass == passToCheck);
   }
 
-  isUserloggedin() {
-    return (currentUser.userID != '');
+  isUserloggedin(): boolean {
+    return (currentUser.userID != "");
   }
 
-  getCurrentUser() {
+  getCurrentUser() : any {
     return currentUser;
   }
 
@@ -58,7 +58,7 @@ export class AuthenticationService {
         var correctPass : boolean = this.checkPassword(user.password, userToLogin.password);
         if(correctPass) {
           currentUser.userID = user.userID;
-          currentUser.UserType = user.userType;
+          currentUser.userType = user.userType;
           return true;
         }
       }
@@ -68,6 +68,11 @@ export class AuthenticationService {
       console.log(err.message);
       return false;
     });
+  }
+
+  logOutUser(): void {
+    currentUser.userType = "";
+    currentUser.userID = "";
   }
 
 }

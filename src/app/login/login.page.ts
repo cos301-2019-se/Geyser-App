@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { NavController } from '@ionic/angular';
+import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
  
 @Component({
@@ -16,16 +16,12 @@ export class LoginPage implements OnInit {
  
   constructor(
  
-    private navCtrl: NavController,
+    private router: Router,
     private authService: AuthenticationService,
     private formBuilder: FormBuilder
  
   ) { }
 
-  /* ngOnInit() {
-    
-  } */
- 
   ngOnInit() {
  
     this.validations_form = this.formBuilder.group({
@@ -54,7 +50,7 @@ export class LoginPage implements OnInit {
   loginUser(value: any){
     this.authService.loginUser(value).then(successful => {
       if(successful) {
-        this.navCtrl.navigateForward('/dashboard');
+        this.router.navigate(['dashboard']);
       } else {
         this.errorMessage = "UserID or password is incorrect.";
       }
