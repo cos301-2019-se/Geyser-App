@@ -6,18 +6,18 @@
 
 <ion-content padding>
 
-  <ion-grid>
-    <ion-row>
-      <ion-col text-center>
-        Welcome to Dashboard!
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col text-center>
-        Your Registered UserID : {{userID}}
-      </ion-col>
-    </ion-row>
-  </ion-grid>  
+  <div *ngIf= "plumber; else elseBlock">
+    <ion-button  (click)="useless()" class="choice" expand="block">Install</ion-button>
+    <ion-button  (click)="useless()" class="choice" expand="block">Repair</ion-button>
+    <!-- 
+    <p> why is this here </p>
+    -->
+  </div>
+  <ng-template #elseBlock>
+    <ion-button  (click)="useless()" class="choice" expand="block">Claim</ion-button>
+    <ion-button  (click)="useless()" class="choice" expand="block">Report Repair</ion-button>
+    <ion-button  (click)="useless()" class="choice" expand="block">Get information</ion-button>
+  </ng-template>
   
   
 </ion-content>
