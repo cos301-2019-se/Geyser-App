@@ -28,7 +28,7 @@ output.style.visibility="visible";
 
 database.collection("users").doc(user).set(
 {
-  password:password2,
+  password:password1,
   userType:"plumber"
 
 }
