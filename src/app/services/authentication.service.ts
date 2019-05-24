@@ -1,37 +1,39 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, DocumentReference, CollectionReference } from '@angular/fire/firestore';
-import { reject } from 'q';
-import { currentUser } from 'src/environments/environment';
 
 export interface User {
-  userID: string,
-  password: string,
-  userType: string
+  userID: string;
+  password: string;
+  userType: string;
 }
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
-  
-  private collectionRef : CollectionReference;
 
-  constructor(private afs: AngularFirestore) { 
+  private collectionRef: CollectionReference;
+  currentUser = {
+    userID: '',
+    userType: ''
+  };
+
+  constructor(private afs: AngularFirestore) {
     this.collectionRef = this.afs.firestore.collection('users');
   }
 
   getUser(id: string): Promise<User> {
-    var docRef : DocumentReference = this.collectionRef.doc(id);
-    var user : User = {
+    const docRef: DocumentReference = this.collectionRef.doc(id);
+    const user: User = {
       userID : '',
       userType : '',
       password : ''
     };
 
     return docRef.get().then(doc => {
-      if(doc.exists) {
-        var data = doc.data();
+      if (doc.exists) {
+        const data = doc.data();
         user.userID = id;
-        user.password = data['password'];
-        user.userType = data['userType'];
+        user.password = data.password;
+        user.userType = data.userType;
         return user;
       } else {
         return null;
@@ -39,40 +41,40 @@ export class AuthenticationService {
     });
   }
 
-  checkPassword(pass: string, passToCheck: string) : boolean {
-    return (pass == passToCheck);
+  checkPassword(pass: string, passToCheck: string): boolean {
+    return (pass === passToCheck);
   }
 
   isUserloggedin(): boolean {
-    return (currentUser.userID != "");
+    return (this.currentUser.userID !== '');
   }
 
-  getCurrentUser() : any {
-    return currentUser;
+  getCurrentUser(): any {
+    return this.currentUser;
   }
 
-  loginUser(userToLogin: any) : Promise<boolean> {
+  loginUser(userToLogin: any): Promise<boolean> {
     return this.getUser(userToLogin.userID).then(user => {
-      if(user != null) {
-        //TODO: hash the password
-        var correctPass : boolean = this.checkPassword(user.password, userToLogin.password);
-        if(correctPass) {
-          currentUser.userID = user.userID;
-          currentUser.userType = user.userType;
+      if (user != null) {
+        // TODO: hash the password
+        const correctPass: boolean = this.checkPassword(user.password, userToLogin.password);
+        if (correctPass) {
+          this.currentUser.userID = user.userID;
+          this.currentUser.userType = user.userType;
           return true;
         }
       }
-
+      console.log('How did you get here?');
       return false;
-    }).catch((err : Error) => {
+    }).catch((err: Error) => {
       console.log(err.message);
       return false;
     });
   }
 
   logOutUser(): void {
-    currentUser.userType = "";
-    currentUser.userID = "";
+    this.currentUser.userType = '';
+    this.currentUser.userID = '';
   }
 
 }

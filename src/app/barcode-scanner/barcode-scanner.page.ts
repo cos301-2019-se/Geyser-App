@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-scanner/ngx';
+import { Router } from '@angular/router';
+import { MemoryService, BarcodeType } from '../services/memory.service';
 
 
 
@@ -10,11 +12,10 @@ import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-sca
   styleUrls: ['./barcode-scanner.page.scss'],
 })
 export class BarcodeScannerPage implements OnInit {
-  encodeData: any;
-  scannedData: {};
+  hasScannedData = false;
   barcodeScannerOptions: BarcodeScannerOptions;
 
-  constructor(private barcodeScanner: BarcodeScanner) { 
+  constructor(private barcodeScanner: BarcodeScanner, private router: Router, private memory: MemoryService) {
     this.barcodeScannerOptions = {
       showTorchButton: true,
       showFlipCameraButton: true
@@ -22,18 +23,34 @@ export class BarcodeScannerPage implements OnInit {
   }
 
   scanCode() {
+    const bar: BarcodeType = {
+      barcode: '',
+      type: '',
+    };
+
     this.barcodeScanner
       .scan()
       .then(barcodeData => {
-        alert("Barcode data " + JSON.stringify(barcodeData));
-        this.scannedData = barcodeData;
+        bar.barcode = barcodeData.text;
+        bar.type = barcodeData.format;
+        this.memory.setBarcode(bar);
+        this.hasScannedData = true;
       })
       .catch(err => {
-        console.log("Error", err);
+        console.log('Error', err);
       });
   }
 
   ngOnInit() {
+  }
+
+  goBack() {
+    this.router.navigate(['dashboard']);
+  }
+
+  goNext() {
+    this.hasScannedData = false;
+    this.router.navigate(['camera']);
   }
 
 }
