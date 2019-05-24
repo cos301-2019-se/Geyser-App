@@ -15,10 +15,7 @@ export const environment = {
   }
 };
 
-export var currentUser = {
-  userID: "",
-  userType: ""
-};
+
 
 /*
  * For easier debugging in development mode, you can import the following file

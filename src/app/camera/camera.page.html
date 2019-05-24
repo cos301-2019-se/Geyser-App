@@ -1,10 +1,23 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>camera</ion-title>
+      <!--<ion-back-button (click)="goBack()"></ion-back-button>-->
+    <ion-title>Images</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-    <ion-button (click)="openCam()" >Open Camera</ion-button>
+    <h3>{{displayInstruction}}</h3>
+    <div *ngIf="!hasTakenImage">
+    <ion-button  (click)="openCam()" class="footerButton" expand="block">Open Camera</ion-button>
+    </div>
+    <!--<div *ngIf= 'readyToTakePicture'>{{openCam()}}</div>-->
     <img src="{{image}}">
+    
 </ion-content>
+
+<ion-footer>
+  <div *ngIf= 'hasTakenImage'>
+    <ion-button  (click)="openCam()" class="footerButton" expand="fill">Retake Picture</ion-button>
+    <ion-button  (click)="nextImage()" class="footerButton" expand="fill">Confirm</ion-button>
+  </div>>  
+</ion-footer>

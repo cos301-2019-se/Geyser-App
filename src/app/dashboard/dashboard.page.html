@@ -6,18 +6,18 @@
 
 <ion-content padding>
 
-  <div *ngIf= "plumber; else elseBlock">
-    <ion-button  (click)="useless()" class="choice" expand="block">Install</ion-button>
-    <ion-button  (click)="useless()" class="choice" expand="block">Repair</ion-button>
+  <div *ngIf= "plumber">
+    <ion-button  (click)="goNext()" class="choice" expand="block">Install</ion-button>
+    <ion-button  (click)="goNext()" class="choice" expand="block">Repair</ion-button>
     <!-- 
     <p> why is this here </p>
     -->
   </div>
-  <ng-template #elseBlock>
-    <ion-button  (click)="useless()" class="choice" expand="block">Claim</ion-button>
-    <ion-button  (click)="useless()" class="choice" expand="block">Report Repair</ion-button>
-    <ion-button  (click)="useless()" class="choice" expand="block">Get information</ion-button>
-  </ng-template>
+  <div *ngIf="homeOwner">
+    <ion-button  (click)="goNext()" class="choice" expand="block">Claim</ion-button>
+    <ion-button  (click)="goNext()" class="choice" expand="block">Report Repair</ion-button>
+    <ion-button  (click)="goNext()" class="choice" expand="block">Get information</ion-button>
+  </div>
   
   
 </ion-content>
