@@ -13,18 +13,8 @@
     Scan Code
   </ion-button>
  
-  <div *ngIf="scannedData">
-    <p>
-      Scanned Code Text : <b>{{ scannedData["text"] }}</b>
-    </p>
-    <p>
-      Scanned Code Format : <b>{{ scannedData["format"] }}</b>
-    </p>
+  <div *ngIf="hasScannedData">
+    {{goNext()}}
   </div>
-  <div>
-    <p>
-      {{scannedData}}
-    </p>
-  </div>>
 
 </ion-content>

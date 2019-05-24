@@ -10,8 +10,3 @@ export const environment = {
     appId: "1:1001903322970:web:a904b91e99d67b22"
   }
 };
-
-export var currentUser = {
-  userID: "",
-  userType: ""
-};
