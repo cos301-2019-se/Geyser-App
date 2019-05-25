@@ -11,9 +11,9 @@ We are using [Ionic Framework version 4.12.0](https://ionicframework.com/)
 
 All documentation is held in the documentation folder.
 
-Architectural Designs documentation is called:
+Architectural Designs documentation is called: "Architectural design and justification.pdf"
 
-Link: 
+Link: https://github.com/cos301-2019-se/Geyser-App/blob/master/documentation/Architectural%20design%20and%20justification.pdf
 
 User Manual is called: "UserManual.pdf"
 
