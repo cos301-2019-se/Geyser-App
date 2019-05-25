@@ -7,6 +7,10 @@ We are using [Ionic Framework version 4.12.0](https://ionicframework.com/)
 
 `inonic serve` will run the development server. Your default browser should open with the representation of the mobile app.
 
+## Project Description
+
+Our project aims to create an app to streamline the process of installing, maintaining and monitoring geysers. The app will capture data about the geyser during installation, generate necessary documentation after installation, generate workflows for maintenance, provide warranty information to insurance companies and generate heatmaps based on a multitude of criteria (such as warranty period, component type, volume, etc...).
+
 #### Demo 2
 
 All documentation is held in the documentation folder.
