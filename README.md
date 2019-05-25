@@ -12,16 +12,24 @@ We are using [Ionic Framework version 4.12.0](https://ionicframework.com/)
 All documentation is held in the documentation folder.
 
 Architectural Designs documentation is called:
+
 Link:
 
 User Manual is called: "UserManual.pdf"
-Link: 
+
+Link: https://github.com/cos301-2019-se/Geyser-App/blob/master/documentation/UserManual.pdf
 
 Coding Standards/Quality is called: "Coding standards.pdf"
-Link:
 
-Link to SRS "Phase1":
-Link to SRS "Phase2":
+Link: https://github.com/cos301-2019-se/Geyser-App/blob/master/documentation/Coding%20standards.pdf
+
+Testing Document is called: "testing document.pdf"
+
+Link: https://github.com/cos301-2019-se/Geyser-App/blob/master/documentation/testing%20document.pdf
+
+Link to SRS "Phase1": 
+
+Link to SRS "Phase2": https://github.com/cos301-2019-se/Geyser-App/blob/master/documentation/Phase%202.pdf
 
 Project Management Link: https://app.zenhub.com/workspaces/hightech-geyser-zen-5ccb197b77bc5b0505df96fe/board?repos=182156319
 
