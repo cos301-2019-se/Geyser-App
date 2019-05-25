@@ -13,7 +13,7 @@ All documentation is held in the documentation folder.
 
 Architectural Designs documentation is called:
 
-Link:
+Link: 
 
 User Manual is called: "UserManual.pdf"
 
@@ -27,7 +27,7 @@ Testing Document is called: "testing document.pdf"
 
 Link: https://github.com/cos301-2019-se/Geyser-App/blob/master/documentation/testing%20document.pdf
 
-Link to SRS "Phase1": 
+Link to SRS "Phase1": https://github.com/cos301-2019-se/Geyser-App/blob/master/documentation/Phase%201.pdf
 
 Link to SRS "Phase2": https://github.com/cos301-2019-se/Geyser-App/blob/master/documentation/Phase%202.pdf
 
