@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<body>
+<input type="file" id="fileButton"/>
+
+ <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-app.js"></script>
+ <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-storage.js"></script>
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyAjuCrlGRtPI7wNR2NlkHoDUsRQI8tnIvc",
+    authDomain: "geyser-defac.firebaseapp.com",
+    databaseURL: "https://geyser-defac.firebaseio.com",
+    projectId: "geyser-defac",
+    storageBucket: "geyser-defac.appspot.com",
+    messagingSenderId: "134297005751",
+    appId: "1:134297005751:web:a2787eae52be71d1"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+//var storageRef = firebase.storage().ref();
+ var fileButton = document.getElementById("fileButton");
+ fileButton.addEventListener('change', function(e){
+ var file = e.target.files[0];
+ var storageRef = firebase.storage().ref("Workers CV");
+ var imagesRef = storageRef.child(file.name);
+ imagesRef.put(file);
+ }); 
+ </script>
+</body>
+</html>
