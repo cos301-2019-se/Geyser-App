@@ -1,0 +1,6 @@
+statistic 
+
+number of jobs completed in a month 
+liters of geyser 
+add another field called closing date and closing agent ID 
+number of jobs a plumber does in a month 
