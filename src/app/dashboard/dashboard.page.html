@@ -6,19 +6,9 @@
 
 <ion-content padding>
 
-  <div *ngIf= "plumber">
-    <ion-button  (click)="goNext()" class="choice" expand="block">Install</ion-button>
-    <ion-button  (click)="goNext()" class="choice" expand="block">Repair</ion-button>
-    <!-- 
-    <p> why is this here </p>
-    -->
+  <div id="error">
+    <p>You should not be seeing this</p>
   </div>
-  <div *ngIf="homeOwner">
-    <ion-button  (click)="goNext()" class="choice" expand="block">Claim</ion-button>
-    <ion-button  (click)="goNext()" class="choice" expand="block">Report Repair</ion-button>
-    <ion-button  (click)="goNext()" class="choice" expand="block">Get information</ion-button>
-  </div>
-  
   
 </ion-content>
 <ion-footer (click)="logout()">
