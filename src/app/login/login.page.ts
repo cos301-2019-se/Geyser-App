@@ -17,7 +17,6 @@ export class LoginPage implements OnInit {
   validationMessages = {
     userID: [
       { type: 'required', message: 'userID is required.' }
-      // { type: 'pattern', message: 'Please enter a valid email.' }
     ],
     password: [
       { type: 'required', message: 'Password is required.' },
@@ -37,7 +36,6 @@ export class LoginPage implements OnInit {
     this.validationsForm = this.formBuilder.group({
       userID: new FormControl('testID', Validators.compose([
         Validators.required
-        // Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
       ])),
       password: new FormControl('pudding', Validators.compose([
         Validators.minLength(5),
