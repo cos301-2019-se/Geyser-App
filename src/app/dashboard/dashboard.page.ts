@@ -11,39 +11,18 @@ import { AuthenticationService } from '../services/authentication.service';
 // @Injectable({ providedIn: 'root' })
 export class DashboardPage implements OnInit {
 
-  private userID: string;
-  private userType: string;
-  plumber = false;
-  homeOwner = false;
-
   constructor(
     private router: Router,
     private authService: AuthenticationService
   ) { }
 
   ionViewWillEnter() {
-    // stops caching
-    console.log(this.authService.isUserloggedin());
-    if (this.authService.isUserloggedin()) {
-      this.userID = this.authService.getCurrentUser().userID;
-      this.userType = this.authService.getCurrentUser().userType;
-    } else {
-      console.log('Not officially logged in, you should not be in this screen.');
-      this.router.navigate(['login']);
-    }
-
-    this.setUserType();
+    //stops caching
   }
 
   ngOnInit() {
+    this.goNext();
   }
-
-  setUserType(): void {
-    this.plumber = this.userType === 'plumber';
-    this.homeOwner = this.userType === 'homeOwner';
-  }
-
-  useless() {}
 
   logout() {
     this.authService.logOutUser();
