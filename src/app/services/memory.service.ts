@@ -14,15 +14,11 @@ export interface GeyserImages {
 }
 
 export interface Details {
+  barcode: string;
   capacity: string;
   model: string;
   manufacturer: string;
-  name: string;
-  surname: string;
-  phone: string;
-  address: string;
   insurance: string;
-  imagePath: string;
 }
 
 @Injectable({

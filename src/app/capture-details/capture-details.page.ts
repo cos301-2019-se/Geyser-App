@@ -18,10 +18,6 @@ export class CaptureDetailsPage implements OnInit {
     capacity: [{ type: 'required', message: 'capacity is required.'}],
     model: [{ type: 'required', message: 'model is required.' }],
     manufacturer: [{ type: 'required', message: 'manufacturer is required.' }],
-    name: [{ type: 'required', message: 'name is required.' }],
-    surname: [{ type: 'required', message: 'surname is required.' }],
-    phone: [{ type: 'required', message: 'phone is required.' }],
-    address: [{ type: 'required', message: 'address is required.' }],
     insurance: [{ type: 'required', message: 'insurance is required.' }]
   };
 
@@ -43,18 +39,6 @@ export class CaptureDetailsPage implements OnInit {
       manufacturer: new FormControl('', Validators.compose([
         Validators.required
       ])),
-      name: new FormControl('', Validators.compose([
-        Validators.required
-      ])),
-      surname: new FormControl('', Validators.compose([
-        Validators.required
-      ])),
-      phone: new FormControl('', Validators.compose([
-        Validators.required
-      ])),
-      address: new FormControl('', Validators.compose([
-        Validators.required
-      ])),
       insurance: new FormControl('', Validators.compose([
         Validators.required
       ]))
@@ -65,15 +49,11 @@ export class CaptureDetailsPage implements OnInit {
     const path = this.memory.getBarcode().barcode;
 
     const details: Details = {
+      barcode : value.barcode,
       capacity : value.capacity,
       model : value.model,
       manufacturer : value.manufacturer,
-      name : value.name,
-      surname : value.surname,
-      phone : value.phone,
-      address : value.address,
       insurance : value.insurance,
-      imagePath : 'images/' + path + '_'
     };
 
     this.database.createDocument(this.memory.getBarcode().barcode, details).then((val) => {
