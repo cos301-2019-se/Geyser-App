@@ -130,7 +130,7 @@ input[type=text] {
     <input type="text" name="textbox16" id="textbox16" />
    
     <label>Case Status</label>
-    <input type="text" name="textbox17" id="textbox17" value = "completed" />
+    <input type="text" name="textbox17" id="textbox17" value = "pending" />
    
    <label>Plumber ID</label>
     <input type="text" name="textbox18" list="exampleList1" id = "textbox18">
@@ -154,11 +154,6 @@ input[type=text] {
 			
 	    </datalist>
 	
-	<label>Case closed by (Agent ID)</label>
-    <input type="text" name="textbox20" id="textbox20" value = "unknown"  />
-	
-	<label>Date (when the case was closed)</label>
-    <input type="text" name="textbox21" id="textbox21" value = "unknown"  />
    
 
  <button type="submit" onclick = "storeData()">Submit</button>
@@ -202,8 +197,6 @@ var caseDescription1 = document.getElementById('textbox16').value;
 var caseStatus1 = document.getElementById('textbox17').value;
 var plumberID1 = document.getElementById('textbox18').value;
 var caseOpenedBy1 = document.getElementById('textbox19').value;
-var caseClosedBy1 = document.getElementById('textbox20').value;
-var caseclosedDate1 = document.getElementById('textbox21').value;
 
 
 
@@ -211,7 +204,7 @@ var caseclosedDate1 = document.getElementById('textbox21').value;
 
 
 
-
+// adds details to the callerDetails table
 db.collection("callerDetails").doc(callerID1).set(
 {
 callerID : callerID1,
@@ -228,6 +221,9 @@ reason:reason1
 }
 )
 
+	
+	
+// adds details to the caseDetails table in firebase 	
 db.collection("caseDetails").doc(caseID1).set(
 {
 caseID: caseID1,
@@ -238,14 +234,19 @@ caseDescription : caseDescription1,
 caseStatus : caseStatus1,
 plumberID : plumberID1,
 caseOpenedBy :caseOpenedBy1,
-caseClosedBy : caseClosedBy1,
-caseClosedDate : caseclosedDate1
+caseClosedBy : "unknown",
+caseClosedDate : "unknown"
 
 
 }
 )
 
 
+	
+	
+	
+	
+	
 
 }
  </script>
