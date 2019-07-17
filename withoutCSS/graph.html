@@ -200,6 +200,97 @@ chart.render();
 	
 	
 }
+	
+	
+function capacity()
+{
+
+var one1 = "50L";
+var two1 = "100L";
+var three1 = "150L";
+var four1 = "200L";
+var five1 = "250L";
+
+var c1 = 0;
+var c2 = 0;
+var c3 = 0;
+var c4 = 0;
+var c5 = 0;
+
+db.collection("geyser").get().then(function(querySnapshot)
+	{
+		querySnapshot.forEach(function(doc)
+		{
+			var m = doc.data().capacity;
+			
+			
+			 
+			
+			 if(m == one1)
+			 {
+			    c1++;
+			 }
+			 if(m == two1)
+			 {
+			    c2++;
+			 }
+			 if(m == three1)
+			 {
+			    c3++;
+			 }
+			 if(m== four1)
+			 {
+			    c4++;
+			 }
+			 if(m== five1)
+			 {
+			    c5++;
+			 }
+			 
+			 
+			    
+			
+	   });
+	   var chart = new CanvasJS.Chart("chartContainer", {
+	animationEnabled: true,
+	theme: "light2", // "light1", "light2", "dark1", "dark2"
+	title:{
+		text: "Capacity of the geyser mostly preferred"
+	},
+	axisY: {
+		title: "Number of Geysers"
+	},
+	data: [{        
+		type: "column",  
+		showInLegend: true, 
+		legendMarkerColor: "grey",
+		legendText: "Liters",
+		dataPoints: [      
+			{ y: c1, label: "50" },
+			{ y: c2,  label: "100" },
+			{ y: c3,  label: "150" },
+			{ y: c4,  label: "200" },
+			{ y: c5,  label: "250" }
+			
+		]
+	}]
+});
+chart.render();
+
+	   //alert(seven);
+	    
+	});
+	
+
+
+
+
+
+
+
+
+
+}
 </script>
 </body>
 </html>
