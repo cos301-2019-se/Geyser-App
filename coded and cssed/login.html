@@ -54,7 +54,7 @@
 					</div>
 
 					<div class="container-login100-form-btn">
-						<button class="login100-form-btn" onclick="Login()">
+						<button class="login100-form-btn" type="button" onclick="Login()">
 							Sign in
 						</button>
 					</div>
@@ -89,11 +89,16 @@
 <!--===============================================================================================-->
 	<script src="vendor/countdowntime/countdowntime.js"></script>
 <!--===============================================================================================-->
-	<script src="js/main.js"></script>
+	<!-- \<script src="js/main.js"></script> -->
+
+
 
 	<script >
-		
- var firebaseConfig = {
+		var array = [];
+		var id = [];
+		var i = 0;
+		function yourfunction() {
+			var firebaseConfig = {
     apiKey: "AIzaSyDibg-oYRpVXU9HqCAOLdxIpYXcZUPpAGM",
     authDomain: "geyser-74ddf.firebaseapp.com",
     databaseURL: "https://geyser-74ddf.firebaseio.com",
@@ -104,9 +109,39 @@
   };
   firebase.initializeApp(firebaseConfig);
   var database = firebase.firestore();
+  	// window.location.href='index.html';
+  	database.collection("agentCredentials").get().then(function(querySnapshot)
+	{
+	   
+		querySnapshot.forEach(function(doc)
+		{
+		
+			//console.log(doc.data().agentPass);
+			var t = doc.data().agentPass;
+			var y = doc.data().agentID;
+		    array[i] = t;
+			id[i] = y;
+			i++;
+			
+			
+			
+	   });
+		console.log(array);
+		console.log(id);
+	   
+	   
+	   // alert("Invalid Password or UserName");
+	   // location.reload();
+
+		
+	});
+  }
+
+window.onload = yourfunction;
+ 
   // Initialize Firebase
   function Login() {
-  	window.location.href='index.html';
+  	
   
   var use=document.getElementById("un").value;
   console.log(use);
@@ -114,84 +149,29 @@
   console.log(ps);
 
   var count=0;
-//   database.collection("users").get().then(function(querySnapshot)
-// {
-// 	querySnapshot.forEach(function(doc)
-// 	{
-// 		if(doc.id()==use)
-// 		{
-// 			console.log("Document data:", doc.data());
-// 			if(doc.data().userType=="agent")
-// 			{
-// 				if(doc.data().password==ps)
-// 				{
-// 					count++;
-// 					window.location=index.html;
-// 				}
-				
-					
-				
-// 			}
-// 			else
-// 			{
-// 				alert("Wrong User type");
-// 				location.reload();
-// 			}
-// 		}
+  for(var j =0; j<i;j++)
+	   {
+		  if(ps == array[j] && use == id[j])
+		  {
+		  	count++;
+		     console.log("hi");
+		     alert("Correct");
+		    location.replace("index.html");
+        	
+		   
+		   }
+		   
+	   }
+	   if(count ==0){
+	   alert("Invalid Password or username");
+		location.reload();}
+		
 
-// 	})
-// 	if(count==0)
-// 	{
-// 		alert("Invalid Password");
-// 		location.reload();
-// 	}
 
-// }
-//   	)
-///////////////////////////////////////////////////////////////////
 
-	window.location.href='index.html';
-var docRef = database.collection("users").doc(use);
-
-docRef.get().then(function(doc) {
-    if (doc.exists) {
-        console.log("Document data:", doc.data());
-        //sleep(1000);
-        if(doc.data().userType=="agent")
-        {
-        	if(doc.data().password==ps)
-        	{
-        		alert("Correct");
-        		window.location.href="index.html";
-        	}
-        }
-        else
-        {
-        	alert("Wrong User type");
-			//location.reload();
-        }
-    } else {
-        // doc.data() will be undefined in this case
-        console.log("No such document!");
-        alert("Invalid Password or UserName");
-        sleep(5000);
-		//location.reload();
-    }
-}).catch(function(error) {
-    console.log("Error getting document:", error);
-});
-// //sleep(10000);
 
 }
 
-function sleep(milliseconds) {
-  var start = new Date().getTime();
-  for (var i = 0; i < 1e7; i++) {
-    if ((new Date().getTime() - start) > milliseconds){
-      break;
-    }
-  }
-}
 
 	</script>
 

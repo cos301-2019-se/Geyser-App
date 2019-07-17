@@ -204,7 +204,7 @@
                             <div class="col-md-6">
    
                               <label>Case Status</label>
-                              <input type="text" name="textbox17" id="textbox17" value = "completed" />
+                              <input type="text" name="textbox17" id="textbox17" value = "pending" />
                             </div>
                           </div>
                           <div class="row">
@@ -234,18 +234,7 @@
                             	    </datalist>
                               </div>
                             </div>
-                          <div class="row">
-                            <div class="col-md-6">
-	
-                            	<label>Case closed by (Agent ID)</label>
-                                <input type="text" name="textbox20" id="textbox20" value = "unknown"  />
-                              </div>
-                              <div class="col-md-6">
-	
-                              	<label>Date (when the case was closed)</label>
-                                  <input type="text" name="textbox21" id="textbox21" value = "unknown"  />
-                                </div>
-                              </div>
+                          
                             </div>
                           </div>
                         </div>
@@ -274,7 +263,7 @@
                   <span class="opener">Cases</span>
                   <ul>
                     <li><a href="callerAndcase.html">New Case</a></li>
-                    <li><a href="closecase.html">Close case</a></li>
+                    <li><a href="search.html">Close case</a></li>
                 
                   </ul>
                 </li>
@@ -282,11 +271,13 @@
                   <span class="opener">Statistics</span>
                   <ul>
                     <li><a href="graph.html">Graph stats</a></li>
-                    <li><a href="#">Search enquiries</a></li>
+                    <li><a href="closecase.html">Search enquiries</a></li>
                   </ul>
                 </li>
                 <li><a href="AddEmployee.html">Add Plumber</a></li>
+                <li><a href="removePlumber.html">Remove Plumber</a></li>
                 <li><a href="https://www.google.com">External Link</a></li>
+                <li><a href="login.html">Logout</a></li>
               </ul>
             </nav>
 
@@ -349,8 +340,8 @@ var caseDescription1 = document.getElementById('textbox16').value;
 var caseStatus1 = document.getElementById('textbox17').value;
 var plumberID1 = document.getElementById('textbox18').value;
 var caseOpenedBy1 = document.getElementById('textbox19').value;
-var caseClosedBy1 = document.getElementById('textbox20').value;
-var caseclosedDate1 = document.getElementById('textbox21').value;
+// var caseClosedBy1 = document.getElementById('textbox20').value;
+// var caseclosedDate1 = document.getElementById('textbox21').value;
 
 
 
@@ -385,14 +376,50 @@ caseDescription : caseDescription1,
 caseStatus : caseStatus1,
 plumberID : plumberID1,
 caseOpenedBy :caseOpenedBy1,
-caseClosedBy : caseClosedBy1,
-caseClosedDate : caseclosedDate1
+caseClosedBy : "unknown",
+caseClosedDate : "unknown"
 
 
 }
 )
 
 
+db.collection("users").get().then(function(querySnapshot)
+  {
+    querySnapshot.forEach(function(doc)
+    {
+    
+        //console.log(doc.id[0]);
+      //i++;
+      if(doc.id==plumberID1)
+      {
+         db.collection("users").doc(doc.id).update({caseToWorkOn: caseID1  });
+      }
+      
+      
+     });
+    
+  });
+
+  
+  
+  /*
+  var com = "24";
+  var u = "unknown";
+  db.collection("caseDetails").get().then(function(querySnapshot)
+  {
+    querySnapshot.forEach(function(doc)
+    {
+      if(com==doc.data().caseStatus && u==doc.data().caseClosedBy)
+      {
+        display.innerHTML += "<table width='200' border='1' ><tr><td>"+doc.data().caseStatus +"</td><td> " + doc.data().caseID+"</td><td> "+doc.data().caseClosedDate+"</td></tr></table><br/>";
+      }
+     });
+    
+  });
+
+
+*/
 location.reload();
 }
  </script>

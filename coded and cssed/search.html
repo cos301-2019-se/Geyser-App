@@ -8,7 +8,7 @@
     <meta name="author" content="">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
 
- <title>Adding new employee</title>
+ <title>Close a case</title>
 <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -60,7 +60,7 @@
                 <div class="row">
                   <div class="col-md-12">
                     <br>
-                    <h2>Sign Up New Agent</h2>
+                    <h2>Select case to close</h2>
                   </div>
                 </div>
               </div>
@@ -70,7 +70,7 @@
               <div class="container-fluid">
                 <div class="row">
                   <div class="col-md-12">
-                  	<h2>Close a Case</h2>
+                  	<h2>Choose an agent</h2>
                   	<br>
                   </div>
                 </div>
@@ -90,7 +90,7 @@
 						
 				
 						<label>Case Closed by (Agent ID)</label>
-						<input type="text" name="textbox19" list="exampleList" id = "test">
+						<input type="text" name="textbox19" list="exampleList" id = "test" required>
 							<datalist id="exampleList">
 								<option value="ARvCV6mlk">  
 								<option value="AXJXoxUcT">
@@ -143,7 +143,9 @@
                   </ul>
                 </li>
                 <li><a href="AddEmployee.html">Add Plumber</a></li>
+                  <li><a href="removePlumber.html">Remove Plumber</a></li>
                 <li><a href="https://www.google.com">External Link</a></li>
+                <li><a href="login.html">Logout</a></li>
               </ul>
             </nav>
 
@@ -264,15 +266,15 @@ function search()
 
 	const display=document.querySelector("#testing");
 	var date = genDate();
-	
+	var u= "unknown";
 	var com = "completed";
 	db.collection("caseDetails").get().then(function(querySnapshot)
 	{
 		querySnapshot.forEach(function(doc)
 		{
-			if(com==doc.data().caseStatus)
+			if(com==doc.data().caseStatus &&u==doc.data().caseClosedBy)
 			{
-			  display.innerHTML += "<table width='200' border='1' ><tr><td>"+doc.data().caseStatus +"</td><td> " + doc.data().caseID+"</td><td> "+doc.data().caseClosedDate+"</td></tr></table><br/>";
+			  display.innerHTML += "<table width='200' border='1' ><tr><td>"+doc.data().caseID+"</td><td>"+doc.data().caseStatus +"</td><td> " + doc.data().incidentDate+"</td></tr></table><br/>";
 			}
 	   });
 		

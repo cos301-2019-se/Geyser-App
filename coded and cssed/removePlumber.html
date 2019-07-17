@@ -8,7 +8,7 @@
     <meta name="author" content="">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
 
- <title>Search</title>
+ <title>Remove Plumber</title>
 <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -44,81 +44,45 @@
                 <div class="row">
                   <div class="col-md-12">
                     <br>
-                    <h2>Search based on various features</h2>
+                    <h2>Removing a Plumber</h2>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="dropdown">
-              <!-- <button onclick="myFunction()" class="dropbtn">Search</button> -->
-              <div id="myDropdown" class="dropdown-content">
-                <a href="AgentSearch.html">Jobs per agent</a>
-                <a href="PlumberSearch.html">Jobs done by plumbers</a>
-                <a href="monthlyJobStats.html">geysers a month</a>
-                <a href="Installed.html">Repairs or installation a month</a>
-                <a href="preferedGeyser.html">Prefered geysers</a>
-                <a href="Capacity.html">Prefered Capacity</a>
-              </div>
-            </div>
-           <!-- <div class="col-md-12">
-                          <select name="category" id="category">
-                            <option value="categories" selected >Select Category</option>
-                            <option value="Featured" >General</option>
-                            <option value="Newest">Specific</option>
-                            <option value="Low Price">Technical</option>
-                            <option value="High Price">Application</option>
-                          </select>
-                        </div> -->
-
-            <!-- =========================================================================================== -->
-            <!-- <div class="row">
+            <div class="row">
                 <div class="col-md-6">
                     <fieldset>
-                      <label>Cases done by plumber: </label>
-                      <input name="search" type="text" class="form-control" id="plumber" placeholder="Plumber ID..." required>
-                      <button type="button" onclick = SP()>Search</button>
-                      <button type="button" onclick = clear()>clear</button>
-                      <a href="closecase.html">clear</a>
+                      <label>Insert Plumber ID to remove</label>
+                      <input name="search" type="text" class="form-control" id="plumberID" placeholder="Plumber ID..." required="">
+                      <button type="button" onclick = remove()>Delete</button>
+                      <!-- <button type="button" onclick = clear()>clear</button> -->
+                      <a href="removePlumber.html">clear</a>
 
                     </fieldset>
            		</div>
-           	</div> -->
-
-           	<!-- Tables -->
-            <!-- <section class="tables">
-              <div class="container-fluid">
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="section-heading">
-                      <h2>Tables</h2>
-                    </div>
-                    <div class="default-table">
-                      <table id="itemList">
-                        <thead>
-                          <tr>
-                            <th>CaseID</th>
-                            <th>Incident Date</th>
-                            <th>Address</th>
-                            <th>Case Status</th>
-                            <th>Description</th>
-                            <th>Caller ID</th>
-                            <th>Agent O</th>
-                            <th>Agent C</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          
-                        </tbody>
-                      </table>
+           	</div>
+           	
+        
          </div>
 	</div>
 </div>
-</div>
-</section> -->
+<script>
+	function remove()
+	{
+		var user = document.getElementById("plumberID").value;
+		confirm("Are you sure you want to remove the Plumber?");
+		database.collection("employeesDetails").doc(user).delete();
+		database.collection("users").doc(user).delete();
+	}
+	
+</script>
 <!-- Sidebar -->
         <div id="sidebar">
 
-          <div class="inner">  
+          <div class="inner">
+
+            
+              
             <!-- Menu -->
             <nav id="menu">
               <ul>
@@ -140,7 +104,7 @@
                   </ul>
                 </li>
                 <li><a href="AddEmployee.html">Add Plumber</a></li>
-                <li><a href="removePlumber.html">Remove Plumber</a></li>
+                  <li><a href="removePlumber.html">Remove Plumber</a></li>
                 <li><a href="https://www.google.com">External Link</a></li>
                 <li><a href="login.html">Logout</a></li>
               </ul>
@@ -174,23 +138,6 @@
   firebase.initializeApp(firebaseConfig);
   var database = firebase.firestore();
 
-  function myFunction() {
-  document.getElementById("myDropdown").classList.toggle("show");
-}
-
-// Close the dropdown if the user clicks outside of it
-window.onclick = function(event) {
-  if (!event.target.matches('.dropbtn')) {
-    var dropdowns = document.getElementsByClassName("dropdown-content");
-    var i;
-    for (i = 0; i < dropdowns.length; i++) {
-      var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains('show')) {
-        openDropdown.classList.remove('show');
-      }
-    }
-  }
-}
 
 	function SP() {
 // clear();

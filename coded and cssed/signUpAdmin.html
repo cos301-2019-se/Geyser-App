@@ -213,9 +213,9 @@
 				db.collection("agentCredentials").doc(id1).set
 				(
 					{
-						name : name1,
+						agentName : name1,
 						agentID: id1,
-						password: pass1
+						agentPass: pass1
 					
 
 
@@ -238,7 +238,7 @@
 			alert("Your password doesn't match. Please enter the password again.");
 	}
  
- window.location.href='index.html';
+ window.location.href='login.html';
  }
  
  function myFunction() {

@@ -55,10 +55,19 @@
                   <div class="col-md-12">
                     <h2>Cases Per Month</h2>
                     <button onclick= cases()> View number of cases per month </button>
-					<div id="chartContainer" style="height: 300px; width: 100%;"></div>
+                    <div id="chartContainer" style="height: 300px; width: 100%;"></div>
 					<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 					<p id = "testing"></p>
                   </div>
+                </div>
+                <div class="row">
+                	<div clase="col-md-12">
+                		<h2> Capacity of geysers</h2>
+                		<button onclick= capacity()> Capacity of geyser used mostly </button>
+                		<div id="chartContainer2" style="height: 300px; width: 100%;"></div>
+					<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+					<p id = "testing2"></p>
+                	</div>
                 </div>
               </div>
             </div>
@@ -86,7 +95,7 @@
                   <span class="opener">Cases</span>
                   <ul>
                     <li><a href="callerAndcase.html">New Case</a></li>
-                    <li><a href="closecase.html">Close case</a></li>
+                    <li><a href="search.html">Close case</a></li>
                 
                   </ul>
                 </li>
@@ -94,11 +103,13 @@
                   <span class="opener">Statistics</span>
                   <ul>
                     <li><a href="graph.html">Graph stats</a></li>
-                    <li><a href="#">Search enquiries</a></li>
+                    <li><a href="closecase.html">Search enquiries</a></li>
                   </ul>
                 </li>
                 <li><a href="AddEmployee.html">Add Plumber</a></li>
+                 <li><a href="removePlumber.html">Remove Plumber</a></li>
                 <li><a href="https://www.google.com">External Link</a></li>
+                <li><a href="login.html">Logout</a></li>
               </ul>
             </nav>
 
@@ -290,8 +301,89 @@ chart.render();
 	   //alert(seven);
 	    
 	});
+
+
 	
 	
+}
+function capacity()
+{
+
+var one1 = "50L";
+var two1 = "100L";
+var three1 = "150L";
+var four1 = "200L";
+var five1 = "250L";
+
+var c1 = 0;
+var c2 = 0;
+var c3 = 0;
+var c4 = 0;
+var c5 = 0;
+
+db.collection("geyser").get().then(function(querySnapshot)
+	{
+		querySnapshot.forEach(function(doc)
+		{
+			var m = doc.data().capacity;
+			
+			
+			 
+			
+			 if(m == one1)
+			 {
+			    c1++;
+			 }
+			 if(m == two1)
+			 {
+			    c2++;
+			 }
+			 if(m == three1)
+			 {
+			    c3++;
+			 }
+			 if(m== four1)
+			 {
+			    c4++;
+			 }
+			 if(m== five1)
+			 {
+			    c5++;
+			 }
+			 
+			 
+			    
+			
+	   });
+	   var chart = new CanvasJS.Chart("chartContainer2", {
+	animationEnabled: true,
+	theme: "light2", // "light1", "light2", "dark1", "dark2"
+	title:{
+		text: "Capacity of the geyser mostly preferred"
+	},
+	axisY: {
+		title: "Number of Geysers"
+	},
+	data: [{        
+		type: "column",  
+		showInLegend: true, 
+		legendMarkerColor: "grey",
+		legendText: "Liters",
+		dataPoints: [      
+			{ y: c1, label: "50" },
+			{ y: c2,  label: "100" },
+			{ y: c3,  label: "150" },
+			{ y: c4,  label: "200" },
+			{ y: c5,  label: "250" }
+			
+		]
+	}]
+});
+chart.render();
+
+	   //alert(seven);
+	    
+	});
 }
 </script>
 </body>

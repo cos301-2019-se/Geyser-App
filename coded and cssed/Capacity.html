@@ -49,43 +49,24 @@
                 </div>
               </div>
             </div>
-            <div class="dropdown">
-              <!-- <button onclick="myFunction()" class="dropbtn">Search</button> -->
-              <div id="myDropdown" class="dropdown-content">
-                <a href="AgentSearch.html">Jobs per agent</a>
-                <a href="PlumberSearch.html">Jobs done by plumbers</a>
-                <a href="monthlyJobStats.html">geysers a month</a>
-                <a href="Installed.html">Repairs or installation a month</a>
-                <a href="preferedGeyser.html">Prefered geysers</a>
-                <a href="Capacity.html">Prefered Capacity</a>
-              </div>
-            </div>
-           <!-- <div class="col-md-12">
-                          <select name="category" id="category">
-                            <option value="categories" selected >Select Category</option>
-                            <option value="Featured" >General</option>
-                            <option value="Newest">Specific</option>
-                            <option value="Low Price">Technical</option>
-                            <option value="High Price">Application</option>
-                          </select>
-                        </div> -->
+            
 
             <!-- =========================================================================================== -->
-            <!-- <div class="row">
+            <div class="row">
                 <div class="col-md-6">
                     <fieldset>
-                      <label>Cases done by plumber: </label>
-                      <input name="search" type="text" class="form-control" id="plumber" placeholder="Plumber ID..." required>
+                      <label>Geyser Capacity search: </label>
+                      <input name="search" type="text" class="form-control" id="plumber" placeholder="Capacity..." required>
                       <button type="button" onclick = SP()>Search</button>
-                      <button type="button" onclick = clear()>clear</button>
+                      <!-- <button type="button" onclick = clear()>clear</button> -->
                       <a href="closecase.html">clear</a>
 
                     </fieldset>
            		</div>
-           	</div> -->
+           	</div>
 
            	<!-- Tables -->
-            <!-- <section class="tables">
+            <section class="tables">
               <div class="container-fluid">
                 <div class="row">
                   <div class="col-md-12">
@@ -114,7 +95,7 @@
 	</div>
 </div>
 </div>
-</section> -->
+</section>
 <!-- Sidebar -->
         <div id="sidebar">
 
@@ -198,12 +179,12 @@ var bar=document.getElementById("plumber").value;
 console.log(bar);
 const display=document.querySelector("#display");
 var c=0;
-database.collection("caseDetails").get().then(function(querySnapshot)
+database.collection("geyser").get().then(function(querySnapshot)
 {
 
   querySnapshot.forEach(function(doc){
   	console.log(doc.data());
-    if(bar==doc.data().plumberID){
+    if(bar==doc.data().capacity){
 	      c++;
 	    console.log("entry foound"
 	      
@@ -211,9 +192,9 @@ database.collection("caseDetails").get().then(function(querySnapshot)
 	      );
 	    var rows = "";
 	    // rows += "<tr><td>" +...++"</td></tr>";
-	    rows= "<tr><td>"+doc.data().caseID+"</td><td>"+doc.data().incidentDate
-	    +"</td><td>"+doc.data().addressOfIncident+"</td><td>"+doc.data().caseStatus+"</td><td>"+doc.data().caseDescription
-	    +"</td><td>"+doc.data().callerID+"</td><td>"+doc.data().caseOpenedBy +"</td><td>"+doc.data().caseClosedBy+"</td></tr>";
+	    // rows= "<tr><td>"+doc.data().caseID+"</td><td>"+doc.data().incidentDate
+	    // +"</td><td>"+doc.data().addressOfIncident+"</td><td>"+doc.data().caseStatus+"</td><td>"+doc.data().caseDescription
+	    // +"</td><td>"+doc.data().callerID+"</td><td>"+doc.data().caseOpenedBy +"</td><td>"+doc.data().caseClosedBy+"</td></tr>";
 	    $( rows ).appendTo( "#itemList tbody" );
 	  }
 	}
