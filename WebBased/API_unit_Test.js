@@ -47,16 +47,11 @@ var removeEmployeeJSON={
 var addGeyserJSON={
 	identifier:'unittester',
 	type:'addGeyser',
-	num:'420',
-	addr:'26 test street',
 	cap:'69',
-	cellnum:'063214156432',
 	path:'NA',
 	insure:'yes',
 	manu:'uwucorp',
-	mod:'4654',
-	firstName:'uwu',
-	secondName:'ligam'
+	mod:'4654'
 };
 
 var updateGeyserJSON={
