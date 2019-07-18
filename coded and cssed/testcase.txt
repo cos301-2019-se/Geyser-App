@@ -71,23 +71,17 @@ reason = geyser to be installed
 ***********************CV****************************
 
 Name : Janaki Patil 
-Date Of Birth : 20/01/1996
-Gender : Female
 ID Number : 9601201478523
 Cell Number: 0782333696
 Address : Eruditi, Prospect street, Hatfield, Pretoria, 0028
 
 
 Name : Diviya Patil  
-Date Of Birth : 21/02/1998
-Gender : Female
 ID Number : 9601207418235
 Cell Number: 0782333787
 Address : Eruditi, Prospect street, Hatfield, Pretoria, 0028
 
 Name : Theo Naidu  
-Date Of Birth : 29/05/1997
-Gender : Male
 ID Number : 99705291458763
 Cell Number: 0745963214
 Address : Respublica, Prospect street, Hatfield, Pretoria, 0028

@@ -73,6 +73,7 @@
 		confirm("Are you sure you want to remove the Plumber?");
 		database.collection("employeesDetails").doc(user).delete();
 		database.collection("users").doc(user).delete();
+    alert("Plumber removed");
 	}
 	
 </script>

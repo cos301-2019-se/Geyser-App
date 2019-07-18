@@ -96,6 +96,7 @@
                           	<br>
                           	
                           	<button type="button" onclick = send()>Signup</button>
+                            <button type="button" onclick = log()>Login</button>
                           </div>
                         </div>
                       </div>
@@ -207,9 +208,11 @@
    var id1 = document.getElementById('textbox1').value;
    var pass1 = document.getElementById('textbox2').value;
 	var confirm1 = document.getElementById('textbox3').value;
- 
+ var check=0;
   if(pass1 == confirm1)
-  {
+  { 
+    check++;
+
 				db.collection("agentCredentials").doc(id1).set
 				(
 					{
@@ -237,10 +240,13 @@
 	{
 			alert("Your password doesn't match. Please enter the password again.");
 	}
- 
- window.location.href='login.html';
+  if(check!=0){
+   
+  }
  }
- 
+ function log(){
+   window.location.href='login.html';
+ }
  function myFunction() {
   var x = document.getElementById("textbox2");
   if (x.type === "password") {
