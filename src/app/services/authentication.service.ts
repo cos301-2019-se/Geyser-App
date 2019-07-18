@@ -4,7 +4,7 @@ import { AngularFirestore, DocumentReference, CollectionReference } from '@angul
 export interface User {
   userID: string;
   password: string;
-  userType: string;
+  caseID: string;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -13,7 +13,7 @@ export class AuthenticationService {
   private collectionRef: CollectionReference;
   currentUser = {
     userID: '',
-    userType: ''
+    caseID: ''
   };
 
   constructor(private afs: AngularFirestore) {
@@ -24,8 +24,8 @@ export class AuthenticationService {
     const docRef: DocumentReference = this.collectionRef.doc(id);
     const user: User = {
       userID : '',
-      userType : '',
-      password : ''
+      password : '',
+      caseID : '',
     };
 
     return docRef.get().then(doc => {
@@ -33,7 +33,7 @@ export class AuthenticationService {
         const data = doc.data();
         user.userID = id;
         user.password = data.password;
-        user.userType = data.userType;
+        user.caseID = data.caseToWorkOn;
         return user;
       } else {
         return null;
@@ -60,7 +60,7 @@ export class AuthenticationService {
         const correctPass: boolean = this.checkPassword(user.password, userToLogin.password);
         if (correctPass) {
           this.currentUser.userID = user.userID;
-          this.currentUser.userType = user.userType;
+          this.currentUser.caseID = user.caseID;
           return true;
         }
       }
@@ -73,7 +73,7 @@ export class AuthenticationService {
   }
 
   logOutUser(): void {
-    this.currentUser.userType = '';
+    this.currentUser.caseID = '';
     this.currentUser.userID = '';
   }
 
