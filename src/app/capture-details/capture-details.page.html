@@ -10,16 +10,15 @@
   <form class="form" [formGroup]="validationForm"  (ngSubmit)="submitData(validationForm.value)">
 
     <ion-item>
-      <ion-label  position="floating" color="primary">Capacity</ion-label>
-      <ion-input type="text" formControlName="capacity"></ion-input>
+      <ion-label>Capacity</ion-label>
+      <ion-select formControlName="capacity" placeholder="Select One">
+        <ion-select-option value="50L">50L</ion-select-option>
+        <ion-select-option value="100L">100L</ion-select-option>
+        <ion-select-option value="150L">150L</ion-select-option>
+        <ion-select-option value="200L">200L</ion-select-option>
+        <ion-select-option value="250L">250L</ion-select-option>
+      </ion-select>
     </ion-item>
-    <div class="validation-errors">
-      <ng-container *ngFor="let validation of validationMessages.capacity">
-        <div class="error-message" *ngIf="validationForm.get('capacity').hasError(validation.type) && (validationForm.get('capacity').dirty || validationForm.get('capacity').touched)">
-        {{ validation.message }}
-      </div>
-      </ng-container>
-    </div>
 
   
     <ion-item>
