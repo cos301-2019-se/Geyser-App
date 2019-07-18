@@ -11,17 +11,25 @@ import { AuthenticationService } from '../services/authentication.service';
 // @Injectable({ providedIn: 'root' })
 export class DashboardPage implements OnInit {
 
+  errorMessage: string = '';
+
   constructor(
     private router: Router,
     private authService: AuthenticationService
   ) { }
 
   ionViewWillEnter() {
-    //stops caching
+    // stops caching
   }
 
   ngOnInit() {
-    this.goNext();
+    // console.log(this.authService.currentUser.caseID);
+    if (this.authService.currentUser.caseID === '' || this.authService.currentUser.caseID === null
+    || this.authService.currentUser.caseID === 'none') {
+      this.errorMessage = 'There are no pending cases.';
+    } else {
+      this.goNext();
+    }
   }
 
   logout() {

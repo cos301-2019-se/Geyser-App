@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { MemoryService, Details, BarcodeType, GeyserImages } from '../services/memory.service';
 import { DatabaseService } from '../services/database.service';
 import { Router } from '@angular/router';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-capture-details',
@@ -18,10 +19,6 @@ export class CaptureDetailsPage implements OnInit {
     capacity: [{ type: 'required', message: 'capacity is required.'}],
     model: [{ type: 'required', message: 'model is required.' }],
     manufacturer: [{ type: 'required', message: 'manufacturer is required.' }],
-    name: [{ type: 'required', message: 'name is required.' }],
-    surname: [{ type: 'required', message: 'surname is required.' }],
-    phone: [{ type: 'required', message: 'phone is required.' }],
-    address: [{ type: 'required', message: 'address is required.' }],
     insurance: [{ type: 'required', message: 'insurance is required.' }]
   };
 
@@ -29,7 +26,8 @@ export class CaptureDetailsPage implements OnInit {
     private formBuilder: FormBuilder,
     private memory: MemoryService,
     private database: DatabaseService,
-    private router: Router
+    private router: Router,
+    private auth: AuthenticationService
     ) { }
 
   ngOnInit() {
@@ -43,18 +41,6 @@ export class CaptureDetailsPage implements OnInit {
       manufacturer: new FormControl('', Validators.compose([
         Validators.required
       ])),
-      name: new FormControl('', Validators.compose([
-        Validators.required
-      ])),
-      surname: new FormControl('', Validators.compose([
-        Validators.required
-      ])),
-      phone: new FormControl('', Validators.compose([
-        Validators.required
-      ])),
-      address: new FormControl('', Validators.compose([
-        Validators.required
-      ])),
       insurance: new FormControl('', Validators.compose([
         Validators.required
       ]))
@@ -62,31 +48,24 @@ export class CaptureDetailsPage implements OnInit {
   }
 
   submitData(value: any) {
-    const path = this.memory.getBarcode().barcode;
-
+    const path = this.auth.currentUser.caseID;
     const details: Details = {
+      barcode : this.memory.getBarcode().barcode,
       capacity : value.capacity,
       model : value.model,
       manufacturer : value.manufacturer,
-      name : value.name,
-      surname : value.surname,
-      phone : value.phone,
-      address : value.address,
       insurance : value.insurance,
-      imagePath : 'images/' + path + '_'
+      caseID : this.auth.currentUser.caseID
     };
-
-    this.database.createDocument(this.memory.getBarcode().barcode, details).then((val) => {
-      console.log(val);
-    });
-
+    this.database.createDocument(this.memory.getBarcode().barcode + '-' + path, details);
     let num = 0;
-    const str = path + '_' + num++ + '.jpg';
-    this.database.upload(path + '_' + num++ + '.jpg', this.memory.pictures.geyser);
-    this.database.upload(path + '_' + num++ + '.jpg', this.memory.pictures.pressureControlValve);
-    this.database.upload(path + '_' + num++ + '.jpg', this.memory.pictures.vacuumBreaker);
-    this.database.upload(path + '_' + num++ + '.jpg', this.memory.pictures.dripTray);
-    this.database.upload(path + '_' + num++ + '.jpg', this.memory.pictures.safety);
+    this.database.upload(path, num++ + '.jpg', this.memory.pictures.geyser);
+    this.database.upload(path, num++ + '.jpg', this.memory.pictures.pressureControlValve);
+    this.database.upload(path, num++ + '.jpg', this.memory.pictures.vacuumBreaker);
+    this.database.upload(path, num++ + '.jpg', this.memory.pictures.dripTray);
+    this.database.upload(path, num++ + '.jpg', this.memory.pictures.safety);
+    alert('files uploaded');
+    this.database.setCaseStatusComplete(details.caseID, this.auth.currentUser.userID);
     this.router.navigate(['complete']);
   }
 }
