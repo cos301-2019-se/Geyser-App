@@ -145,6 +145,7 @@ request:
 	type: addUser,
 	user: username,
 	pass: password,
+	case: case id
 
 }
 */
@@ -158,13 +159,14 @@ function addUser(body)
 	console.log(user);
 	console.log(salt);*/
 	var type="plumber";
+	var caseToWork=body.case;
 	//var finalPass=pass+salt;
 	finalPass=hash(pass);
 	//console.log(finalPass);
 	db.collection("users").doc(user).set(
 {
   
-	
+	caseToWorkOn:caseToWork,
 	password:finalPass,
 	userType:type
 }
@@ -185,7 +187,7 @@ function removeUser(body)
 {
 	var user=body.user;
 	db.collection("users").doc(user).delete();
-	return true;
+	return "true";
 }
 function genSalt()
 {
@@ -224,7 +226,7 @@ function updateUser(body)
 		[param]:val
 	}
 		);
-	return true;
+	return "true";
 	
 
 }
@@ -259,14 +261,14 @@ function addEmployee(body)
 		DateOfBirth:dob,
 		address:addr,
 		cellNumber:cellnum,
+		fullName:userName,
 		gender:gen,
 		idNumber:idnum,
-		name:userName,
 		plumberID:id
 
 	}
 	);
-	return true;
+	return "true";
 }
 /*
 request: 
@@ -281,7 +283,7 @@ function removeEmployee(body)
 {
 	var id=body.id;
 	db.collection("employeesDetails").doc(id).delete();
-	return true;
+	return "true";
 
 }
 /*
@@ -302,7 +304,7 @@ function updateEmployee(body)
 	db.collection("employeesDetails").doc(id).update({
 		[param]:val
 	});
-	return true;
+	return "true";
 
 }
 /*
@@ -311,23 +313,20 @@ request:
 	identifier: identifier,
 	type: addGeyser,
 	num: geyser number,
-	addr: geyser address,
 	cap: geyser capacity,
-	cellnum: owner celphone,
+	caseid: case id,
 	path: image path,
 	insure: insured?,
 	manu: manufacturer,
-	mod: model number,
-	firstName: first name of owner,
-	secondName: second name of owner
+	mod: model number
+
 }
 */
 function addGeyser(body)
 {
 	var geysernum=body.num;
-	var addr=body.addr;
 	var cap=body.cap;
-	var cellnum=body.cellnum;
+	var caseid=body.caseid;
 	var path=body.path;
 	var insure=body.insure;
 	var manu=body.manu;
@@ -335,16 +334,15 @@ function addGeyser(body)
 	var firstName=body.firstName;
 	var secondName=body.secondName;
 	db.collection("geyser").doc(geysernum).set({
-		address:addr,
 		capacity:cap,
-		cellNumber:cellnum,
+		caseID:caseid,
 		imagePath:path,
 		insurance:insure,
 		manufacturer:manu,
-		name:firstName,
-		surname:secondName
+		model:mod
+
 	});
-	return true;
+	return "true";
 
 }
 /*
@@ -359,7 +357,7 @@ function removeGeyser(body)
 {
 	var number=body.number;
 	db.collection("geyser").doc(number).delete();
-	return true;
+	return "true";
 
 }
 /*
@@ -380,7 +378,7 @@ function updateGeyser(body)
 	db.collection("geyser").doc(id).update({
 		[param]:val
 	});
-	return true;
+	return "true";
 
 }
 
@@ -389,26 +387,46 @@ request:
 {
 	identifier: identifier,
 	type: addCase,
-	caseID: case id,
-	closeDate: close date of the case,
+	id: case id,
+	addr: address of case,
+	caller: caller id,
+	closedby: agent closed by,
+	closeddate: date closed by,
+	description: case description,
+	openedby: agent opened by,
 	status: case status,
-	agentID: agent id
+	date: date of incident,
+	plumid: plumber id
+	
 
 }
 */
 function addCase(body)
 {
-	var id=body.caseId;
-	var closeDate=body.closeDate;
+	var id=body.id;
+	var addr=body.addr;
+	var caller=body.caller;
+	var closedby=body.closedby;
+	var closeddate=body.closeddate;
+	var description=body.description;
+	var openedby=body.openedby;
 	var status=body.status;
-	var agentID=body.agentID;
+	var date=body.date;
+	var plumid=body.plumid;
 	db.collection("caseDetails").doc(id).set({
-		caseClosedDate:closeDate,
+		addressOfIncident:addr,
+		callerID:caller,
+		caseClosedBy:closedby,
+		caseClosedDate:closeddate,
+		caseDescription:description,
 		caseID:id,
+		caseOpenedBy:openedby,
 		caseStatus:status,
-		closeByAgentID:agentID
+		incidentDate:date,
+		plumberID:plumid
+		
 	});
-	return true;
+	return "true";
 }
 /*
 request:
@@ -422,7 +440,7 @@ function removeCase(body)
 {
 	var id=body.id;
 	db.collection("caseDetails").doc(id).delete();
-	return true;
+	return "true";
 }
 /*
 request:
@@ -442,7 +460,7 @@ function updateCase(body)
 	db.collection("caseDetails").doc(id).update({
 		[param]:val
 	});
-	return true;
+	return "true";
 }
 
 /*
@@ -483,7 +501,7 @@ function addCaller(body)
 		serviceType:servtype,
 		surname:callersurname
 	});
-	return true;
+	return "true";
 }
 /*
 request:
@@ -497,7 +515,7 @@ function removeCaller(body)
 {
 	var id=body.id;
 	db.collection("callerDetails").doc(id).delete();
-	return true;
+	return "true";
 }
 /*
 request:
@@ -517,7 +535,7 @@ function updateCaller(body)
 	db.collection("callerDetails").doc(id).update({
 		[param]:val
 	});
-	return true;	
+	return "true";	
 }
 /*
 request: 
@@ -539,7 +557,7 @@ function addAgent(body)
 		name:agentname,
 		password:agentpass
 	});
-	return true;
+	return "true";
 }
 /*
 request:
@@ -553,7 +571,7 @@ function removeAgent(body)
 {
 	var id=body.id;
 	db.collection("agentCredentials").doc(id).delete();
-	return true;
+	return "true";
 
 }
 /*
@@ -574,7 +592,7 @@ function updateAgent(body)
 	db.collection("agentCredentials").doc(id).update({
 		[param]:val
 	});
-	return true;
+	return "true";
 }
 
 //add special case retrievals below

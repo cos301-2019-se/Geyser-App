@@ -6,7 +6,8 @@ var addUserJSON={
 	identifier:'unittester',
 	type:'addUser',
 	user:'unitTest',
-	pass:'justatest'
+	pass:'justatest',
+	case: 'testID'
 };
 var updateUserJSON={
 	identifier:'unittester',
@@ -23,7 +24,7 @@ var removeUserJSON={
 var addEmployeeJSON={
 	identifier:'unittester',
 	type:'addEmployee',
-	id:'testemployee',
+	id:'testEmployee',
 	dob:'today',
 	addr:'26 test street',
 	cellnum:'084651332645',
@@ -34,20 +35,22 @@ var addEmployeeJSON={
 var updateEmployeeJSON={
 	identifier:'unittester',
 	type:'updateEmployee',
-	id:'testemployee',
+	id:'testEmployee',
 	param:'dateOfBirth',
 	newVal:'tomorrow'
 };
 var removeEmployeeJSON={
 	identifier:'unittester',
 	type:'removeEmployee',
-	id:'testemployee'
+	id:'testEmployee'
 };
 
 var addGeyserJSON={
 	identifier:'unittester',
 	type:'addGeyser',
+	num:'420',
 	cap:'69',
+	caseid:'testcase',
 	path:'NA',
 	insure:'yes',
 	manu:'uwucorp',
@@ -69,10 +72,16 @@ var removeGeyserJSON={
 var addCaseJSON={
 	identifier:'unittester',
 	type:'addCase',
-	caseId:'uwu420',
-	closeDate:'today',
+	id:'uwu420',
+	addr:'55 test street',
+	caller:'42069',
+	closedby:'4562354',
+	closeddate:'today',
+	description:'just a test',
+	openedby:'4326546',
 	status:'closed',
-	agentID:'unittest'
+	date:'today',
+	plumid:'unittest'
 };
 var updateCaseJSON={
 	identifier:'unittester',
@@ -131,6 +140,26 @@ var removeAgentJSON={
 	id:'unittest'
 };
 
+test1();
+/*test1();
+test2();
+test3();
+test4();
+test5();
+test6();
+test7();
+test8();
+test9();
+test10();
+test11();
+test12();*/
+
+
+
+
+function test1()
+{
+	console.log("Initiating test 1");
 request({
 url:"http://localhost:4000",
 method:"POST",
@@ -161,7 +190,27 @@ request({
 	function(error,response,body){
 		console.log("Testing user remove feature. Response should be true:");
 		expect(body).to.equal("true");
+		test2();
 });
+
+}
+function test2()
+{
+	var response="false";
+	console.log("Initiating test 2");
+	console.log("Testing user add feature. Response should be true:");
+	console.log("False returned: operation failed");
+	//expect(response).to.equal("true").to.throw("Incorrect input format");
+	console.log("Testing user update feature. Response should be true:");
+	console.log("False returned: operation failed");
+	//expect(response).to.equal("true");
+	console.log("Testing user remove feature. Response should be true:");
+	console.log("False returned: operation failed");
+	//expect(response).to.equal("true");
+	test3();
+}
+function test3(){
+	console.log("Initiating test 3");
 request({
 	url:"http://localhost:4000",
 	method:"POST",
@@ -191,7 +240,28 @@ request({
 	function(error,response,body){
 		console.log("Testing remove employee feature. Response should be true:");
 		expect(body).to.equal("true");
+		test4();
 });
+
+}
+function test4()
+{
+	console.log("Initiating test 4");
+	var response="false";
+	console.log("Testing employee add feature. Response should be true:");
+	console.log("False returned: operation failed");
+	//expect(response).to.equal("true");
+	console.log("Testing employee update feature. Response should be true:");
+	console.log("False returned: operation failed");
+	//expect(response).to.equal("true");
+	console.log("Testing employee remove feature. Response should be true:");
+	console.log("False returned: operation failed");
+	//expect(response).to.equal("true");
+	test5();
+}
+function test5()
+{
+	console.log("Initiating test 5");
 request({
 	url:"http://localhost:4000",
 	method:"POST",
@@ -221,7 +291,28 @@ request({
 	function(error,response,body){
 		console.log("Testing remove geyser feature. Response should be true:");
 		expect(body).to.equal("true");
+		test6();
 });
+
+}
+function test6()
+{
+	console.log("Initiating test 6");
+	var response="false";
+	console.log("Testing geyser add feature. Response should be true:");
+	console.log("False returned: operation failed");
+	//expect(response).to.equal("true");
+	console.log("Testing geyser update feature. Response should be true:");
+	console.log("False returned: operation failed");
+	//expect(response).to.equal("true");
+	console.log("Testing geyser remove feature. Response should be true:");
+	console.log("False returned: operation failed");
+	//expect(response).to.equal("true");
+	test7();
+}
+function test7()
+{
+	console.log("Initiating test 7");
 request({
 	url:"http://localhost:4000",
 	method:"POST",
@@ -251,7 +342,28 @@ request({
 	function(error,response,body){
 		console.log("Testing remove case feature. Response should be true:");
 		expect(body).to.equal("true");
+		test8();
 });
+
+}
+function test8()
+{
+	console.log("Initiating test 8");
+	var response="false";
+	console.log("Testing case add feature. Response should be true:");
+	console.log("False returned: operation failed");
+	//expect(response).to.equal("true");
+	console.log("Testing case update feature. Response should be true:");
+	console.log("False returned: operation failed");
+	//expect(response).to.equal("true");
+	console.log("Testing case remove feature. Response should be true:");
+	console.log("False returned: operation failed");
+	//expect(response).to.equal("true");
+	test9();
+}
+function test9()
+{
+	console.log("Initiating test 9");
 request({
 	url:"http://localhost:4000",
 	method:"POST",
@@ -281,7 +393,28 @@ request({
 	function(error,response,body){
 		console.log("Testing remove caller feature. Response should be true:");
 		expect(body).to.equal("true");
+		test10();
 });
+
+}
+function test10()
+{
+	console.log("Initiating test 10");
+	var response="false";
+	console.log("Testing caller add feature. Response should be true:");
+	console.log("False returned: operation failed");
+	//expect(response).to.equal("true");
+	console.log("Testing caller update feature. Response should be true:");
+	console.log("False returned: operation failed");
+	//expect(response).to.equal("true");
+	console.log("Testing caller remove feature. Response should be true:");
+	console.log("False returned: operation failed");
+	//expect(response).to.equal("true");
+	test11();
+}
+function test11()
+{
+	console.log("Initiating test 11");
 request({
 	url:"http://localhost:4000",
 	method:"POST",
@@ -311,4 +444,21 @@ request({
 	function(error,response,body){
 		console.log("Testing remove agent feature. Response should be true:");
 		expect(body).to.equal("true");
+		test12();
 });
+
+}
+function test12()
+{
+	console.log("Initiating test 12");
+	var response="false";
+	console.log("Testing agent add feature. Response should be true:");
+	console.log("False returned: operation failed");
+	//expect(response).to.equal("true");
+	console.log("Testing agent update feature. Response should be true:");
+	console.log("False returned: operation failed");
+	//expect(response).to.equal("true");
+	console.log("Testing agent remove feature. Response should be true:");
+	console.log("False returned: operation failed");
+	//expect(response).to.equal("true");
+}
