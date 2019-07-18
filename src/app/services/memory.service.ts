@@ -19,6 +19,7 @@ export interface Details {
   model: string;
   manufacturer: string;
   insurance: string;
+  caseID: string;
 }
 
 @Injectable({
@@ -43,7 +44,7 @@ export class MemoryService {
     this.pictures = data;
   }
 
-  getPicturesData(): GeyserImages{
+  getPicturesData(): GeyserImages {
     return this.pictures;
   }
 }

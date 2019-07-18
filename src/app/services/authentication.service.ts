@@ -33,7 +33,7 @@ export class AuthenticationService {
         const data = doc.data();
         user.userID = id;
         user.password = data.password;
-        user.caseID = data.caseID;
+        user.caseID = data.caseToWorkOn;
         return user;
       } else {
         return null;

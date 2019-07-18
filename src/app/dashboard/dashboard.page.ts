@@ -19,12 +19,13 @@ export class DashboardPage implements OnInit {
   ) { }
 
   ionViewWillEnter() {
-    //stops caching
+    // stops caching
   }
 
   ngOnInit() {
-    //console.log(this.authService.currentUser.caseID);
-    if (this.authService.currentUser.caseID === '' || this.authService.currentUser.caseID === null) {
+    // console.log(this.authService.currentUser.caseID);
+    if (this.authService.currentUser.caseID === '' || this.authService.currentUser.caseID === null
+    || this.authService.currentUser.caseID === 'none') {
       this.errorMessage = 'There are no pending cases.';
     } else {
       this.goNext();
