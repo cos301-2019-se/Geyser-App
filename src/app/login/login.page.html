@@ -4,11 +4,11 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content class="content" padding>
   <form class="form" [formGroup]="validationsForm"  (ngSubmit)="loginUser(validationsForm.value)">
 
     <ion-item>
-      <ion-label  position="floating" color="primary">UserID</ion-label>
+      <ion-label position="floating" color="primary">UserID</ion-label>
       <ion-input type="text" formControlName="userID"></ion-input>
     </ion-item>
     <div class="validation-errors">
