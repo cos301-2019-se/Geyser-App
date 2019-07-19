@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-firestore.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+   
+ 
+  <style> 
+input[type=text] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+}
+</style>
+ </head>
+ <body>
+ 
+ 
+	<label>Full name </label>
+    <input type="text" name="textbox4" id="textbox4" />
+ 
+ 
+    <label>Agent ID</label>
+	<p><strong>Note: please click the generate button to create an ID.</p>
+    <input type="text" name="textbox1" id="textbox1" />
+	<p><button type="button" onclick = genAgentID()>Generate Agent ID</button></p>
+  
+    <label>Password</label>
+	<p><strong>Note: Generate or type your own password.</p>
+    <input type="password" name="textbox2" id="textbox2" />
+	<input type="checkbox" onclick="myFunction()">Show Password
+	<p><button type="button" onclick = genAgentPassword()>Generate Agent Password</button></p>
+	
+	<label>Confirm Password</label>
+    <input type="password" name="textbox3" id="textbox3" />
+	
+	<br>
+	<br>
+	
+	<button type="button" onclick = send()>Signup</button>
+	
+ <script>
+ var firebaseConfig = {
+    apiKey: "AIzaSyDibg-oYRpVXU9HqCAOLdxIpYXcZUPpAGM",
+    authDomain: "geyser-74ddf.firebaseapp.com",
+    databaseURL: "https://geyser-74ddf.firebaseio.com",
+    projectId: "geyser-74ddf",
+    storageBucket: "geyser-74ddf.appspot.com",
+    messagingSenderId: "1001903322970",
+    appId: "1:1001903322970:web:a904b91e99d67b22"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  var db = firebase.firestore();
+ 
+ 
+ function genAgentID()
+ {
+        var text = "A";
+        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+           for(var i = 0; i < 8; i++) 
+          {
+             text += possible.charAt(Math.floor(Math.random() * possible.length));
+           }
+        document.getElementById("textbox1").value = text;
+          
+ }
+ 
+ 
+ function genAgentPassword()
+ {
+        var text = " ";
+        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789#@&*";
+          for(var i = 0; i < 8; i++) 
+          {
+             text += possible.charAt(Math.floor(Math.random() * possible.length));
+          }
+        document.getElementById("textbox2").value = text;
+          
+ }
+ 
+ // this function confirms the password 
+ function send()
+ {
+ var name1 = document.getElementById('textbox4').value;
+   var id1 = document.getElementById('textbox1').value;
+   var pass1 = document.getElementById('textbox2').value;
+	var confirm1 = document.getElementById('textbox3').value;
+ 
+  if(pass1 == confirm1)
+  {
+				db.collection("agentCredentials").doc(id1).set
+				(
+					{
+						agentName : name1,
+						agentID: id1,
+						agentPass: pass1
+					
+
+
+
+					}
+				)
+
+				db.collection("users").doc(id1).set
+				(
+					{
+					  password : pass1,
+					  userType : "agent"
+
+
+					}
+				)
+	}
+	else
+	{
+			alert("Your password doesn't match. Please enter the password again.");
+	}
+ 
+ 
+ }
+ 
+ function myFunction() {
+  var x = document.getElementById("textbox2");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
+ 
+
+
+
+
+
+
+ 
+
+ 
+ </script>
+ 
+ </body>
+ 
+ </html>
