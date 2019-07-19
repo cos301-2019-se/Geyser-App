@@ -9,7 +9,7 @@ We are using [Ionic Framework version 4.12.0](https://ionicframework.com/)
 
 Our project aims to create an app to streamline the process of installing, maintaining and monitoring geysers. The app will capture data about the geyser during installation, generate necessary documentation after installation, generate workflows for maintenance, provide warranty information to insurance companies and generate heatmaps based on a multitude of criteria (such as warranty period, component type, volume, etc...).
 
-#### Demo 2
+#### Demo 3
 
 All documentation is held in the documentation folder.
 
@@ -19,21 +19,28 @@ Link: https://github.com/cos301-2019-se/Geyser-App/blob/master/documentation/Arc
 
 User Manual is called: "UserManual.pdf"
 
-Link: https://github.com/cos301-2019-se/Geyser-App/blob/master/documentation/UserManual.pdf
+Link: https://github.com/cos301-2019-se/Geyser-App/blob/master/documentation/User%20manual%20for%20admin.docx.pdf
 
 Coding Standards/Quality is called: "Coding standards.pdf"
 
-Link: https://github.com/cos301-2019-se/Geyser-App/blob/master/documentation/Coding%20standards.pdf
+Link: https://github.com/cos301-2019-se/Geyser-App/blob/master/documentation/Demo%203/Coding%20standards.pdf
 
 Testing Document is called: "testing document.pdf"
 
-Link: https://github.com/cos301-2019-se/Geyser-App/blob/master/documentation/testing%20document.pdf
+Link: https://github.com/cos301-2019-se/Geyser-App/blob/master/documentation/Demo%203/unit%20test%20policy.pdf
 
 Link to SRS "Phase1": https://github.com/cos301-2019-se/Geyser-App/blob/master/documentation/Phase%201.pdf
 
 Link to SRS "Phase2": https://github.com/cos301-2019-se/Geyser-App/blob/master/documentation/Phase%202.pdf
 
+Link to SRS "Phase3": https://github.com/cos301-2019-se/Geyser-App/blob/master/documentation/Demo%203/HighTech_SRS.pdf
+
 Project Management Link: https://app.zenhub.com/workspaces/hightech-geyser-zen-5ccb197b77bc5b0505df96fe/board?repos=182156319
+
+Architectural design Document is called: "ntier Architecture.pdf"
+
+Link: https://github.com/cos301-2019-se/Geyser-App/blob/master/documentation/Demo%203/Presentation%20Tier%20(1).pdf
+Link: https://github.com/cos301-2019-se/Geyser-App/blob/master/documentation/Demo%203/ntier%20architecture.pptx
 
 Team member profiles: "TeamOverview.md"
 
