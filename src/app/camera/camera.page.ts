@@ -14,11 +14,11 @@ export class CameraPage implements OnInit {
   hasTakenImage = false;
   readyToTakePicture = true;
   nextImageString: string[] = [
-    'please take a photo of the geyser',
-    'please take a photo of the pressure control valve',
-    'please take a photo of the vacuum breakers',
-    'please take a photo of the driptray',
-    'please take a photo of the safety'
+    'Please take a photo of the geyser',
+    'Please take a photo of the pressure control valve',
+    'Please take a photo of the vacuum breakers',
+    'Please take a photo of the driptray',
+    'Please take a photo of the safety'
   ];
   imageIndex = 0;
   displayInstruction = '';
