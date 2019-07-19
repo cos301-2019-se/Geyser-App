@@ -30,7 +30,6 @@ export class DatabaseService {
     // const ref = this.afStore.storage.ref('images/');
     const ref = this.afStore.storage.ref();
     // const task = ref.child(`${str}`).put(file);
-    alert(`images/${path}/${name}`);
     const task = ref.child(`images/${path}/${name}`).putString(file, 'data_url');
 
     //   var uploadTask = storageRef.child('images/' + file.name).put(file, metadata);
