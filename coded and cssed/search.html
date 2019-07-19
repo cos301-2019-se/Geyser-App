@@ -245,14 +245,15 @@ function add()
 	var agent = document.getElementById("test").value;
 	alert(agent);
 	var com = "completed";
+  var u="unknown";
 	db.collection("caseDetails").get().then(function(querySnapshot)
 	{
 		querySnapshot.forEach(function(doc)
 		{
-			if(com==doc.data().caseStatus)
+			if(com==doc.data().caseStatus&& u==doc.data().caseClosedBy )
 			{
 			   
-				db.collection("caseDetails").doc(doc.id).update({caseClosedBy: agent, caseClosedDate :date  });
+				db.collection("caseDetails").doc(doc.id).update({caseClosedBy: agent, caseClosedDate :date, caseStatus : "closed"  });
 			}
 	   });
 		
