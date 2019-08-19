@@ -135,42 +135,86 @@ async function handle(req)
 		console.log("update agent "+req.body.identifier);
 		return updateAgent(req.body);
 	}
+	if(req.body.type=="login")
+	{
+		console.log("login attempt");
+		return login(req.body);
+	}
+	if(req.body.type=="retrieveCaseID")
+	{
+		console.log("Case ID retrieve: "+req.body.identifier);
+		return retrieveCaseID(req.body);
+	}
 	
 }
 
 /*
+for plumbers
 request:
 {
 	identifier: identifier,
 	type: addUser,
 	user: username,
 	pass: password,
+	userType: user type,
 	case: case id
+
+}
+for admins
+request:
+{
+	identifier: identifier,
+	type: addUser,
+	user: username,
+	pass: password,
+	userType: user type
 
 }
 */
 
 function addUser(body)
 {
-	//var salt=genSalt();
+	if(!validateIdentifier(body))
+	{
+		console.log("Invalid user detected "+body.identifier);
+		return "false";
+	}
+	var passSalt=genSalt();
 	var user=body.user;
 	var pass=body.pass;
 	/*console.log(pass);
 	console.log(user);
 	console.log(salt);*/
-	var type="plumber";
-	var caseToWork=body.case;
-	//var finalPass=pass+salt;
+	var type=body.userType;
+	
+	var finalPass=pass+salt;
 	finalPass=hash(pass);
+	var useIdentifier=generateIdentifier();
 	//console.log(finalPass);
+	if(type=="plumber")
+	{
+		var caseToWork=body.case;
 	db.collection("users").doc(user).set(
-{
-  
+	{
+  	identifier:useIdentifier,
 	caseToWorkOn:caseToWork,
 	password:finalPass,
+	salt:passSalt
 	userType:type
-}
-);
+	}
+	);
+	}
+	if(type=="admin")
+	{
+		db.collection("users").doc(user).set(
+	{
+  	identifier:useIdentifier,
+	password:finalPass,
+	salt:passSalt
+	userType:type
+	}
+	);	
+	}
 	return "true";
 
 
@@ -185,6 +229,11 @@ request:
 */
 function removeUser(body)
 {
+	if(!validateIdentifier(body))
+	{
+		console.log("Invalid user detected "+body.identifier);
+		return "false";
+	}
 	var user=body.user;
 	db.collection("users").doc(user).delete();
 	return "true";
@@ -199,6 +248,18 @@ function genSalt()
 		result=result+chars.charAt(Math.floor(Math.random()*len));
 	}
 	return result;
+}
+function generateIdentifier()
+{
+		var result="";
+	var chars="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+	var len=chars.length;
+	for(var i=0; i<10;i=i+1)
+	{
+		result=result+chars.charAt(Math.floor(Math.random()*len));
+	}
+	return result
+
 }
 function hash(password)
 {
@@ -218,6 +279,11 @@ request:
 */
 function updateUser(body)
 {
+	if(!validateIdentifier(body))
+	{
+		console.log("Invalid user detected "+body.identifier);
+		return "false";
+	}
 	var param=body.param;
 	var user=body.user;
 	var val=body.newVal;
@@ -246,6 +312,11 @@ request:
 */
 function addEmployee(body)
 {
+	if(!validateIdentifier(body))
+	{
+		console.log("Invalid user detected "+body.identifier);
+		return "false";
+	}
 	var id=body.id;
 	var dob=body.dob;
 	var addr=body.addr;
@@ -281,6 +352,11 @@ request:
 
 function removeEmployee(body)
 {
+	if(!validateIdentifier(body))
+	{
+		console.log("Invalid user detected "+body.identifier);
+		return "false";
+	}
 	var id=body.id;
 	db.collection("employeesDetails").doc(id).delete();
 	return "true";
@@ -298,6 +374,11 @@ identifier: identifier,
 */
 function updateEmployee(body)
 {
+	if(!validateIdentifier(body))
+	{
+		console.log("Invalid user detected "+body.identifier);
+		return "false";
+	}
 	var param=body.param;
 	var id=body.id;
 	var val=body.newVal;
@@ -324,6 +405,11 @@ request:
 */
 function addGeyser(body)
 {
+	if(!validateIdentifier(body))
+	{
+		console.log("Invalid user detected "+body.identifier);
+		return "false";
+	}
 	var geysernum=body.num;
 	var cap=body.cap;
 	var caseid=body.caseid;
@@ -355,6 +441,11 @@ request:
 */
 function removeGeyser(body)
 {
+	if(!validateIdentifier(body))
+	{
+		console.log("Invalid user detected "+body.identifier);
+		return "false";
+	}
 	var number=body.number;
 	db.collection("geyser").doc(number).delete();
 	return "true";
@@ -372,6 +463,11 @@ request:
 */
 function updateGeyser(body)
 {
+	if(!validateIdentifier(body))
+	{
+		console.log("Invalid user detected "+body.identifier);
+		return "false";
+	}
 	var param=body.param;
 	var id=body.id;
 	var val=body.newVal;
@@ -403,6 +499,11 @@ request:
 */
 function addCase(body)
 {
+	if(!validateIdentifier(body))
+	{
+		console.log("Invalid user detected "+body.identifier);
+		return "false";
+	}
 	var id=body.id;
 	var addr=body.addr;
 	var caller=body.caller;
@@ -438,6 +539,11 @@ request:
 */
 function removeCase(body)
 {
+	if(!validateIdentifier(body))
+	{
+		console.log("Invalid user detected "+body.identifier);
+		return "false";
+	}
 	var id=body.id;
 	db.collection("caseDetails").doc(id).delete();
 	return "true";
@@ -454,6 +560,11 @@ request:
 */
 function updateCase(body)
 {
+	if(!validateIdentifier(body))
+	{
+		console.log("Invalid user detected "+body.identifier);
+		return "false";
+	}
 	var param=body.param;
 	var id=body.id;
 	var val=body.newVal;
@@ -482,6 +593,11 @@ request:
 */
 function addCaller(body)
 {
+	if(!validateIdentifier(body))
+	{
+		console.log("Invalid user detected "+body.identifier);
+		return "false";
+	}
 	var id=body.id;
 	var addr=body.addr;
 	var callback=body.callback;
@@ -513,6 +629,11 @@ request:
 */
 function removeCaller(body)
 {
+	if(!validateIdentifier(body))
+	{
+		console.log("Invalid user detected "+body.identifier);
+		return "false";
+	}
 	var id=body.id;
 	db.collection("callerDetails").doc(id).delete();
 	return "true";
@@ -529,6 +650,11 @@ request:
 */
 function updateCaller(body)
 {
+	if(!validateIdentifier(body))
+	{
+		console.log("Invalid user detected "+body.identifier);
+		return "false";
+	}
 	var param=body.param;
 	var id=body.id;
 	var val=body.newVal;
@@ -549,13 +675,24 @@ request:
 */
 function addAgent(body)
 {
+	if(!validateIdentifier(body))
+	{
+		console.log("Invalid user detected "+body.identifier);
+		return "false";
+	}
 	var id=body.id;
 	var agentname=body.agentname;
 	var agentpass=body.agentpass;
+	var userIdentifier=generateIdentifier();
+	var passSalt=genSalt();
+	agentpass=agentpass+passSalt;
+	agentpass=hash(agentpass);
 	db.collection("agentCredentials").doc(id).set({
+		identifier:userIdentifier,
 		agentID:id,
 		name:agentname,
-		password:agentpass
+		password:agentpass,
+		salt:passSalt
 	});
 	return "true";
 }
@@ -569,6 +706,11 @@ request:
 */
 function removeAgent(body)
 {
+	if(!validateIdentifier(body))
+	{
+		console.log("Invalid user detected "+body.identifier);
+		return "false";
+	}
 	var id=body.id;
 	db.collection("agentCredentials").doc(id).delete();
 	return "true";
@@ -586,6 +728,11 @@ request:
 */
 function updateAgent(body)
 {
+	if(!validateIdentifier(body))
+	{
+		console.log("Invalid user detected "+body.identifier);
+		return "false";
+	}
 	var param=body.param;
 	var id=body.id;
 	var val=body.newVal;
@@ -595,4 +742,120 @@ function updateAgent(body)
 	return "true";
 }
 
-//add special case retrievals below
+/*
+for both login functions
+{
+	type: login/loginAgent,
+	userName: user name,
+	password: password
+} 
+*/
+function login(body)
+{
+	var user=body.userName;
+	var record=db.collection('users').doc(user);
+	if(!record.exists)
+	{
+		var returnData={
+			Error: 'User does not exist';
+		}
+		return JSON.stringifiy(returnData);
+	}else
+	{
+		var data=record.data();
+		var pass=body.password;
+		pass=pass+data.salt;
+		pass=hash(pass);
+		if(pass==data.password)
+		{
+			var returnData={
+				identifier:data.identifier,
+				userType: data.userType
+			}
+			return JSON.stringifiy(returnData);
+		}
+	}
+}
+
+
+function agentLogin(body)
+{
+	var user=body.userName;
+	var record=db.collection('agentCredentials').doc(user);
+	if(!record.exists)
+	{
+		var returnData={
+			Error: 'User does not exist';
+		}
+		return JSON.stringifiy(returnData);
+	}else
+	{
+		var data=record.data();
+		var pass=body.password;
+		pass=pass+data.salt;
+		pass=hash(pass);
+		if(pass==data.password)
+		{
+			var returnData={
+				identifier:data.identifier,
+				userType: 'agent'
+			}
+			return JSON.stringifiy(returnData);
+		}
+	}
+}
+
+function validateIdentifier(body)
+{
+	var id=body.identifier;
+	db.collection("users").where('identifier','==',id).get()
+	.then(snapshot=>{
+		if(snapshot.empty){
+			
+			db.collection("agentCredentials").where('identifier','==',id)
+			.get().then(snapshot=>{
+				if(snapshot.empty){
+					return false;
+				}
+				return true;
+			});
+		}
+		return true;
+	});
+}
+
+/*
+{
+	identifier: user identifier,
+	type:retrieveCaseID,
+	userid: id of user
+}
+*/
+function retrieveCaseID(body)
+{
+	var returnResult;
+	if(validateIdentifier(body))
+	{
+		var record=db.collection('users').doc(body.userid);
+		if(record.exists)
+		{
+			returnResult={
+			Error: 'Invalid user ID';
+		}
+		return JSON.stringifiy(returnResult);
+		}
+		var data=record.data();
+		returnResult= {
+			casid: data.caseToWorkOn
+		}
+		return JSON.stringifiy(returnResult);
+
+
+	}else
+	{
+		returnResult={
+			Error: 'Invalid user';
+		}
+		return JSON.stringifiy(returnResult);
+	}
+}
