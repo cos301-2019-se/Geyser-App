@@ -77,14 +77,12 @@
                       <table id="itemList">
                         <thead>
                           <tr>
-                            <th>CaseID</th>
-                            <th>Incident Date</th>
-                            <th>Address</th>
-                            <th>Case Status</th>
-                            <th>Description</th>
-                            <th>Caller ID</th>
-                            <th>Agent O</th>
-                            <th>Agent C</th>
+                            <th>Barcode</th>
+                            <th>caseID</th>
+                            <th>Insured</th>
+                            <th>Manufacturer</th>
+                            <th>Model</th>
+
                           </tr>
                         </thead>
                         <tbody>
@@ -176,51 +174,89 @@ window.onclick = function(event) {
 
 	function geyser() {
 // clear();
-var bar=document.getElementById("plumber").value;
-console.log(bar);
+var brand=document.getElementById("plumber").value;
+console.log(brand);
 const display=document.querySelector("#display");
 var c=0;
-database.collection("geyser").get().then(function(querySnapshot)
-{
 
-  querySnapshot.forEach(function(doc){
-  	console.log(doc.data());
-    if(bar==doc.data().manufacturer){
-	      c++;
-	    console.log("entry foound"
+
+
+
+$.ajax({
+    url: "http://127.0.0.1:4000/",
+    type: "POST",
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    data: JSON.stringify({
+        type: "retrieveBrandSearch",
+        id: brand,
+        identifier:"abcdefghij"
+    }),
+    success:function(res){
+      console.log("Success: "+res) ;
+      var convertedObj= JSON.parse(res);
+      console.log(convertedObj.userType);  
+       //alert("Correct");
+       for(var co=0;co<convertedObj.data.length;co++){
+      var rows = "";
+      rows= "<tr><td>"+convertedObj.data[co].barcode+"</td><td>"+convertedObj.data[i].caseID
+      +"</td><td>"+convertedObj.data[co].insurance+"</td><td>"+convertedObj.data[co].manufacturer+"</td><td>"+convertedObj.data[co].model+"</td></tr>";
+      $( rows ).appendTo( "#itemList tbody" );
+    }
+
+    },
+    fail:function(data){
+      console.log("Fail: "+data);
+    },
+    error: function (jqXHR, textStatus, errorThrown) { 
+      console.log(jqXHR)
+      console.log(textStatus)
+      console.log(errorThrown)
+    }
+}); 
+
+
+// database.collection("geyser").get().then(function(querySnapshot)
+// {
+
+//   querySnapshot.forEach(function(doc){
+//   	console.log(doc.data());
+//     if(bar==doc.data().manufacturer){
+// 	      c++;
+// 	    console.log("entry foound"
 	      
-	      //can add.details to be specific
-	      );
-	    var rows = "";
-	    // rows += "<tr><td>" +...++"</td></tr>";
-	    // rows= "<tr><td>"+doc.data().caseID+"</td><td>"+doc.data().incidentDate
-	    // +"</td><td>"+doc.data().addressOfIncident+"</td><td>"+doc.data().caseStatus+"</td><td>"+doc.data().caseDescription
-	    // +"</td><td>"+doc.data().callerID+"</td><td>"+doc.data().caseOpenedBy +"</td><td>"+doc.data().caseClosedBy+"</td></tr>";
-	    $( rows ).appendTo( "#itemList tbody" );
-	  }
-	}
-  );
+// 	      //can add.details to be specific
+// 	      );
+// 	    var rows = "";
+// 	    // rows += "<tr><td>" +...++"</td></tr>";
+// 	    // rows= "<tr><td>"+doc.data().caseID+"</td><td>"+doc.data().incidentDate
+// 	    // +"</td><td>"+doc.data().addressOfIncident+"</td><td>"+doc.data().caseStatus+"</td><td>"+doc.data().caseDescription
+// 	    // +"</td><td>"+doc.data().callerID+"</td><td>"+doc.data().caseOpenedBy +"</td><td>"+doc.data().caseClosedBy+"</td></tr>";
+// 	    $( rows ).appendTo( "#itemList tbody" );
+// 	  }
+// 	}
+//   );
 
   
-});
-if(c==0)
-{
+// });
+// if(c==0)
+// {
 	
 
+// }
 }
-}
 
 
 
 
-function sleep(milliseconds) {
-  var start = new Date().getTime();
-  for (var i = 0; i < 1e7; i++) {
-    if ((new Date().getTime() - start) > milliseconds){
-      break;
-    }
-  }
-};
+// function sleep(milliseconds) {
+//   var start = new Date().getTime();
+//   for (var i = 0; i < 1e7; i++) {
+//     if ((new Date().getTime() - start) > milliseconds){
+//       break;
+//     }
+//   }
+// };
 </script>
 
 <!-- Scripts -->
