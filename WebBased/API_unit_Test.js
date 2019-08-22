@@ -1,5 +1,6 @@
 var expect=require('chai').expect;
 var request=require('request');
+var crypto=require("crypto");
 
 
 var addUserJSON={
@@ -153,6 +154,7 @@ test9();
 test10();
 test11();
 test12();*/
+test13()
 
 
 
@@ -462,3 +464,114 @@ function test12()
 	console.log("False returned: operation failed");
 	//expect(response).to.equal("true");
 }
+
+//demo 4 tests
+
+var plumberLoginJSON = {
+	type: "login",
+	userName: "testuserapi",
+	password: "password"
+};
+
+var agentLoginJSON = {
+	type: "loginAgent",
+	userName: "testagentapi",
+	password: "password"
+};
+
+var retrieveCaseIDJSON = {
+	identifier: "test",
+	type:"retrieveCaseID",
+	userid: "testuserapi"
+};
+
+var graphJSON = {
+	identifier: "atest",
+	type: "retrieveGraph"
+};
+
+var caseSearchJSON = {
+	type: "retrieveCaseSearch",
+	identifier: "atest",
+	id:"testuserapi"
+};
+
+function test13() {
+	request({
+		url:"http://localhost:4000",
+		method:"POST",
+		json:true,
+		body:plumberLoginJSON
+	},
+		function(error,response,body){
+			console.log("Testing plumber login feature. Response should be true:");
+			expect(body.userType).to.equal("plumber");
+	});
+
+	request({
+		url:"http://localhost:4000",
+		method:"POST",
+		json:true,
+		body:agentLoginJSON
+	},
+		function(error,response,body){
+			console.log("Testing agent login feature. Response should be true:");
+			expect(body.userType).to.equal("agent");
+	});
+
+	request({
+		url:"http://localhost:4000",
+		method:"POST",
+		json:true,
+		body:retrieveCaseIDJSON
+	},
+		function(error,response,body){
+			console.log("Testing case id retrival. Response should be true:");
+			expect(body.casid).to.equal("3c3oWlEm");
+	});
+
+	request({
+		url:"http://localhost:4000",
+		method:"POST",
+		json:true,
+		body:graphJSON
+	},
+		function(error,response,body){
+			console.log("Testing graph retrival. Response should be true:");
+			expect(body.June).to.equal(body.June); //will this even work? I don't know how to check
+	});
+
+	request({
+		url:"http://localhost:4000",
+		method:"POST",
+		json:true,
+		body:caseSearchJSON
+	},
+		function(error,response,body){
+			console.log("Testing case id retrival. Response should be true:");
+			body.forEach(e => {
+				expect(e.caseID).to.equal(e.caseID);
+			});
+			
+	});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
