@@ -26,11 +26,6 @@
 	<link rel="stylesheet" type="text/css" href="css/util.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 <!--===============================================================================================-->
-<script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-firestore.js"></script>
-<script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-storage.js"></script>
 </head>
 <body>
 	
@@ -39,7 +34,7 @@
 			<div class="wrap-login100 p-b-160 p-t-50">
 				<form class="login100-form validate-form">
 					<span class="login100-form-title p-b-43">
-						IPA Login
+						Account Login
 					</span>
 					
 					<div class="wrap-input100 rs1 validate-input" data-validate = "Username is required">
@@ -54,16 +49,15 @@
 					</div>
 
 					<div class="container-login100-form-btn">
-						<button class="login100-form-btn" onclick="Login()">
+						<button class="login100-form-btn" type="button" onclick="Login()">
 							Sign in
 						</button>
 					</div>
 					
 					<div class="text-center w-full p-t-23">
-						<a href="signUpAdmin.html" class="txt1">
+						<a href="#" class="txt1">
 							Sign up
 						</a>
-
 					</div>
 				</form>
 			</div>
@@ -90,102 +84,68 @@
 	<script src="vendor/countdowntime/countdowntime.js"></script>
 <!--===============================================================================================-->
 	<script src="js/main.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-storage.js"></script>
+<!-- <script src ="jquery.min.js"></script>
+ -->	<script >
+ 	
 
-	<script >
-		
- var firebaseConfig = {
-    apiKey: "AIzaSyDibg-oYRpVXU9HqCAOLdxIpYXcZUPpAGM",
-    authDomain: "geyser-74ddf.firebaseapp.com",
-    databaseURL: "https://geyser-74ddf.firebaseio.com",
-    projectId: "geyser-74ddf",
-    storageBucket: "geyser-74ddf.appspot.com",
-    messagingSenderId: "1001903322970",
-    appId: "1:1001903322970:web:a904b91e99d67b22"
-  };
-  // Initialize Firebase
+
   function Login() {
-  firebase.initializeApp(firebaseConfig);
-  var database = firebase.firestore();
+  	
+  
   var use=document.getElementById("un").value;
   console.log(use);
   var ps=document.getElementById("pw").value;
   console.log(ps);
-  var count=0;
-//   database.collection("users").get().then(function(querySnapshot)
-// {
-// 	querySnapshot.forEach(function(doc)
-// 	{
-// 		if(doc.id()==use)
-// 		{
-// 			if(doc.data().userType=="agent")
-// 			{
-// 				if(doc.data().password==ps)
-// 				{
-// 					count++;
-// 					window.location=index.html;
-// 				}
-				
-					
-				
-// 			}
-// 			else
-// 			{
-// 				alert("Wrong User type");
-// 				location.reload();
-// 			}
-// 		}
 
-// 	}
-// 	if(count==0)
-// 	{
-// 		alert("Invalid Password");
-// 	location.reload();
-// 	}
-// )
-// }
-//   	)
-///////////////////////////////////////////////////////////////////
-var docRef = database.collection("users").doc(use);
+ 
+ $.ajax({
+    url: "http://127.0.0.1:4000/",
+    type: "POST",
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    data: JSON.stringify({
+        type: "login",
+        userName: use,
+        password: ps
+    }),
+    success:function(res){
+    	console.log("Success: "+res) ;
+    	var convertedObj= JSON.parse(res);
+    	console.log(convertedObj.userType);  
+    	 alert("Correct");
 
-docRef.get().then(function(doc) {
-    if (doc.exists) {
-        console.log("Document data:", doc.data());
-        //sleep(1000);
-        if(doc.data().userType=="agent")
-        {
-        	if(doc.data().password==ps)
-        	{
-        		alert("Correct");
-        		//window.location.href =index.html;
-        	}
-        }
-        else
-        {
-        	alert("Wrong User type");
-			//location.reload();
-        }
-    } else {
-        // doc.data() will be undefined in this case
-        console.log("No such document!");
-        alert("Invalid Password or UserName");
-        sleep(5000);
-		//location.reload();
+    	 if(convertedObj.userType=="admin"||convertedObj.userType=="agent")
+		location.replace("home.html");
+	else
+	{
+		location.replace("home2.html");
+	}
+
+    },
+    fail:function(data){
+    	console.log("Fail: "+data);
+    },
+    error: function (jqXHR, textStatus, errorThrown) { 
+    	console.log(jqXHR)
+    	console.log(textStatus)
+    	console.log(errorThrown)
     }
-}).catch(function(error) {
-    console.log("Error getting document:", error);
-});
-//sleep(10000);
+}); 
+  
+		
+
+
+
 
 }
 
-function sleep(milliseconds) {
-  var start = new Date().getTime();
-  for (var i = 0; i < 1e7; i++) {
-    if ((new Date().getTime() - start) > milliseconds){
-      break;
-    }
-  }
-}
+
+
 	</script>
 
 </body>
