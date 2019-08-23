@@ -73,7 +73,7 @@ Linkedin: https://www.linkedin.com/in/theoveshen-naidu-4b6782180
 |   Skills:             |   I have good leadership, time management, problem solving and decision making skills. In addition I am proficient in various programming languages such as : Java, JavaScript, PHP, C, C++, Python, HTML, CSS, Delphi. Furthermore, I have Database management Skills and also proficient in MS Word, Excel and PowerPoint Presentation.                              |
 |   Attitudes:       	|   I am an honest, reliable and a hardworking person. I enjoy encountering challenges and solving them because they give a true reflection of who you are.                 |
 
-linkedin: linkedin.com/in/janaki-patil-83072812a
+Linkedin: https://www.linkedin.com/in/janaki-patil-83072812a
 ---
 
 ## Tristan Sander-hughes
