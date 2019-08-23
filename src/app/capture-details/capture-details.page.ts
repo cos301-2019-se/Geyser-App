@@ -16,9 +16,9 @@ export class CaptureDetailsPage implements OnInit {
   errorMessage = ''; //
 
   validationMessages = {
-    model: [{ type: 'required', message: 'model is required.' }],
-    manufacturer: [{ type: 'required', message: 'manufacturer is required.' }],
-    insurance: [{ type: 'required', message: 'insurance is required.' }]
+    model: [{ type: 'required', message: '.   Model is required.'}],
+    manufacturer: [{ type: 'required', message: '.   Manufacturer is required.' }],
+    insurance: [{ type: 'required', message: '.   Insurance is required.' }]
   };
 
   constructor(
