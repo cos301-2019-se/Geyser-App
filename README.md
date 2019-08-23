@@ -51,7 +51,7 @@ Team member profiles: "TeamOverview.md"
 ## ![20190503_111541](https://user-images.githubusercontent.com/48208244/57770074-c4b63100-770f-11e9-9d88-961635d5a179.jpg)
 
 ## Theoveshan Naidu
-Linkedin: https://www.linkedin.com/in/theoveshen-naidu-4b6782180
+
 |                   	|                                                                   	|
 |:--------------------	|----------------------------------------------------------------------	|
 |   Student Number:   	|   16148861                        	                                |
@@ -59,10 +59,12 @@ Linkedin: https://www.linkedin.com/in/theoveshen-naidu-4b6782180
 |   Work Experience:   	|   Tutor at the University Of Pretoria                                 |
 |   Skills:             |   C++, Java, JS, PHP, Assembly(64bit), HTML,CSS, NodeJS, Python       |
 |   Attitudes:       	|   Big team worker that will help teamworks ensure work is done. And always tries to meet every deadline ahead of time.       	                                    |
+
+Linkedin: https://www.linkedin.com/in/theoveshen-naidu-4b6782180
 ---
 
 ## Janaki Patil
-linkedin: linkedin.com/in/janaki-patil-83072812a
+
 |                   	|                                                                   	|
 |:--------------------	|----------------------------------------------------------------------	|
 |   Student Number:   	|   16006110                        	                                |
@@ -71,10 +73,11 @@ linkedin: linkedin.com/in/janaki-patil-83072812a
 |   Skills:             |   I have good leadership, time management, problem solving and decision making skills. In addition I am proficient in various programming languages such as : Java, JavaScript, PHP, C, C++, Python, HTML, CSS, Delphi. Furthermore, I have Database management Skills and also proficient in MS Word, Excel and PowerPoint Presentation.                              |
 |   Attitudes:       	|   I am an honest, reliable and a hardworking person. I enjoy encountering challenges and solving them because they give a true reflection of who you are.                 |
 
+linkedin: linkedin.com/in/janaki-patil-83072812a
 ---
 
 ## Tristan Sander-hughes
-Linkedin: https://www.linkedin.com/in/tristan-sander-hughes-581995191/
+
 |                   	|                                                                   	|
 |:--------------------	|----------------------------------------------------------------------	|
 |   Student Number:   	|   17071390                        	                                |
@@ -83,10 +86,11 @@ Linkedin: https://www.linkedin.com/in/tristan-sander-hughes-581995191/
 |   Skills:             |   C++, Java, Javascript, PHP, Assembly(64bit), HTML.                  |
 |   Attitudes:       	|   Internally driven, and intensely pragmatic                          |
 
+Linkedin: https://www.linkedin.com/in/tristan-sander-hughes-581995191/
 ---
 
 ## Zi Xin Zhang
-Linkedin: https://www.linkedin.com/in/zi-xin-zhang-1a7ab017b/
+
 |                   	|                                                                   	|
 |:--------------------	|----------------------------------------------------------------------	|
 |   Student Number:   	|   15192556                        	                                |
@@ -95,10 +99,11 @@ Linkedin: https://www.linkedin.com/in/zi-xin-zhang-1a7ab017b/
 |   Skills:             |   C++, Java, C#                                                       |
 |   Attitudes:       	|   I am generally a solitary person but willing to work with anybody and provide aide wherever I can help.                       	                                    |
 
+Linkedin: https://www.linkedin.com/in/zi-xin-zhang-1a7ab017b/
 ---
 
 ## Alexandros Mendes Petrou
-Linkedin: https://www.linkedin.com/in/alexandros-petrou-077b6b191/
+
 |                   	|                                                                   	|
 |:--------------------	|----------------------------------------------------------------------	|
 |   Student Number:   	|   15291792                        	                                |
@@ -107,4 +112,5 @@ Linkedin: https://www.linkedin.com/in/alexandros-petrou-077b6b191/
 |   Skills:             |    C++, Java, C#, Python, Javasript, HTML, CSS, Time management, Problem solving                                                                                         |
 |   Attitudes:       	|   Willing do work alone or in a group to get the job done, willing to help anyone to solve a problem, diligent.       	                                    |
 
+Linkedin: https://www.linkedin.com/in/alexandros-petrou-077b6b191/
 ---
