@@ -17,7 +17,7 @@ Architectural Designs documentation is called: "Architectural design and justifi
 
 Link: https://github.com/cos301-2019-se/Geyser-App/blob/master/documentation/Demo%203/Presentation%20Tier%20(1).pdf
 
-Link:https://github.com/cos301-2019-se/Geyser-App/blob/master/documentation/Demo%203/ntier%20architecture.pptx
+Link:https://github.com/cos301-2019-se/Geyser-App/blob/master/documentation/AD.docx
 
 User Manual is called: "UserManual.pdf"
 
@@ -44,7 +44,7 @@ Project Management Link: https://app.zenhub.com/workspaces/hightech-geyser-zen-5
 Architectural design Document is called: "ntier Architecture.pdf"
 
 Link: https://github.com/cos301-2019-se/Geyser-App/blob/master/documentation/Demo%203/Presentation%20Tier%20(1).pdf
-Link: https://github.com/cos301-2019-se/Geyser-App/blob/master/documentation/Demo%203/ntier%20architecture.pptx
+Link: https://github.com/cos301-2019-se/Geyser-App/blob/master/documentation/AD.docx
 
 Presentation Demo 4:
 Link: https://github.com/cos301-2019-se/Geyser-App/blob/master/documentation/Presentation1%20Final%20demo%204.pptx
