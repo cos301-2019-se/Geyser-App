@@ -51,6 +51,7 @@ Team member profiles: "TeamOverview.md"
 ## ![20190503_111541](https://user-images.githubusercontent.com/48208244/57770074-c4b63100-770f-11e9-9d88-961635d5a179.jpg)
 
 ## Theoveshan Naidu
+Linkedin: https://www.linkedin.com/in/theoveshen-naidu-4b6782180
 |                   	|                                                                   	|
 |:--------------------	|----------------------------------------------------------------------	|
 |   Student Number:   	|   16148861                        	                                |
@@ -61,6 +62,7 @@ Team member profiles: "TeamOverview.md"
 ---
 
 ## Janaki Patil
+linkedin: linkedin.com/in/janaki-patil-83072812a
 |                   	|                                                                   	|
 |:--------------------	|----------------------------------------------------------------------	|
 |   Student Number:   	|   16006110                        	                                |
@@ -72,6 +74,7 @@ Team member profiles: "TeamOverview.md"
 ---
 
 ## Tristan Sander-hughes
+Linkedin: https://www.linkedin.com/in/tristan-sander-hughes-581995191/
 |                   	|                                                                   	|
 |:--------------------	|----------------------------------------------------------------------	|
 |   Student Number:   	|   17071390                        	                                |
@@ -83,6 +86,7 @@ Team member profiles: "TeamOverview.md"
 ---
 
 ## Zi Xin Zhang
+Linkedin: https://www.linkedin.com/in/zi-xin-zhang-1a7ab017b/
 |                   	|                                                                   	|
 |:--------------------	|----------------------------------------------------------------------	|
 |   Student Number:   	|   15192556                        	                                |
@@ -94,6 +98,7 @@ Team member profiles: "TeamOverview.md"
 ---
 
 ## Alexandros Mendes Petrou
+Linkedin: https://www.linkedin.com/in/alexandros-petrou-077b6b191/
 |                   	|                                                                   	|
 |:--------------------	|----------------------------------------------------------------------	|
 |   Student Number:   	|   15291792                        	                                |
