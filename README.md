@@ -13,12 +13,6 @@ Our project aims to create an app to streamline the process of installing, maint
 
 All documentation is held in the documentation folder.
 
-Architectural Designs documentation is called: "Architectural design and justification.pdf"
-
-Link: https://github.com/cos301-2019-se/Geyser-App/blob/master/documentation/Demo%203/Presentation%20Tier%20(1).pdf
-
-Link:https://github.com/cos301-2019-se/Geyser-App/blob/master/documentation/AD.docx
-
 User Manual is called: "UserManual.pdf"
 
 Link: https://github.com/cos301-2019-se/Geyser-App/blob/master/documentation/User%20manual%20Final%20Final.pdf
@@ -44,6 +38,7 @@ Project Management Link: https://app.zenhub.com/workspaces/hightech-geyser-zen-5
 Architectural design Document is called: "ntier Architecture.pdf"
 
 Link: https://github.com/cos301-2019-se/Geyser-App/blob/master/documentation/Demo%203/Presentation%20Tier%20(1).pdf
+
 Link: https://github.com/cos301-2019-se/Geyser-App/blob/master/documentation/AD.docx
 
 Presentation Demo 4:
