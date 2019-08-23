@@ -16,7 +16,8 @@ All documentation is held in the documentation folder.
 Architectural Designs documentation is called: "Architectural design and justification.pdf"
 
 Link: https://github.com/cos301-2019-se/Geyser-App/blob/master/documentation/Demo%203/Presentation%20Tier%20(1).pdf
-Link:https://github.com/cos301-2019-se/Geyser-App/blob/master/documentation/Demo%203/unit%20test%20policy.pdf
+
+Link:https://github.com/cos301-2019-se/Geyser-App/blob/master/documentation/Demo%203/ntier%20architecture.pptx
 
 User Manual is called: "UserManual.pdf"
 
@@ -36,7 +37,7 @@ Link to SRS "Phase2": https://github.com/cos301-2019-se/Geyser-App/blob/master/d
 
 Link to SRS "Phase3": https://github.com/cos301-2019-se/Geyser-App/blob/master/documentation/Demo%203/HighTech_SRS.pdf
 
-Link to SRS "Phase4": 
+Link to SRS "Phase4": https://github.com/cos301-2019-se/Geyser-App/blob/master/documentation/HighTech_SRS%20(1).pdf
 
 Project Management Link: https://app.zenhub.com/workspaces/hightech-geyser-zen-5ccb197b77bc5b0505df96fe/board?repos=182156319
 
@@ -44,6 +45,9 @@ Architectural design Document is called: "ntier Architecture.pdf"
 
 Link: https://github.com/cos301-2019-se/Geyser-App/blob/master/documentation/Demo%203/Presentation%20Tier%20(1).pdf
 Link: https://github.com/cos301-2019-se/Geyser-App/blob/master/documentation/Demo%203/ntier%20architecture.pptx
+
+Presentation Demo 4:
+Link: https://github.com/cos301-2019-se/Geyser-App/blob/master/documentation/Presentation1%20Final%20demo%204.pptx
 
 Team member profiles: "TeamOverview.md"
 
