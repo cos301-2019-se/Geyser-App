@@ -8,14 +8,14 @@
  
 <ion-content ion-padding>
   <h1>Press Button To Scan</h1>
-<div class="c">
-  <ion-button (click)="scanCode()">
-    Scan Code
-  </ion-button>
-</div>
  
   <div *ngIf="hasScannedData">
     {{goNext()}}
   </div>
 
 </ion-content>
+<ion-footer (click)="scanCode()">
+    <ion-toolbar color="primary">
+      <ion-title class="Logout-btn">Scan</ion-title>
+    </ion-toolbar>
+</ion-footer>

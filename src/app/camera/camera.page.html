@@ -7,9 +7,6 @@
 
 <ion-content>
     <h3 class="instruction">{{displayInstruction}}</h3>
-    <div class="c" *ngIf="!hasTakenImage">
-    <ion-button  (click)="openCam()" class="footerButton" expand="block">Open Camera</ion-button>
-    </div>
     <!--<div *ngIf= 'readyToTakePicture'>{{openCam()}}</div>-->
     <div class="imgBox">
       <img src="{{image}}">
@@ -18,8 +15,11 @@
 </ion-content>
 
 <ion-footer>
+  <div class="c" *ngIf="!hasTakenImage">
+    <ion-button  (click)="openCam()" class="footerButton" expand="fill">Open Camera</ion-button>
+  </div>
   <div class="c" *ngIf= 'hasTakenImage'>
     <ion-button  (click)="openCam()" class="footerButton" expand="fill">Retake Picture</ion-button>
     <ion-button  (click)="nextImage()" class="footerButton" expand="fill">Confirm</ion-button>
-  </div>>  
+  </div>  
 </ion-footer>
