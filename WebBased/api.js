@@ -32,14 +32,39 @@ server.listen(PORT);
 
 
 app.use(bodyParser.json()); 
+app.use(function(req,res,next){
+	res.header("Access-Control-Allow-Origin","*");
+	res.header("Access-Control-Allow-Headers","*");
+	next();
+});
 app.post("/",async function(req,res){
 	console.log("request received");
 	console.log(req.body);
 	
 	res.json(await handle(req));
-	res.end;
+	res.end();
 });
 
+
+///////////////////////
+	var array=[];
+	var idc=0;
+	db.collection("users").get().then(querySnapshot=>
+	{
+		querySnapshot.forEach(function(doc)
+		{
+			var ID=doc.data().identifier;
+			array[idc]=ID;
+			idc++;
+			//console.log(ID);
+			
+
+
+		});
+
+		
+	});
+///////////////////////
 
 
 async function handle(req)
@@ -145,7 +170,32 @@ async function handle(req)
 		console.log("Case ID retrieve: "+req.body.identifier);
 		return retrieveCaseID(req.body);
 	}
-	
+	if(req.body.type=="retrieveGraph")
+	{
+		console.log("Graph retrieval request");
+		return retrieveGraphData(req.body);
+	}
+	if(req.body.type=="retrieveCaseSearch")
+	{
+		console.log("Case search request");
+		return retrieveCaseSearch(req.body);
+	}
+	if(req.body.type=="retrieveAgentSearch")
+	{
+		console.log("Agent search request");
+		retrun retrieveAgentSearch(req.body);
+	}
+	if(req.body.type=="retrieveCapacitySearch")
+	{
+		console.log("Capacity search request");
+		retrun retrieveCapacitySearch(req.body);
+	}
+	if(req.body.type=="retrieveBrandSearch")
+	{
+		console.log("Manufacturer search request");
+		retrun retrieveBrandSearch(req.body);
+	}
+	retrieveBrandSearch
 }
 
 /*
@@ -188,7 +238,7 @@ function addUser(body)
 	var type=body.userType;
 	
 	var finalPass=pass+salt;
-	finalPass=hash(pass);
+	finalPass=toUpperCase(hash(pass));
 	var useIdentifier=generateIdentifier();
 	//console.log(finalPass);
 	if(type=="plumber")
@@ -199,7 +249,7 @@ function addUser(body)
   	identifier:useIdentifier,
 	caseToWorkOn:caseToWork,
 	password:finalPass,
-	salt:passSalt
+	salt:passSalt,
 	userType:type
 	}
 	);
@@ -210,7 +260,7 @@ function addUser(body)
 	{
   	identifier:useIdentifier,
 	password:finalPass,
-	salt:passSalt
+	salt:passSalt,
 	userType:type
 	}
 	);	
@@ -753,28 +803,40 @@ for both login functions
 function login(body)
 {
 	var user=body.userName;
-	var record=db.collection('users').doc(user);
-	if(!record.exists)
+	console.log(user);
+	return db.collection('users').doc(user).get().then(doc=>{
+
+		
+	console.log(doc.exists);
+	if(!doc.exists)
 	{
 		var returnData={
-			Error: 'User does not exist';
+			Error: 'User does not exist'
 		}
-		return JSON.stringifiy(returnData);
+		return JSON.stringify(returnData);
 	}else
 	{
-		var data=record.data();
+		var data=doc.data();
 		var pass=body.password;
 		pass=pass+data.salt;
 		pass=hash(pass);
+		pass=pass.toUpperCase();
 		if(pass==data.password)
 		{
 			var returnData={
 				identifier:data.identifier,
 				userType: data.userType
 			}
-			return JSON.stringifiy(returnData);
+			return JSON.stringify(returnData);
+		}
+		else{
+			var returnData={
+				Error: 'Incorrect password'
+			}
+			return JSON.stringify(returnData);
 		}
 	}
+});
 }
 
 
@@ -785,9 +847,9 @@ function agentLogin(body)
 	if(!record.exists)
 	{
 		var returnData={
-			Error: 'User does not exist';
+			Error: 'User does not exist'
 		}
-		return JSON.stringifiy(returnData);
+		return JSON.stringify(returnData);
 	}else
 	{
 		var data=record.data();
@@ -800,7 +862,7 @@ function agentLogin(body)
 				identifier:data.identifier,
 				userType: 'agent'
 			}
-			return JSON.stringifiy(returnData);
+			return JSON.stringify(returnData);
 		}
 	}
 }
@@ -808,20 +870,18 @@ function agentLogin(body)
 function validateIdentifier(body)
 {
 	var id=body.identifier;
-	db.collection("users").where('identifier','==',id).get()
-	.then(snapshot=>{
-		if(snapshot.empty){
-			
-			db.collection("agentCredentials").where('identifier','==',id)
-			.get().then(snapshot=>{
-				if(snapshot.empty){
-					return false;
-				}
+	console.log(id);
+	
+	for(var j=0;j<idc;j++)
+	{
+		if(id==array[j])
+		{
+			console.log("valid user");
 				return true;
-			});
 		}
-		return true;
-	});
+	}
+	
+return false;	
 }
 
 /*
@@ -840,22 +900,305 @@ function retrieveCaseID(body)
 		if(record.exists)
 		{
 			returnResult={
-			Error: 'Invalid user ID';
+			Error: 'Invalid user ID'
 		}
-		return JSON.stringifiy(returnResult);
+		return JSON.stringify(returnResult);
 		}
 		var data=record.data();
 		returnResult= {
 			casid: data.caseToWorkOn
 		}
-		return JSON.stringifiy(returnResult);
+		return JSON.stringify(returnResult);
 
 
 	}else
 	{
 		returnResult={
-			Error: 'Invalid user';
+			Error: 'Invalid user'
 		}
-		return JSON.stringifiy(returnResult);
+		return JSON.stringify(returnResult);
 	}
+}
+
+/*
+{
+	identifier: identifier,
+	type:retrieveGraph
+}*/
+function retrieveGraphData(body)
+{
+	if(!validateIdentifier(body))
+	{
+		console.log("Invalid user");
+		var returnData={
+			Error: "Invalid User"
+		}
+		return JSON.stringify(returnData);
+	}
+	var start=0;
+	var end=0;
+	var month=0;
+	var Jan=0;
+	var Feb=0;
+	var Mar=0;
+	var Apr=0;
+	var MayMonth=0;
+	var Jun=0;
+	var Jul=0;
+	var Aug=0;
+	var Sep=0;
+	var Oct=0;
+	var Nov=0;
+	var Dec=0;
+	return db.collection("caseDetails").get().then(function(querySnapshot)
+	{
+		querySnapshot.forEach(function(doc)
+		{
+			var m=doc.data().incidentDate;
+			var search=m[4];
+			for(var i=0; i<m.length; i++)
+			{
+				if(m[i]==search)
+				{
+					start=i;
+					break;
+				}
+			}
+			for(var j=0; j<m.length; j++)
+			{
+				if(m[j]==search)
+				{
+					end=j;
+				}
+			}
+			console.log(m);
+
+			month=m.slice(start+1,end);
+			console.log(month);
+			if(month=="1")
+			{
+				Jan++;
+			}
+			if(month=="2")
+			{
+				Feb++;
+			}
+			if(month=="3")
+			{
+				Mar++;
+			}
+			if(month=="4")
+			{
+				Apr++;
+			}
+			if(month=="5")
+			{
+				MayMonth++;
+			}
+			if(month=="6")
+			{
+				Jun++;
+			}
+			if(month=="7")
+			{
+				Jul++;
+			}
+			if(month=="8")
+			{
+				Aug++;
+			}
+			if(month=="9")
+			{
+				Sep++;
+			}
+			if(month=="10")
+			{
+				Oct++;
+			}
+			if(month=="11")
+			{
+				Nov++;
+			}
+			if(month=="12")
+			{
+				Dec++;
+			}
+
+		});
+		console.log(Jan);
+			var returnData={
+		January:Jan,
+		February:Feb,
+		March:Mar,
+		April:Apr,
+		May:MayMonth,
+		June:Jun,
+		July:Jul,
+		August:Aug,
+		September:Sep,
+		October:Oct,
+		November:Nov,
+		December:Dec	
+	}
+	return JSON.stringify(returnData);
+
+	});
+
+}
+/*
+{
+	type: retrieveCaseSearch,
+	identifier: identifier,
+	id:plubmerid
+}
+*/
+
+function retrieveCaseSearch(body)
+{
+	if(!validateIdentifier(body))
+	{
+		console.log("Invalid user");
+		var returnData={
+			Error: "Invalid User"
+		}
+		return JSON.stringify(returnData);
+	}
+	var id=body.id;
+	var returnData={
+		data:[]
+	};
+	return db.collection("caseDetails").get().then(function(querySnapshot)
+	{
+		querySnapshot.forEach(function(doc)
+		{
+			console.log(doc.data());
+			if(id == doc.data().plumberID){
+				console.log("entry found");
+				var row={
+					caseID:doc.data().caseID,
+					incidentDat:doc.data().incidentDate,
+					caseStatus: doc.data().caseStatus,
+					caseDescription:doc.data().caseDescription,
+					addressOfIncident:doc.data().addressOfIncident,
+					callerID: doc.data().callerID,
+					caseOpenedBy:doc.data().caseOpenedBy,
+					caseClosedBy:doc.data().caseClosedBy
+
+				}
+				returnData.data.push(row);
+			}
+		});
+		return JSON.stringify(returnData);
+	});
+}
+
+function retrieveAgentSearch(body)
+{
+	if(!validateIdentifier(body))
+	{
+		console.log("Invalid user");
+		var returnData={
+			Error: "Invalid User"
+		}
+		return JSON.stringify(returnData);
+	}
+	var id=body.id;
+	var returnData={
+		data:[]
+	};
+	return db.collection("caseDetails").get().then(function(querySnapshot)
+	{
+		querySnapshot.forEach(function(doc)
+		{
+			console.log(doc.data());
+			if(id == doc.data().caseOpenedBy){
+				console.log("entry found");
+				var row={
+					caseID:doc.data().caseID,
+					incidentDat:doc.data().incidentDate,
+					caseStatus: doc.data().caseStatus,
+					caseDescription:doc.data().caseDescription,
+					addressOfIncident:doc.data().addressOfIncident,
+					callerID: doc.data().callerID,
+					caseOpenedBy:doc.data().caseOpenedBy,
+					caseClosedBy:doc.data().caseClosedBy
+
+				}
+				returnData.data.push(row);
+			}
+		});
+		return JSON.stringify(returnData);
+	});
+}
+
+function retrieveCapacitySearch(body)
+{
+	if(!validateIdentifier(body))
+	{
+		console.log("Invalid user");
+		var returnData={
+			Error: "Invalid User"
+		}
+		return JSON.stringify(returnData);
+	}
+	var id=body.id;
+	var returnData={
+		data:[]
+	};
+	return db.collection("geyser").get().then(function(querySnapshot)
+	{
+		querySnapshot.forEach(function(doc)
+		{
+			console.log(doc.data());
+			if(id == doc.data().capacity){
+				console.log("entry found");
+				var row={
+					barcode:doc.data().barcode,
+					caseID:doc.data().caseID,
+					insurance: doc.data().insurance,
+					manufacturer:doc.data().manufacturer,
+					model:doc.data().model
+
+				}
+				returnData.data.push(row);
+			}
+		});
+		return JSON.stringify(returnData);
+	});
+}
+
+function retrieveBrandSearch(body)
+{
+	if(!validateIdentifier(body))
+	{
+		console.log("Invalid user");
+		var returnData={
+			Error: "Invalid User"
+		}
+		return JSON.stringify(returnData);
+	}
+	var id=body.id;
+	var returnData={
+		data:[]
+	};
+	return db.collection("geyser").get().then(function(querySnapshot)
+	{
+		querySnapshot.forEach(function(doc)
+		{
+			console.log(doc.data());
+			if(id == doc.data().manufacturer){
+				console.log("entry found");
+				var row={
+					barcode:doc.data().barcode,
+					caseID:doc.data().caseID,
+					insurance: doc.data().insurance,
+					manufacturer:doc.data().manufacturer,
+					model:doc.data().model
+
+				}
+				returnData.data.push(row);
+			}
+		});
+		return JSON.stringify(returnData);
+	});
 }
