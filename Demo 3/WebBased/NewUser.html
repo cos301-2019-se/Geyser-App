@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-firestore.js"></script>
+<style>
+div{
+	visibility: hidden;
+}
+</style>
+</head>
+
+<body>
+
+
+			<h4>New User Details</h5>
+		   <p>
+          
+            <input type="text" name="Username" placeholder = "User name" id="UserName" >
+          </p> 
+		  <p>
+          
+            <input type="password" name="Password" placeholder = "pass" id="pass" >
+          </p>
+          <p>
+            
+            
+            <button id="subBut" type="submit" onclick = "upload()">Submit</button>
+          </p>
+
+          <div id="confirmDiv" >User Added</div>
+
+         
+      
+
+
+    <script src="admin.js"></script>
+
+</body>
+
+</html>
