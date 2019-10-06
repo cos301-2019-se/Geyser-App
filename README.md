@@ -8,7 +8,7 @@ This project was created in order to streamline the process of documentation of 
 | Document Link                                                                                 |
 |-----------------------------------------------------------------------------------------------|
 |[Requirements and Design Document](/Documentation)                                             |
-|[Coding Standards Document](/Documentation)                                                  	|
+|[Coding Standards Document](Documentation/Coding%20Standards/Coding%20Standards.pdf)                                                  	|
 |[Testing Policy Document and Reports](/Documentation)                                          |
 |[Project Management Tool](https://app.zenhub.com/workspaces/hightech-geyser-zen-5ccb197b77bc5b0505df96fe/board?repos=182156319)                                          |
 |[User Manual Document](/Documentation)                                                      	|
