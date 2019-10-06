@@ -40,3 +40,5 @@ take pictures.
 `ionic cordova build android`
 <br>
 This will build an APK in '\platforms\android\app\build\outputs\apk\debug' directory and then it needs to be put into the phone and installed.
+
+If a guide on how to use the mobile app is needed, it can be found in our [User Manual Document](/Documentation/User%20Manual/User%20manual%20Final%20one.pdf). Or a quick [video demonstration](https://www.youtube.com/watch?v=xDqgnfOv5bI&feature=youtu.be)
