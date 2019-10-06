@@ -23,11 +23,11 @@ There are 3 ways you can use the mobile app.
 
 2. Go into the Ionic Mobile App folder with this command <br>
 `cd '.\Ionic Mobile App\'`
-<br>
+
 Once inside the folder use this command to get all the needed files automatically.
 <br>
 `npm install`
-<br>
+
 When that is done you can run the command <br>
 `ionic serve`
 <br>
