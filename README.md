@@ -12,10 +12,10 @@ Our project aims to create an app to streamline the process of installing, maint
 ## Project Documentation
 | Document Link                                                                                 |
 |-----------------------------------------------------------------------------------------------|
-|[Requirements and Design Document](https://github.com/cos301-2019-se/Geyser-App/tree/staging/documentation)       |
-|[Coding Standards Document](https://github.com/cos301-2019-se/Geyser-App/tree/staging/documentation)                  	|
-|[Testing Policy Document and Reports](https://github.com/cos301-2019-se/Geyser-App/tree/staging/documentation)  |
-|[User Manual Document](https://github.com/cos301-2019-se/Geyser-App/tree/staging/documentation)                              	|
-|[Team Overview]()                                      	|
+|[Requirements and Design Document](/documentation)       |
+|[Coding Standards Document](/documentation)                  	|
+|[Testing Policy Document and Reports](/documentation)  |
+|[User Manual Document](/documentation)                              	|
+|[Team Overview](/Documentation/Team%20Overview/TeamOverview.md)                                      	|
 
 Project Management Link: https://app.zenhub.com/workspaces/hightech-geyser-zen-5ccb197b77bc5b0505df96fe/board?repos=182156319
