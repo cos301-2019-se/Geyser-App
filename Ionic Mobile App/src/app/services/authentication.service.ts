@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, DocumentReference, CollectionReference } from '@angular/fire/firestore';
+import * as crypto from 'crypto';
 
 export interface User {
   userID: string;
@@ -56,8 +57,10 @@ export class AuthenticationService {
   loginUser(userToLogin: any): Promise<boolean> {
     return this.getUser(userToLogin.userID).then(user => {
       if (user != null) {
-        // TODO: hash the password
-        const correctPass: boolean = this.checkPassword(user.password, userToLogin.password);
+        //this checks the hashed password
+        var salted: string = userToLogin.password + "thisissalt";
+        var hashed: string = this.hash(salted);
+        const correctPass: boolean = this.checkPassword(user.password, hashed);
         if (correctPass) {
           this.currentUser.userID = user.userID;
           this.currentUser.caseID = user.caseID;
@@ -75,6 +78,13 @@ export class AuthenticationService {
   logOutUser(): void {
     this.currentUser.caseID = '';
     this.currentUser.userID = '';
+  }
+
+  //this hashes the password
+  hash(password: string): string {
+    var hash = crypto.createHash("sha256");
+    hash.update(password);
+    return hash.digest('hex');
   }
 
 }
