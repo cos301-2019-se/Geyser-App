@@ -12,10 +12,10 @@ Our project aims to create an app to streamline the process of installing, maint
 ## Project Documentation
 | Document Link                                                                                 |
 |-----------------------------------------------------------------------------------------------|
-|[Requirements and Design Document](/documentation)       |
-|[Coding Standards Document](/documentation)                  	|
-|[Testing Policy Document and Reports](/documentation)  |
-|[User Manual Document](/documentation)                              	|
+|[Requirements and Design Document](/Documentation)       |
+|[Coding Standards Document](/Documentation)                  	|
+|[Testing Policy Document and Reports](/Documentation)  |
+|[User Manual Document](/Documentation)                              	|
 |[Team Overview](/Documentation/Team%20Overview/TeamOverview.md)                                      	|
 
 Project Management Link: https://app.zenhub.com/workspaces/hightech-geyser-zen-5ccb197b77bc5b0505df96fe/board?repos=182156319
