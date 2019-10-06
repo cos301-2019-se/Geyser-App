@@ -11,6 +11,6 @@ This project was created in order to streamline the process of documentation of 
 |[Coding Standards Document](Documentation/Coding%20Standards/Coding%20Standards.pdf)                                                  	|
 |[Testing Policy Document and Reports](/Documentation)                                          |
 |[Project Management Tool](https://app.zenhub.com/workspaces/hightech-geyser-zen-5ccb197b77bc5b0505df96fe/board?repos=182156319)                                          |
-|[User Manual Document](/Documentation)                                                      	|
+|[User Manual Document](/Documentation/User%20Manual/User%20manual%20Final%20one.pdf)                                                      	|
 |[Team Overview](/Documentation/Team%20Overview/TeamOverview.md)                              	|
 |[Instructions To Use Project](/Documentation/Instructions/Instructions.md)                              	|
