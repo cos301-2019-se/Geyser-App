@@ -2,7 +2,7 @@
 # Geyser-App
 ## Project Description
 
-Our project aims to create an app to streamline the process of installing, maintaining and monitoring geysers. The app will capture data about the geyser during installation, generate necessary documentation after installation, generate workflows for maintenance, provide warranty information to insurance companies and generate heatmaps based on a multitude of criteria (such as warranty period, component type, volume, etc...).
+This project was created in order to streamline the process of documentation of users in the field, minimizing the paperwork they are required to do while also making the storage and retrieval of this documentation more organised and more accessible. Our project also provides a means for administrative users to modify and review this documentation and provide analysis on the data within the database for users to consult for decisions.
 
 ## Project Documentation
 | Document Link                                                                                 |
@@ -13,4 +13,4 @@ Our project aims to create an app to streamline the process of installing, maint
 |[Project Management Tool](https://app.zenhub.com/workspaces/hightech-geyser-zen-5ccb197b77bc5b0505df96fe/board?repos=182156319)                                          |
 |[User Manual Document](/Documentation)                                                      	|
 |[Team Overview](/Documentation/Team%20Overview/TeamOverview.md)                              	|
-|[Instructions To Use Project]()                              	|
+|[Instructions To Use Project](/Documentation/Instructions/Instructions.md)                              	|
