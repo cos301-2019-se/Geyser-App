@@ -20,7 +20,6 @@ export class LoginPage implements OnInit {
     ],
     password: [
       { type: 'required', message: 'Password is required.' },
-      { type: 'minlength', message: 'Password must be at least 5 characters long.' }
     ]
   };
 
@@ -34,11 +33,10 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
     this.validationsForm = this.formBuilder.group({
-      userID: new FormControl('testID', Validators.compose([
+      userID: new FormControl('', Validators.compose([
         Validators.required
       ])),
-      password: new FormControl('pudding', Validators.compose([
-        Validators.minLength(5),
+      password: new FormControl('', Validators.compose([
         Validators.required
       ])),
     });
