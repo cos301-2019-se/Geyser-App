@@ -15,5 +15,5 @@ Here is a small [presentation of our project](https://docs.google.com/presentati
 |[User Manual Document](/Documentation/User%20Manual/User%20manual%20Final%20one.pdf)                                                      	|
 |[Team Overview](/Documentation/Team%20Overview/TeamOverview.md)                              	|
 |[Instructions To Use Project](/Documentation/Instructions/Instructions.md)                              	|
-|[Video Links](/Documentation/Video%20Links\Videos.md)|
+|[Video Links](/Documentation/Video%20Links/Videos.md)|
 |[Instructions To Use Project](/Documentation/Instructions/Instructions.md)                              	|
