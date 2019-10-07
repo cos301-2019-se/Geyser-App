@@ -16,3 +16,4 @@ Here is a small [presentation of our project](https://docs.google.com/presentati
 |[Team Overview](/Documentation/Team%20Overview/TeamOverview.md)                              	|
 |[Instructions To Use Project](/Documentation/Instructions/Instructions.md)                              	|
 |[Video Links](/Documentation/Video%20Links\Videos.md)|
+|[Instructions To Use Project](/Documentation/Instructions/Instructions.md)                              	|
