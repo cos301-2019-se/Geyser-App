@@ -14,4 +14,6 @@ Here is a small [presentation of our project](https://docs.google.com/presentati
 |[Project Management Tool](https://app.zenhub.com/workspaces/hightech-geyser-zen-5ccb197b77bc5b0505df96fe/board?repos=182156319)                                          |
 |[User Manual Document](/Documentation/User%20Manual/User%20manual%20Final%20one.pdf)                                                      	|
 |[Team Overview](/Documentation/Team%20Overview/TeamOverview.md)                              	|
+|[Slideshow Presentation](/Documentation)                              	|
+|[Video Demonstrations](/Documentation)                              	|
 |[Instructions To Use Project](/Documentation/Instructions/Instructions.md)                              	|
