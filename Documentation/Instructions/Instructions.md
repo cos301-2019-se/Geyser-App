@@ -3,7 +3,7 @@
 ## Installation
 The software and tools needed are [HERE](Installation.md) with a guide on how to get it up and running.
 If you want to build the mobile app yourself you will need to install everything listed in that list.
-We have [pre-made a APK](Documentation/Instructions/APK/Latest.apk) to make it easier for those that don't wish to go through the whole process,
+We have [pre-made a APK](/APK/Latest.apk) to make it easier for those that don't wish to go through the whole process,
 if you are just going to use the APK no software is needed to use it. 
 If you just want to to run it on your browser (Which we do not recommand because of limitations) you only need the first two items in the list to be installed.
 
@@ -19,7 +19,7 @@ Then just have to go into the folder
 
 ## Mobile App
 There are 3 ways you can use the mobile app.
-1. We have pre-built the APK for the mobile app [HERE](Documentation/Instructions/APK/Latest.apk) and it only needs to be downloaded and put into the phone and installed.
+1. We have pre-built the APK for the mobile app [HERE](/APK/Latest.apk) and it only needs to be downloaded and put into the phone and installed.
 
 2. Go into the Ionic Mobile App folder with this command <br>
 `cd '.\Ionic Mobile App\'`
