@@ -42,3 +42,8 @@ take pictures.
 This will build an APK in '\platforms\android\app\build\outputs\apk\debug' directory and then it needs to be put into the phone and installed.
 
 If a guide on how to use the mobile app is needed, it can be found in our [User Manual Document](/Documentation/User%20Manual/User%20manual%20Final%20one.pdf). Or a quick [video demonstration](https://www.youtube.com/watch?v=xDqgnfOv5bI&feature=youtu.be)
+
+When testing the mobile app, use the login information:
+userID: cosdepartment
+password: helloworld
+Do not press the confirm button on the detail capture page, the page after the photos are taken unless the tester is able to assign more cases to the cosdepartment user via the admin webpage. Pressing the confirm button will close the case and upload the details to the database.
