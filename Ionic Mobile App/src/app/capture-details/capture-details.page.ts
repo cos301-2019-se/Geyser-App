@@ -13,12 +13,13 @@ import { AuthenticationService } from '../services/authentication.service';
 export class CaptureDetailsPage implements OnInit {
 
   validationForm: FormGroup;
-  errorMessage = ''; //
+  errorMessage = '';
 
   validationMessages = {
     model: [{ type: 'required', message: '.   Model is required.'}],
     manufacturer: [{ type: 'required', message: '.   Manufacturer is required.' }],
-    insurance: [{ type: 'required', message: '.   Insurance is required.' }]
+    insurance: [{ type: 'required', message: '.   Insurance is required.' }],
+    temperature: [{ type: 'required', message: '.   Temperature is required.' }]
   };
 
   constructor(
@@ -42,20 +43,26 @@ export class CaptureDetailsPage implements OnInit {
       ])),
       insurance: new FormControl('', Validators.compose([
         Validators.required
+      ])),
+      temperature: new FormControl('', Validators.compose([
+        Validators.required
       ]))
     });
   }
 
   submitData(value: any) {
     const path = this.auth.currentUser.caseID;
+
     const details: Details = {
       barcode : this.memory.getBarcode().barcode,
       capacity : value.capacity,
       model : value.model,
       manufacturer : value.manufacturer,
       insurance : value.insurance,
-      caseID : this.auth.currentUser.caseID
+      caseID : this.auth.currentUser.caseID,
+      geyserTemp: value.temperature
     };
+
     this.database.createDocument(this.memory.getBarcode().barcode + '-' + path, details);
     let num = 0;
     this.database.upload(path, num++ + '.jpg', this.memory.pictures.geyser);
@@ -66,5 +73,6 @@ export class CaptureDetailsPage implements OnInit {
     alert('files uploaded');
     this.database.setCaseStatusComplete(details.caseID, this.auth.currentUser.userID);
     this.router.navigate(['complete']);
+    
   }
 }

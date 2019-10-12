@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, DocumentReference, CollectionReference } from '@angular/fire/firestore';
-import * as crypto from 'crypto';
 
 export interface User {
   userID: string;
@@ -82,9 +81,10 @@ export class AuthenticationService {
 
   //this hashes the password
   hash(password: string): string {
-    var hash = crypto.createHash("sha256");
-    hash.update(password);
-    return hash.digest('hex');
+    //var hash = crypto.createHash("sha256");
+    //hash.update(password);
+    //return hash.digest('hex');
+    return 'test';
   }
 
 }

@@ -20,6 +20,7 @@ export interface Details {
   manufacturer: string;
   insurance: string;
   caseID: string;
+  geyserTemp: number;
 }
 
 @Injectable({

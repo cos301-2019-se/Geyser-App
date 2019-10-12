@@ -5,17 +5,36 @@
     </ion-title>
   </ion-toolbar>
 </ion-header>
- 
+
 <ion-content ion-padding>
-  <h1>Press Button To Scan</h1>
- 
+
+  <h1 *ngIf="!enterBarcodeMode">Please scan or enter the barcode</h1>
+  <h1 *ngIf="enterBarcodeMode"> Please enter the barcode</h1>
+
+  <form *ngIf="enterBarcodeMode" class="form" [formGroup]="validationsForm" (ngSubmit)="enterBarcode(validationsForm.value)">
+    <ion-item>
+      <!--<ion-label position="floating" color="primary">Barcode</ion-label>-->
+      <ion-input type="text" formControlName="barcode"></ion-input>
+    </ion-item>
+    <div class="validation-errors">
+        <ng-container *ngFor="let validation of validationMessages.barcode">
+          <div class="error-message" *ngIf="validationsForm.get('barcode').hasError(validation.type) && (validationsForm.get('barcode').dirty || validationsForm.get('barcode').touched)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
+    <ion-button class="submit-btn c" type="submit"  [disabled]="!validationsForm.valid">Submit barcode</ion-button>
+  </form>
+
   <div *ngIf="hasScannedData">
     {{goNext()}}
   </div>
 
 </ion-content>
-<ion-footer (click)="scanCode()">
-    <ion-toolbar color="primary">
-      <ion-title class="Logout-btn">Scan</ion-title>
-    </ion-toolbar>
+
+<ion-footer>
+    <div class="c">
+        <ion-button (click)="scanCode()" class="footerButton" expand="fill">Scan barcode</ion-button>
+        <ion-button (click)="enterCode()" class="footerButton" expand="fill">Enter barcode</ion-button>
+    </div>
 </ion-footer>

@@ -10,7 +10,7 @@
   <form class="form" [formGroup]="validationForm"  (ngSubmit)="submitData(validationForm.value)">
 
     <ion-item>
-      <ion-label>Capacity</ion-label>
+      <ion-label color="primary">Capacity</ion-label>
       <ion-select formControlName="capacity" placeholder="Select One">
         <ion-select-option value="50L">50L</ion-select-option>
         <ion-select-option value="100L">100L</ion-select-option>
@@ -46,18 +46,26 @@
       </ng-container>
     </div>
 
+    <ion-item>
+      <div>
+        <ion-label color="primary">Temperature</ion-label>
+      </div>
+        <ion-range formControlName="temperature" step="60" pin="true" min="30" max="100" step="1" color="secondary">
+          <ion-icon slot="start" name="md-thermometer"></ion-icon>
+          <ion-label slot="start">30</ion-label>
+          <ion-label slot="end">100</ion-label>
+        </ion-range>
+    </ion-item>
+
   
     <ion-item>
-      <ion-label  position="floating" color="primary">Insurance</ion-label>
-      <ion-input type="text" formControlName="insurance"></ion-input>
+      <ion-label color="primary">Has insurance?</ion-label>
+      <ion-select formControlName="insurance" placeholder="Select One">
+        <ion-select-option value="yes">Yes</ion-select-option>
+        <ion-select-option value="no">No</ion-select-option>
+      </ion-select>
     </ion-item>
-    <div class="validation-errors">
-      <ng-container *ngFor="let validation of validationMessages.insurance">
-        <div class="error-message" *ngIf="validationForm.get('insurance').hasError(validation.type) && (validationForm.get('insurance').dirty || validationForm.get('insurance').touched)">
-          {{ validation.message }}
-        </div>
-      </ng-container>
-    </div>
+
     <div class="c">
       <ion-button class="submit-btn" type="submit"  [disabled]="!validationForm.valid">Confirm</ion-button>
     </div>
