@@ -1,48 +1,18 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, DocumentReference, CollectionReference } from '@angular/fire/firestore';
-
-export interface User {
-  userID: string;
-  password: string;
-  caseID: string;
-}
+import { HTTP } from '@ionic-native/http/ngx';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
 
-  private collectionRef: CollectionReference;
+  apiUrl: string = 'https://workflow-io.herokuapp.com/';
+
   currentUser = {
     userID: '',
-    caseID: ''
+    caseID: '',
+    identifier: ''
   };
 
-  constructor(private afs: AngularFirestore) {
-    this.collectionRef = this.afs.firestore.collection('users');
-  }
-
-  getUser(id: string): Promise<User> {
-    const docRef: DocumentReference = this.collectionRef.doc(id);
-    const user: User = {
-      userID : '',
-      password : '',
-      caseID : '',
-    };
-
-    return docRef.get().then(doc => {
-      if (doc.exists) {
-        const data = doc.data();
-        user.userID = id;
-        user.password = data.password;
-        user.caseID = data.caseToWorkOn;
-        return user;
-      } else {
-        return null;
-      }
-    });
-  }
-
-  checkPassword(pass: string, passToCheck: string): boolean {
-    return (pass === passToCheck);
+  constructor( private http: HTTP) {
   }
 
   isUserloggedin(): boolean {
@@ -54,22 +24,23 @@ export class AuthenticationService {
   }
 
   loginUser(userToLogin: any): Promise<boolean> {
-    return this.getUser(userToLogin.userID).then(user => {
-      if (user != null) {
-        //this checks the hashed password
-        var salted: string = userToLogin.password + "thisissalt";
-        var hashed: string = this.hash(salted);
-        const correctPass: boolean = this.checkPassword(user.password, hashed);
-        if (correctPass) {
-          this.currentUser.userID = user.userID;
-          this.currentUser.caseID = user.caseID;
-          return true;
-        }
-      }
-      console.log('How did you get here?');
+    const userDetails = {
+      userName: userToLogin.userID,
+      password: userToLogin.password
+    };
+
+    const options = {
+      method: 'post',
+      data: userDetails,
+      responseType: 'json'
+    };
+
+    return this.http.post(this.apiUrl, options, {}).then(data => {
+      console.log(data.data); // data received by server
       return false;
-    }).catch((err: Error) => {
-      console.log(err.message);
+    })
+    .catch(error => {
+      console.log(error.error); // error message as string
       return false;
     });
   }
@@ -77,14 +48,7 @@ export class AuthenticationService {
   logOutUser(): void {
     this.currentUser.caseID = '';
     this.currentUser.userID = '';
-  }
-
-  //this hashes the password
-  hash(password: string): string {
-    //var hash = crypto.createHash("sha256");
-    //hash.update(password);
-    //return hash.digest('hex');
-    return 'test';
+    this.currentUser.identifier = '';
   }
 
 }

@@ -12,14 +12,8 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
-// environment
-import { environment } from 'src/environments/environment';
-
-// firebase
-import { AngularFireModule } from '@angular/fire';
-import { ReactiveFormsModule } from '@angular/forms';
-import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/firestore';
-import { AngularFireStorage, StorageBucket } from '@angular/fire/storage';
+// HTTP
+import { HTTP } from '@ionic-native/http/ngx';
 
 // services
 import { AuthenticationService } from './services/authentication.service';
@@ -40,22 +34,17 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule,
-    ReactiveFormsModule,
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    HTTP,
     AuthenticationService,
     DatabaseService,
-    AngularFireStorage,
     MemoryService,
     Camera,
     BarcodeScanner,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    { provide: FirestoreSettingsToken, useValue: {} },
-    { provide: StorageBucket, useValue: 'gs://geyser-74ddf.appspot.com/' }
   ],
   bootstrap: [AppComponent]
 })
