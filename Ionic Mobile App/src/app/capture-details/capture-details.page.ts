@@ -113,8 +113,8 @@ export class CaptureDetailsPage implements OnInit {
     this.auth.addgeyser(details).then(successful => {
       if(successful) {
         this.isGeyserAdded = true;
-        this.checkDataUploaded();
       }
+      this.checkDataUploaded();
 
     }, err => { 
       this.checkDataUploaded();
@@ -123,8 +123,8 @@ export class CaptureDetailsPage implements OnInit {
     this.auth.sendImages(this.memory.pictures).then(successful => {
       if(successful) {
         this.isPicturesSent = true;
-        this.checkDataUploaded();
       }
+      this.checkDataUploaded();
 
     }, err => { 
       this.checkDataUploaded();
@@ -133,8 +133,8 @@ export class CaptureDetailsPage implements OnInit {
     this.auth.updateCase(caseDetails).then(successful => {
       if(successful) {
         this.isCaseChanged = true;
-        this.checkDataUploaded();
       }
+      this.checkDataUploaded();
 
     }, err => { 
       this.checkDataUploaded();
@@ -143,8 +143,8 @@ export class CaptureDetailsPage implements OnInit {
     this.auth.updateUser(userDetails).then(successful => {
       if(successful) {
         this.isUserChanged = true;
-        this.checkDataUploaded();
       }
+      this.checkDataUploaded();
 
     }, err => { 
       this.checkDataUploaded();
