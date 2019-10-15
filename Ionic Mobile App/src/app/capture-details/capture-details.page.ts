@@ -81,6 +81,7 @@ export class CaptureDetailsPage implements OnInit {
   }
 
   submitData(value: any) {
+    this.errorMessage = 'Details are being uploaded please wait...';
     this.uploadCounter = 0;
     const details: Details = {
       type: 'addGeyser',
