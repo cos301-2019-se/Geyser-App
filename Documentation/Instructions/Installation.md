@@ -6,7 +6,7 @@
 | [NodeJS](https://nodejs.org/en/) | 10.16.3 LTS | - |
 | [npm](https://www.npmjs.com/) | 6.4.1 | (Should be bundled with NodeJS) |
 |[ionic](https://ionicframework.com/)|4.12.0| After installing npm, run the command `npm install -g ionic@4.12.0`|
-|[Cordova](https://cordova.apache.org/)| - |`npm install -g cordova` |
+|[Cordova](https://cordova.apache.org/)| - |After installing npm, run the command `npm install -g cordova` |
 | [Java JDK8](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) | Java 8 | - |
 | [Gradle](https://gradle.org/)| Latest |[Gradle Instructions](https://gradle.org/install/) |
 | [Android Studio](https://developer.android.com/studio/) | Latest |[Android Studio Intructions](https://developer.android.com/studio/install)|
