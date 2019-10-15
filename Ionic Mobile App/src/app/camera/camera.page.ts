@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { Router } from '@angular/router';
 import { MemoryService, GeyserImages } from '../services/memory.service';
+import { AuthenticationService } from '../services/authentication.service';
 
 const MAX_IMAGES = (5);
 
@@ -20,11 +21,16 @@ export class CameraPage implements OnInit {
     '(4/5) Please take a photo of the driptray',
     '(5/5) Please take a photo of the safety'
   ];
+  
   imageIndex = 0;
   displayInstruction = '';
   image: any = '';
   imageData: any = '';
+
   pictures: GeyserImages = {
+    type: 'sendImages',
+    identifier: '',
+    caseID: '',
     geyser : '',
     pressureControlValve : '',
     vacuumBreaker : '',
@@ -32,8 +38,15 @@ export class CameraPage implements OnInit {
     safety : ''
   };
 
-  constructor(private camera: Camera, private router: Router, private memory: MemoryService) {
+  constructor(
+    private camera: Camera, 
+    private router: Router,
+    private authService: AuthenticationService,
+    private memory: MemoryService
+    ) {
     this.displayInstruction = this.nextImageString[this.imageIndex];
+    this.pictures.caseID = this.authService.currentUser.caseID;
+    this.pictures.identifier = this.authService.currentUser.identifier;
   }
 
   openCam() {
@@ -50,7 +63,7 @@ export class CameraPage implements OnInit {
       this.imageData = 'data:image/jpeg;base64,' + imageData;
       this.hasTakenImage = true;
     }, (err) => {
-     alert('error ' + JSON.stringify(err));
+      alert('error ' + JSON.stringify(err));
     });
 
   }

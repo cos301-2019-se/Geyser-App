@@ -14,7 +14,7 @@ export class DatabaseService {
   createDocument(id: string, data: any): Promise<any> {
     return this.collectionRef.doc(id).set(data);
   }
-
+/*
   setCaseStatusComplete(id: string, user: string): Promise<any> {
 
     this.afs.firestore.collection('users').doc(user).update({
@@ -25,7 +25,7 @@ export class DatabaseService {
       caseStatus: 'completed'
     });
   }
-
+*/
   upload(path: string, name: string, file: any) {
     // const ref = this.afStore.storage.ref('images/');
     const ref = this.afStore.storage.ref();

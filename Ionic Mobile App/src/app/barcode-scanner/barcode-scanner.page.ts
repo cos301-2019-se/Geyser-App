@@ -52,7 +52,7 @@ export class BarcodeScannerPage implements OnInit {
   enterBarcode(value: any) {
     this.bar.barcode = value.barcode;
     this.bar.type = 'entered';
-    this.memory.setBarcode(this.bar);
+    this.memory.barcode = this.bar;
     this.goNext()
   }
 
@@ -63,7 +63,7 @@ export class BarcodeScannerPage implements OnInit {
       .then(barcodeData => {
         this.bar.barcode = barcodeData.text;
         this.bar.type = barcodeData.format;
-        this.memory.setBarcode(this.bar);
+        this.memory.barcode = this.bar;
         this.hasScannedData = true;
       })
       .catch(err => {
