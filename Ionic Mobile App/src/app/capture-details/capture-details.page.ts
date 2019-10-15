@@ -41,6 +41,7 @@ export class CaptureDetailsPage implements OnInit {
   isGeyserAdded: boolean = false;
   isPicturesSent: boolean = false;
   isCaseChanged: boolean = false;
+  isUserChanged: boolean = false;
   uploadCounter: number = 0
   validationForm: FormGroup;
   errorMessage = '';
@@ -100,7 +101,6 @@ export class CaptureDetailsPage implements OnInit {
       param: 'caseID',
       newVal: 'completed'
     }
-
     
     const userDetails: userDetails = {
       type: 'updateUser',
@@ -139,17 +139,27 @@ export class CaptureDetailsPage implements OnInit {
     }, err => { 
       this.checkDataUploaded();
     });
+
+    this.auth.updateUser(userDetails).then(successful => {
+      if(successful) {
+        this.isUserChanged = true;
+        this.checkDataUploaded();
+      }
+
+    }, err => { 
+      this.checkDataUploaded();
+    });
   }
 
   checkDataUploaded() {
-    if(this.isGeyserAdded && this.isPicturesSent && this.isCaseChanged) {
+    if(this.isGeyserAdded && this.isPicturesSent && this.isCaseChanged && this.isUserChanged) {
       this.router.navigate(['complete']);
     } else {
       this.errorMessage = 'Details are being uploaded please wait...';
       this.uploadCounter++;
     }
 
-    if(this.uploadCounter == 3) {
+    if(this.uploadCounter == 4) {
       this.errorMessage = 'Details could not be uploaded please try again.';
     }
   }
