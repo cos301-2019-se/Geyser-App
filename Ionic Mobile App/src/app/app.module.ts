@@ -13,14 +13,10 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
 // HTTP
-import { HTTP } from '@ionic-native/http/ngx';
-import { NativeHttpModule, NativeHttpBackend, NativeHttpFallback } from 'ionic-native-http-connection-backend';
-import { HttpBackend, HttpXhrBackend, HttpClientModule } from '@angular/common/http';
-import { Platform } from '@ionic/angular';
+import { HttpClientModule } from '@angular/common/http';
 
 // services
 import { AuthenticationService } from './services/authentication.service';
-import { DatabaseService } from './services/database.service';
 import { MemoryService } from './services/memory.service';
 
 // camera
@@ -36,21 +32,17 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
   imports: [
     BrowserModule,
     HttpClientModule,
-    NativeHttpModule,
     IonicModule.forRoot(),
     AppRoutingModule,
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    HTTP,
     AuthenticationService,
-    DatabaseService,
     MemoryService,
     Camera,
     BarcodeScanner,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    { provide: HttpBackend, useClass: NativeHttpFallback, deps: [Platform, NativeHttpBackend, HttpXhrBackend]},
   ],
   bootstrap: [AppComponent]
 })

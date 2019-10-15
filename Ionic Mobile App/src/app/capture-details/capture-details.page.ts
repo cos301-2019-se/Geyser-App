@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { MemoryService, BarcodeType, GeyserImages } from '../services/memory.service';
-import { DatabaseService } from '../services/database.service';
+import { MemoryService } from '../services/memory.service';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
 
@@ -56,7 +55,6 @@ export class CaptureDetailsPage implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private memory: MemoryService,
-    private database: DatabaseService,
     private router: Router,
     private auth: AuthenticationService
     ) { }
