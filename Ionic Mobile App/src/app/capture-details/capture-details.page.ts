@@ -98,7 +98,7 @@ export class CaptureDetailsPage implements OnInit {
       type: 'updateCase',
       identifier: this.auth.currentUser.identifier,
       id: this.auth.currentUser.caseID,
-      param: 'caseID',
+      param: 'caseStatus',
       newVal: 'completed'
     }
     

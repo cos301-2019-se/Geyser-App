@@ -73,8 +73,8 @@ export class AuthenticationService {
     });
   }
 
-  updateUser(cuserToUpdate: any): Promise<Boolean> {
-    return this.http.post<string>(this.apiUrl, cuserToUpdate, this.httpOptions).toPromise().then(data => {
+  updateUser(userToUpdate: any): Promise<Boolean> {
+    return this.http.post<string>(this.apiUrl, userToUpdate, this.httpOptions).toPromise().then(data => {
       var res = JSON.parse(data);
       if(res.errror == 'Invalid user') {
         console.log('Invalid user');
