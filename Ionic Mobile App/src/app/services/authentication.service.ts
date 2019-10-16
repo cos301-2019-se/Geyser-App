@@ -34,7 +34,7 @@ export class AuthenticationService {
   sendImages(imagesToSend: any): Promise<Boolean> {
     return this.http.post<string>(this.apiUrl, imagesToSend, this.httpOptions).toPromise().then(data => {
       var res = JSON.parse(data);
-      alert(data);
+      alert(JSON.stringify(data));
       if(res.errror == 'Invalid user') {
         console.log('Invalid user');
         return false;
@@ -42,7 +42,7 @@ export class AuthenticationService {
       return true;
     }, err => {
       console.log('API failed.');
-      alert(err);
+      alert(JSON.stringify(err));
       return false;
     });
   }
