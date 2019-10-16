@@ -24,7 +24,13 @@
     <div class="justified">
 <label>Enter your case number given to you</label>
 <br>
-    <input type="text" name="textbox18"  id = "textbox18"> 
+<input type="text" name="textbox19"  id = "textbox18"> 
+</div>
+
+<div class="justified">
+ <label>Enter username of your choice</label>
+<br>  
+    <input type="text" name="textbox18"  id = "textbox19"> 
  </div>
     <div class="rating">
       <input type="radio" name="rating" id="rating-5" value = "5">
@@ -145,15 +151,13 @@
  </div> 
   
   
- 
-<script>
+ <script src="functions.js"></script>
+<script language="JavaScript" type="text/javascript" >
 function refresh()
 {
+  
   location.reload();
 }
-function send()
-{
-
 
 var firebaseConfig = {
     apiKey: "AIzaSyDibg-oYRpVXU9HqCAOLdxIpYXcZUPpAGM",
@@ -166,39 +170,83 @@ var firebaseConfig = {
   };
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
-  var db = firebase.firestore();   
-  
-  
-  
-  var comments = document.getElementById("comment").value;
-  var radios = document.getElementsByName('rating');
-  var stars;
-  var caseID =  document.getElementById("textbox18").value;
-  
+  var db = firebase.firestore(); 
+
+function send()
+{
+ 
+	  var comments = document.getElementById("comment").value;
+	  var radios = document.getElementsByName('rating');
+	  var stars;
+	  var caseID =  document.getElementById("textbox18").value;
+	  var uname =  document.getElementById("textbox19").value;
+	   for (var i = 0, length = radios.length; i < length; i++)
+	   {
+	     	if (radios[i].checked)
+	     	{
+
+	     		 stars = radios[i].value;
+			 break;
+	     	}
+	   }
+	console.log(comments);
+	console.log(stars);
 for (var i = 0, length = radios.length; i < length; i++)
 {
  if (radios[i].checked)
  {
   
   stars = radios[i].value;
-
   
   break;
  }
 }
 console.log(comments);
 console.log(stars);
-
-
 db.collection("feedback").doc(caseID).set(
 {
 rating : stars,
 feedback : comments,
-caseNumber : caseID
-
-
+caseNumber : caseID,
+userName:uname
 }
 )
+//window.location.href='home2.html';
+
+	// var ids=getCookie("Identifier");
+
+ // 	 $.ajax({
+	// 	  url: "https://workflow-io.herokuapp.com/",
+	// 	  type: "POST",
+	// 	  contentType: "application/json; charset=utf-8",
+	// 	  dataType: "json",
+	// 	  data: JSON.stringify
+	// 	 ({
+	// 	      type: "addReview",
+	// 	      rating : stars,
+	// 	      feedback : comments,
+	// 	      caseNumber : caseID,
+	// 	      userName : uname,
+	// 	      identifier:ids
+ //          	  }),
+	// 	  success:function(res)
+	// 	 {
+	// 	    console.log("Success: "+res) ;
+	// 	    window.location.href='home2.html';
+	// 	 },
+	// 	 fail:function(data)
+	// 	 {
+	// 	    console.log("Fail: "+data);
+	// 	 },
+	// 	 error: function (jqXHR, textStatus, errorThrown) 
+	// 	 { 
+	// 	    console.log(jqXHR)
+	// 	    console.log(textStatus)
+	// 	    console.log(errorThrown)
+	// 	  }
+ //    }); 
+
+
  }
  
  

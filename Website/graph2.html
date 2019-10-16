@@ -46,26 +46,82 @@
             <!-- Header -->
             <header id="header">
               <div class="logo">
-                <a href="home.html">WorkFlow-IO</a>
+                <a href="home.html">WorkFlow-IO.
+                </a>
               </div>
             </header>
             <div class="page-heading">
               <div class="container-fluid">
                 <div class="row">
                   <div class="col-md-12">
-                    <h2>Cases Per Month</h2>
-                    <button onclick= cases()> View number of cases per month </button>
+                    <h2>Geyser Temperature</h2>
+                    <button onclick= geyserTemp()> View geyser temperature  </button>
                     <div id="chartContainer" style="height: 300px; width: 100%;"></div>
 					<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+					<section class="tables">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="section-heading">
+                      <h2>Tables</h2>
+                    </div>
+                    <div class="default-table">
+                      <table id="itemList2">
+                        <thead>
+                          <tr>
+                            <th>CaseID</th>
+                            <th>GeyserTemperature</th>
+                            <th>Capacity</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          
+                        </tbody>
+                      </table>
+
+                      <p id=average1></p>
+					</div>
+				</div>
+				</div>
+			</div>
+			</section>
 					<p id = "testing"></p>
                   </div>
                 </div>
                 <div class="row">
                 	<div clase="col-md-12">
-                		<h2> Capacity of geysers</h2>
-                		<button onclick= capacity()> Capacity of geyser used mostly </button>
+                		<h2> Feedback</h2>
+                		<button onclick= capacity()> View feedback risk </button>
+						
                 		<div id="chartContainer2" style="height: 300px; width: 300%;"></div>
 					<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+					<section class="tables">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="section-heading">
+                      <h2>Negative review case</h2>
+                    </div>
+                    <div class="default-table">
+                      <table id="itemList">
+                        <thead>
+                          <tr>
+                            <th>PlumberID</th>
+                            <th>CaseID</th>
+                            <th>CaseOpenedOn</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          
+                        </tbody>
+                      </table>
+
+                      <p id=average></p>
+					</div>
+				</div>
+				</div>
+			</div>
+			</section>
 					<p id = "testing"></p>
                 	</div>
                 </div>
@@ -97,7 +153,6 @@
                   <ul>
                     <li><a href="callerAndcase.html">New Case</a></li>
                     <li><a href="closeCase.html">Close case</a></li>
-                    
                 
                   </ul>
                 </li>
@@ -110,6 +165,7 @@
                      <li><a href="viewCase.html">Inpect Case</a></li>
                   </ul>
                 </li>
+                
                 <li><a href="https://www.google.com">External Link</a></li>
                 <li><a href="index.html">Logout</a></li>
               </ul>
@@ -151,7 +207,6 @@
 
 <script src="functions.js"></script>
 <script>
-
 var firebaseConfig = {
     apiKey: "AIzaSyDibg-oYRpVXU9HqCAOLdxIpYXcZUPpAGM",
     authDomain: "geyser-74ddf.firebaseapp.com",
@@ -164,243 +219,237 @@ var firebaseConfig = {
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
   var db = firebase.firestore();
-  
+ 
 
 
-function cases()
+ 
+function geyserTemp()
 {
 	const display=document.querySelector("#testing");
-	var end =0
-	var start = 0;
-	var month = 0;
+	var range1 = 55;
+	var range2 = 65;
 	
-	var one =0;
-	var two =0;
-	var three =0;
-	var four =0;
-	var five =0;
-	var six =0;
-	var seven =0;
-	var eight =0;
-	var nine =0;
-	var ten =0;
-	var eleven =0;
-	var twelve =0;
-	
-	var one1 = "1";
-	var two1 ="2";
-	var three1 ="3";
-	var four1 ="4";
-	var five1 ="5";
-	var six1 ="6";
-	var seven1 ="7";
-	var eight1 ="8";
-	var nine1 ="9";
-	var ten1 ="10";
-	var eleven1 ="11";
-	var twelve1 ="12";
+	var lowest = 0;
+	var perfect = 0;
+	var highest = 0;
 	
 	
-	db.collection("caseDetails").get().then(function(querySnapshot)
+	db.collection("geyser").get().then(function(querySnapshot)
 	{
 		querySnapshot.forEach(function(doc)
 		{
-			var m = doc.data().incidentDate;
-			var search = m[4];
-			
-			for(var i =0; i<m.length; i++)
+			var m = doc.data().geyserTemp;
+			if(m >range1)
 			{
-			     if(m[i] == search)
-			     {
-				   start = i;
-				   break;
-			     }
-			
+				lowest++;
+				
+				var rows = "";
+				rows= "<tr><td>"+doc.data().caseID+"</td><td>"+doc.data().geyserTemp
+				+"</td><td>"+doc.data().capacity+"</td></tr>";
+				$( rows ).appendTo( "#itemList2 tbody" );
+				
+				
 			}
-			for(var j =0; j<m.length; j++)
+			else if(m <range2)
 			{
-			     if(m[j] == search)
-				 {
-				    end = j;
-				    
-				 }
-			
+				highest++;
+			}
+			else
+			{
+				perfect++;
 			}
 			
-			 month = m.slice(start+1, end);
-			
-			 if(month == one1)
-			 {
-			    one++;
-			 }
-			 if(month == two1)
-			 {
-			    two++;
-			 }
-			 if(month == three1)
-			 {
-			    three++;
-			 }
-			 if(month == four1)
-			 {
-			    four++;
-			 }
-			 if(month == five1)
-			 {
-			    five++;
-			 }
-			 if(month == six1)
-			 {
-			    six++;
-			 }
-			 if(month == seven1)
-			 {
-			    seven++;
-			 }
-			 if(month == eight1)
-			 {
-			    eight++;
-			 }
-			 if(month == nine1)
-			 {
-			    nine++;
-			 }
-			 if(month == ten1)
-			 {
-			    ten++;
-			 }
-			 if(month == eleven1)
-			 {
-			    eleven++;
-			 }
-			 if(month == twelve1)
-			 {
-			    twelve++;
-			 }
-			 
 			    
 			
 	   });
 	   var chart = new CanvasJS.Chart("chartContainer", 
 	   {
 		animationEnabled: true,
-		theme: "light2", // "light1", "light2", "dark1", "dark2"
+		theme: "light2", 
 		title:
 		{
-			text: "Number Of Cases per month"
-		},
+			text: "Geyser Temperature"
+	        },
 		axisY: 
 		{
-			title: "Number of cases"
+			title: "Number of geysers"
 		},
-		data: [{        
-		type: "column",  
-		showInLegend: true, 
-		legendMarkerColor: "grey",
-		legendText: "Month",
-		dataPoints: 
-		[      
-			{ y: one, label: "Jan" },
-			{ y: two,  label: "Feb" },
-			{ y: three,  label: "Mar" },
-			{ y: four,  label: "Apr" },
-			{ y: five,  label: "May" },
-			{ y: six, label: "June" },
-			{ y: seven,  label: "July" },
-			{ y: eight,  label: "Aug" },
-			{ y: nine,  label: "Sept" },
-			{ y: ten,  label: "Oct" },
-			{ y: eleven,  label: "Nov" },
-			{ y: twelve,  label: "Dec" }
-		]
-	}]
-});
-chart.render();
-    
+		data: 
+		[{        
+			type: "column",  
+			showInLegend: true, 
+			legendMarkerColor: "grey",
+			legendText: "Temperature in degrees celcius",
+			dataPoints: 
+			[      
+				{ y: lowest, label: "below 55 degrees" },
+				{ y: perfect,  label: "Between 55 and 65" },
+				{ y: highest,  label: "above 65" }
+			
+			]
+		}]
 	});
-
-
+	chart.render();   
+	});
 	
 	
 }
 function capacity()
 {
+	var one = 1;
+	var two=2;
+	var three=3;
+	var four = 4;
+	var five = 5;
 
-	var one1 = "50L";
-	var two1 = "100L";
-	var three1 = "150L";
-	var four1 = "200L";
-	var five1 = "250L";
+	var bad =0;
+	var good = 0;
+	var i =0;
+	var j =0;
+	var plumberCount=0;
+	var total = [];
+	var plumber1Count=0;
+	var plumber2Count=0;
+	var one = 1;
+	var two = 2;
+	var rating = 0;
+	var plum1 = [];
+	var q = 0;
+	var caseWorked1 = [];
+	var caseWorked2 = [];
+	var whenCaseOpened1 = [];
+	var whenCaseOpened2 = [];
+	var plum2 = [];
+	var r =0;
+	var whichPlumber = 0;
+	var whichPlumberCount = 0;
+	var caseNum2=[];
+	var caseNum1 =[];
 
-	var c1 = 0;
-	var c2 = 0;
-	var c3 = 0;
-	var c4 = 0;
-	var c5 = 0;
 
-db.collection("geyser").get().then(function(querySnapshot)
+	db.collection("feedback").get().then(function(querySnapshot)
 	{
 		querySnapshot.forEach(function(doc)
 		{
-			var m = doc.data().capacity;
+			var m = doc.data().rating;
 			
-			 if(m == one1)
+			
+			 
+			
+			/* if(m == one || m == two)
 			 {
-			    c1++;
+			     bad++;
 			 }
-			 if(m == two1)
+			 */
+			 if(m==three || m == four || m == five)
 			 {
-			    c2++;
-			 }
-			 if(m == three1)
-			 {
-			    c3++;
-			 }
-			 if(m== four1)
-			 {
-			    c4++;
-			 }
-			 if(m== five1)
-			 {
-			    c5++;
+			    good++;
 			 }
 			 
 			 
+			 
+			 var m = doc.data().rating;
+			
+			if(m == one)
+			{  
+				bad++;			
+				var p = doc.data().caseNumber;
+				caseNum1[j] = p;
+				db.collection("caseDetails").get().then(function(querySnapshot)
+				{
+				    
+					querySnapshot.forEach(function(doc)
+					{
+						var g = doc.data().caseID;
+						if(p == g)
+						{
+							 plum1[q] = doc.data().plumberID;
+							 caseWorked1[q] = doc.data().caseID;
+							 whenCaseOpened1[q] = doc.data().incidentDate;
+							 var rows = "";
+							 rows= "<tr><td>"+plum1[q]+"</td><td>"+caseWorked1[q]
+							 +"</td><td>"+whenCaseOpened1[q]+"</td></tr>";
+							 $( rows ).appendTo( "#itemList tbody" );
+							 q++;
+						}
+					});
+						
+				});
+				
+				j++;
+				
+			}
+			if(m == two)
+			{
+				bad++;
+				var p = doc.data().caseNumber;
+				caseNum2[j] = p;
+				db.collection("caseDetails").get().then(function(querySnapshot)
+				{
+				    
+					querySnapshot.forEach(function(doc)
+					{
+						var g = doc.data().caseID;
+						if(p == g)
+						{
+							plum2[r] = doc.data().plumberID;
+							caseWorked2[r] = doc.data().caseID;
+							whenCaseOpened2[r] = doc.data().incidentDate;
+							var rows = "";
+  	    						rows= "<tr><td>"+plum2[r]+"</td><td>"+caseWorked2[r]
+						        +"</td><td>"+whenCaseOpened2[r]+"</td></tr>";
+							$( rows ).appendTo( "#itemList tbody" );
+						         r++;
+						}
+			
+			
+					});
+	  
+				});
+				
+				j++;
+			}
+			
 			    
 			
-	   });
-	   var chart = new CanvasJS.Chart("chartContainer2", 
-	  {
+	   }); 
+	   
+	var chart = new CanvasJS.Chart("chartContainer2", 
+	{
 		animationEnabled: true,
-		theme: "light2", 
+		theme: "light2", // "light1", "light2", "dark1", "dark2"
 		title:
 		{
-			text: "Capacity of the geyser mostly preferred"
+			text: "User feedback"
 		},
-		axisY:
+		axisY: 
 		{
-			title: "Number of Geysers"
+			title: "Number of response"
 		},
-		data:
+		data: 
 		[{        
 			type: "column",  
 			showInLegend: true, 
 			legendMarkerColor: "grey",
-			legendText: "Liters",
+			legendText: "Response",
 			dataPoints: 
 			[      
-				{ y: c1, label: "50" },
-				{ y: c2,  label: "100" },
-				{ y: c3,  label: "150" },
-				{ y: c4,  label: "200" },
-				{ y: c5,  label: "250" }
+				{ y: bad, label: "Negative" },
+				{ y: good,  label: "Positive" }
 			
 			]
 		}]
-});
-chart.render();
+	});
+	chart.render();
+	  
 	    
 	});
+	
+	
+
+	
+	
+	
 }
 </script>
 </body>
