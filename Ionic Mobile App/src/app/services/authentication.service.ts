@@ -32,6 +32,7 @@ export class AuthenticationService {
   }
 
   sendImages(imagesToSend: any): Promise<Boolean> {
+    alert(JSON.stringify(imagesToSend));
     return this.http.post<string>(this.apiUrl, imagesToSend, this.httpOptions).toPromise().then(data => {
       var res = JSON.parse(data);
       alert(JSON.stringify(data));
