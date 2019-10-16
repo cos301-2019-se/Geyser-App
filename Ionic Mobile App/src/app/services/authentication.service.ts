@@ -33,7 +33,7 @@ export class AuthenticationService {
   sendImages(imagesToSend: any): Promise<Boolean> {
     return this.http.post<string>(this.apiUrl, imagesToSend, this.httpOptions).toPromise().then(data => {
       var res = JSON.parse(data);
-      if(res.errror == 'Invalid user') {
+      if(res.error == 'Invalid user') {
         console.log('Invalid user');
         return false;
       }
@@ -47,7 +47,7 @@ export class AuthenticationService {
   addgeyser(geyserToAdd: any): Promise<Boolean> {
     return this.http.post<string>(this.apiUrl, geyserToAdd, this.httpOptions).toPromise().then(data => {
       var res = JSON.parse(data);
-      if(res.errror == 'Invalid user') {
+      if(res.error == 'Invalid user') {
         console.log('Invalid user');
         return false;
       }
@@ -61,7 +61,7 @@ export class AuthenticationService {
   updateCase(caseToUpdate: any): Promise<Boolean> {
     return this.http.post<string>(this.apiUrl, caseToUpdate, this.httpOptions).toPromise().then(data => {
       var res = JSON.parse(data);
-      if(res.errror == 'Invalid user') {
+      if(res.error == 'Invalid user') {
         console.log('Invalid user');
         return false;
       }
@@ -75,7 +75,7 @@ export class AuthenticationService {
   updateUser(userToUpdate: any): Promise<Boolean> {
     return this.http.post<string>(this.apiUrl, userToUpdate, this.httpOptions).toPromise().then(data => {
       var res = JSON.parse(data);
-      if(res.errror == 'Invalid user') {
+      if(res.error == 'Invalid user') {
         console.log('Invalid user');
         return false;
       }
