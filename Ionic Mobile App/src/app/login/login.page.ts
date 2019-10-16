@@ -43,6 +43,7 @@ export class LoginPage implements OnInit {
   }
 
   loginUser(value: any){
+    
     this.authService.loginUser(value).then(successful => {
       if(successful) {
         this.router.navigate(['dashboard']);
@@ -53,5 +54,6 @@ export class LoginPage implements OnInit {
     }, err => {
       this.errorMessage = 'UserID or password is incorrect.';
     });
+
   }
 }

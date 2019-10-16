@@ -1,76 +1,113 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, DocumentReference, CollectionReference } from '@angular/fire/firestore';
-import * as crypto from 'crypto';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-export interface User {
-  userID: string;
-  password: string;
-  caseID: string;
+export interface user { 
+  result: string;
+  identifier: string;
+  caseToBeWorkedOn: string;
 }
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
 
-  private collectionRef: CollectionReference;
-  currentUser = {
-    userID: '',
-    caseID: ''
+  apiUrl: string = 'https://workflow-io.herokuapp.com/';
+  httpOptions = {
+    headers: new HttpHeaders({ 
+      'Content-Type': 'application/json; charset=utf-8'
+    })
   };
 
-  constructor(private afs: AngularFirestore) {
-    this.collectionRef = this.afs.firestore.collection('users');
-  }
+  currentUser = {
+    userID: '',
+    caseID: '',
+    identifier: '',
+  };
 
-  getUser(id: string): Promise<User> {
-    const docRef: DocumentReference = this.collectionRef.doc(id);
-    const user: User = {
-      userID : '',
-      password : '',
-      caseID : '',
-    };
-
-    return docRef.get().then(doc => {
-      if (doc.exists) {
-        const data = doc.data();
-        user.userID = id;
-        user.password = data.password;
-        user.caseID = data.caseToWorkOn;
-        return user;
-      } else {
-        return null;
-      }
-    });
-  }
-
-  checkPassword(pass: string, passToCheck: string): boolean {
-    return (pass === passToCheck);
+  constructor(private http: HttpClient) {
   }
 
   isUserloggedin(): boolean {
     return (this.currentUser.userID !== '');
   }
 
-  getCurrentUser(): any {
-    return this.currentUser;
+  sendImages(imagesToSend: any): Promise<Boolean> {
+    return this.http.post<string>(this.apiUrl, imagesToSend, this.httpOptions).toPromise().then(data => {
+      var res = JSON.parse(data);
+      if(res.errror == 'Invalid user') {
+        console.log('Invalid user');
+        return false;
+      }
+      return true;
+    }, err => {
+      console.log('API failed.');
+      return false;
+    });
   }
 
-  loginUser(userToLogin: any): Promise<boolean> {
-    return this.getUser(userToLogin.userID).then(user => {
-      if (user != null) {
-        //this checks the hashed password
-        var salted: string = userToLogin.password + "thisissalt";
-        var hashed: string = this.hash(salted);
-        const correctPass: boolean = this.checkPassword(user.password, hashed);
-        if (correctPass) {
-          this.currentUser.userID = user.userID;
-          this.currentUser.caseID = user.caseID;
-          return true;
-        }
+  addgeyser(geyserToAdd: any): Promise<Boolean> {
+    return this.http.post<string>(this.apiUrl, geyserToAdd, this.httpOptions).toPromise().then(data => {
+      var res = JSON.parse(data);
+      if(res.errror == 'Invalid user') {
+        console.log('Invalid user');
+        return false;
       }
-      console.log('How did you get here?');
+      return true;
+    }, err => {
+      console.log('API failed.');
       return false;
-    }).catch((err: Error) => {
-      console.log(err.message);
+    });
+  }
+
+  updateCase(caseToUpdate: any): Promise<Boolean> {
+    return this.http.post<string>(this.apiUrl, caseToUpdate, this.httpOptions).toPromise().then(data => {
+      var res = JSON.parse(data);
+      if(res.errror == 'Invalid user') {
+        console.log('Invalid user');
+        return false;
+      }
+      return true;
+    }, err => {
+      console.log('API failed.');
+      return false;
+    });
+  }
+
+  updateUser(userToUpdate: any): Promise<Boolean> {
+    return this.http.post<string>(this.apiUrl, userToUpdate, this.httpOptions).toPromise().then(data => {
+      var res = JSON.parse(data);
+      if(res.errror == 'Invalid user') {
+        console.log('Invalid user');
+        return false;
+      }
+      return true;
+    }, err => {
+      console.log('API failed.');
+      return false;
+    });
+  }
+
+
+  loginUser(userToLogin: any): Promise<Boolean> {
+    this.logOutUser();
+    const userDetails = {
+      type: 'appLogin',
+      userName: userToLogin.userID,
+      password: userToLogin.password
+    };
+
+    return this.http.post<string>(this.apiUrl, userDetails, this.httpOptions).toPromise().then(data => {
+      var res: user = JSON.parse(data);
+      if(res.result != 'Incorrect password') {
+        this.currentUser.caseID = res.caseToBeWorkedOn;
+        this.currentUser.identifier = res.identifier;
+        this.currentUser.userID = userDetails.userName
+        return true;
+      } else {
+        console.log('Incorrect password');
+        return false;
+      }
+    }, err => {
+      console.log('API failed.');
       return false;
     });
   }
@@ -78,13 +115,6 @@ export class AuthenticationService {
   logOutUser(): void {
     this.currentUser.caseID = '';
     this.currentUser.userID = '';
+    this.currentUser.identifier = '';
   }
-
-  //this hashes the password
-  hash(password: string): string {
-    var hash = crypto.createHash("sha256");
-    hash.update(password);
-    return hash.digest('hex');
-  }
-
 }
