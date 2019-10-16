@@ -60,7 +60,7 @@ export class CameraPage implements OnInit {
 
     this.camera.getPicture(options).then((imageData) => {
       this.image = 'data:image/jpeg;base64,' + imageData; // (window as any).Ionic.WebView.convertFileSrc(imageData);
-      this.imageData = 'data:image/jpeg;base64,' + imageData;
+      this.imageData = imageData; //'data:image/jpeg;base64,' + imageData;
       this.hasTakenImage = true;
     }, (err) => {
       alert('error ' + JSON.stringify(err));
