@@ -23,7 +23,6 @@ export class AuthenticationService {
     identifier: '',
   };
 
-
   constructor(private http: HttpClient) {
   }
 
@@ -32,10 +31,8 @@ export class AuthenticationService {
   }
 
   sendImages(imagesToSend: any): Promise<Boolean> {
-    alert(JSON.stringify(imagesToSend));
     return this.http.post<string>(this.apiUrl, imagesToSend, this.httpOptions).toPromise().then(data => {
       var res = JSON.parse(data);
-      alert(JSON.stringify(data));
       if(res.errror == 'Invalid user') {
         console.log('Invalid user');
         return false;
@@ -43,7 +40,6 @@ export class AuthenticationService {
       return true;
     }, err => {
       console.log('API failed.');
-      alert(JSON.stringify(err));
       return false;
     });
   }
@@ -121,5 +117,4 @@ export class AuthenticationService {
     this.currentUser.userID = '';
     this.currentUser.identifier = '';
   }
-
 }
