@@ -435,6 +435,7 @@ function updateUser(body)
 	}
 	var param=body.param;
 	var user=body.user;
+	user=user.toLowerCase();
 	var val=body.newVal;
 	db.collection("users").doc(user).update(
 	{
@@ -1040,14 +1041,19 @@ function appLogin(body)
 {
 	var user=body.userName;
 	console.log(user);
+	user=user.toLowerCase();
 	return db.collection('users').doc(user).get().then(doc=>{
 
 		
 	//console.log(doc.exists);
 	if(!doc.exists)
 	{
+		console.log("entered fake");
+		var nada='';
 		var returnData={
-			result: 'failed'
+			result: 'Incorrect password',
+			identifier:nada,
+				caseToBeWorkedOn:nada
 		}
 		return JSON.stringify(returnData);
 	}else
