@@ -32,3 +32,13 @@ $RECYCLE.BIN/
 .DS_Store
 Thumbs.db
 UserInterfaceState.xcuserstate
+
+# Local Node Files
+Ionic Mobile App/node.exe
+Ionic Mobile App/npx
+Ionic Mobile App/npx.cmd
+Ionic Mobile App/npm
+Ionic Mobile App/npm.cmd
+Ionic Mobile App/nodevars.bat
+Ionic Mobile App/node_perfctr_provider.man
+Ionic Mobile App/node_etw_provider.man

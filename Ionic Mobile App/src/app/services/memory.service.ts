@@ -6,6 +6,9 @@ export interface BarcodeType {
 }
 
 export interface GeyserImages {
+  type: string;
+  identifier: string;
+  caseID: string;
   geyser: any;
   pressureControlValve: any;
   vacuumBreaker: any;
@@ -13,32 +16,15 @@ export interface GeyserImages {
   safety: any;
 }
 
-export interface Details {
-  barcode: string;
-  capacity: string;
-  model: string;
-  manufacturer: string;
-  insurance: string;
-  caseID: string;
-}
-
 @Injectable({
   providedIn: 'root'
 })
 export class MemoryService {
 
-  private barcode: BarcodeType;
+  barcode: BarcodeType;
   pictures: GeyserImages;
 
-  constructor() { }
-
-  setBarcode(data: BarcodeType) {
-    this.barcode = data;
-  }
-
-  getBarcode() {
-    return this.barcode;
-  }
+  constructor() {}
 
   setPicturesData(data: GeyserImages) {
     this.pictures = data;

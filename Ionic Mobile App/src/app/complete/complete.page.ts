@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-complete',
@@ -7,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CompletePage implements OnInit {
 
-  constructor() { }
+  constructor(
+    private router: Router,
+    private authService: AuthenticationService
+  ) { }
 
   ngOnInit() {
+  }
+
+  logout() {
+    this.authService.logOutUser();
+    this.router.navigate(['login']);
   }
 
 }
