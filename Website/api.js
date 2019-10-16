@@ -1,8 +1,9 @@
-
-
 var crypto=require("crypto");
+var fs=require('fs');
+MurmurHash3 = require('./imurmurhash');
 var express=require("express");
 var app=express();
+const {Storage}=require('@google-cloud/storage');
 var server=require("http").createServer(app);
 var os=require("os");
 var bodyParser = require('body-parser');
@@ -11,7 +12,16 @@ var rp = require('request-promise');
 var fs = require('fs') 
 var limit=0;
 var arr = {};
-const PORT=4000;
+const PORT=process.env.PORT || 4000;
+
+const storage=new Storage(
+	{
+		projectId:"geyser-74ddf",
+		keyFilename:"geyser-74ddf-firebase-adminsdk-wooqq-a05e3465e3.json"
+	});
+const bucket=storage.bucket("geyser-74ddf.appspot.com");
+
+
 var firebase=require("firebase");
 require("firebase/firestore");
 var firebaseConfig = {
@@ -33,7 +43,8 @@ console.log("Listening on port "+PORT);
 server.listen(PORT);
 
 
-app.use(bodyParser.json()); 
+app.use(bodyParser.json({limit: '200mb'}));
+app.use(bodyParser.urlencoded({limit: '200mb', extended: true}));
 app.use(function(req,res,next){
 	res.header("Access-Control-Allow-Origin","*");
 	res.header("Access-Control-Allow-Headers","*");
@@ -41,7 +52,7 @@ app.use(function(req,res,next){
 });
 app.post("/",async function(req,res){
 	console.log("request received");
-	console.log(req.body);
+	//console.log(req.body);
 	
 	res.json(await handle(req));
 	res.end();
@@ -197,7 +208,71 @@ async function handle(req)
 		console.log("Manufacturer search request");
 		return retrieveBrandSearch(req.body);
 	}
-	retrieveBrandSearch
+	if(req.body.type=="sendImages")
+	{
+		console.log("Image send request");
+		return sendImages(req.body);
+	}
+	if(req.body.type=="retrieveImages")
+	{
+		console.log("Image retrieval request");
+		return retrieveImages(req.body);
+	}
+	if(req.body.type=="updatePlumberCase")
+	{
+		console.log("update Plumber Case");
+		return updatePlumberCase(req.body);
+	}
+	if(req.body.type=="addReview")
+	{
+		console.log("Adding review of case");
+		return addReview(req.body);
+	}
+	if(req.body.type=="appLogin")
+	{
+		console.log("App login");
+		return appLogin(req.body);
+	}
+	if(req.body.type=="searchReview")
+	{
+		console.log("search Reviews");
+		return searchReview(req.body);
+	}
+	if(req.body.type=="closeCasesSearch")
+	{
+		console.log("Search for cases to close");
+		return closeCasesSearch(req.body);
+	}
+	if(req.body.type=="closeCases")
+	{
+		console.log("Closing Case");
+		return closeCases(req.body);
+	}
+	if(req.body.type=="specificCase")
+	{
+		console.log("Specific Case INfo");
+		return specificCase(req.body);
+	}
+	if(req.body.type=="specificCaseGeyser")
+	{
+		console.log("Specific Geyser INfo");
+		return specificCaseGeyser(req.body);
+	}
+	if(req.body.type=="specificCaseReview")
+	{
+		console.log("Specific Case Review");
+		return specificCaseReview(req.body);
+	}
+	if(req.body.type=="addressCount")
+	{
+		console.log("count for risk");
+		return addressCount(req.body);
+	}
+
+
+
+
+	//retrieveBrandSearch
 }
 
 /*
@@ -232,42 +307,49 @@ function addUser(body)
 		return "false";
 	}
 	var passSalt=genSalt();
+
 	var user=body.user;
 	var pass=body.pass;
-	/*console.log(pass);
-	console.log(user);
-	console.log(salt);*/
+	
 	var type=body.userType;
 	
-	var finalPass=pass+salt;
-	finalPass=toUpperCase(hash(pass));
+	var finalPass=pass+passSalt;
+	//console.log(finalPass);
+	finalPass=hash(finalPass);
+	finalPass=finalPass.toUpperCase();
 	var useIdentifier=generateIdentifier();
 	//console.log(finalPass);
 	if(type=="plumber")
 	{
 		var caseToWork=body.case;
-	db.collection("users").doc(user).set(
-	{
-  	identifier:useIdentifier,
-	caseToWorkOn:caseToWork,
-	password:finalPass,
-	salt:passSalt,
-	userType:type
-	}
-	);
-	}
-	if(type=="admin")
-	{
 		db.collection("users").doc(user).set(
+		{
+			identifier:useIdentifier,
+			caseToWorkOn:"none",
+			password:finalPass,
+			salt:passSalt,
+			userType:type
+		});
+	}
+	if(type=="admin"||type=="agent"||type=="guest")
 	{
-  	identifier:useIdentifier,
-	password:finalPass,
-	salt:passSalt,
-	userType:type
+		var temp=body.pass+passSalt;
+		var ret=crypto.createHash("sha256");
+		ret.update(temp);
+		passwor= ret.digest('hex');
+		db.collection("users").doc(user).set(
+		{
+	  	identifier:useIdentifier,
+		password:passwor,
+		salt:passSalt,
+		userType:type
+		});	
 	}
-	);	
-	}
-	return "true";
+		var returnData={
+		result:'success'
+	};
+	updateID();
+	return JSON.stringify(returnData);
 
 
 }
@@ -284,12 +366,19 @@ function removeUser(body)
 	if(!validateIdentifier(body))
 	{
 		console.log("Invalid user detected "+body.identifier);
-		return "false";
+			var returnData={
+		error:'Invalid user'
+	};
+	return JSON.stringify(returnData);
 	}
 	var user=body.user;
 	db.collection("users").doc(user).delete();
-	return "true";
+		var returnData={
+		result:'success'
+	};
+	return JSON.stringify(returnData);
 }
+
 function genSalt()
 {
 	var result="";
@@ -300,10 +389,12 @@ function genSalt()
 		result=result+chars.charAt(Math.floor(Math.random()*len));
 	}
 	return result;
+	// return "thisissalt";
 }
+
 function generateIdentifier()
 {
-		var result="";
+	var result="";
 	var chars="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 	var len=chars.length;
 	for(var i=0; i<10;i=i+1)
@@ -313,8 +404,11 @@ function generateIdentifier()
 	return result
 
 }
+
 function hash(password)
 {
+	// var hash = MurmurHash3(password, 1);
+	// return hash.result();
 	var hash=crypto.createHash("sha256");
 	hash.update(password);
 	return hash.digest('hex');
@@ -334,7 +428,10 @@ function updateUser(body)
 	if(!validateIdentifier(body))
 	{
 		console.log("Invalid user detected "+body.identifier);
-		return "false";
+			var returnData={
+		error:'Invalid user'
+	};
+	return JSON.stringify(returnData);
 	}
 	var param=body.param;
 	var user=body.user;
@@ -344,7 +441,10 @@ function updateUser(body)
 		[param]:val
 	}
 		);
-	return "true";
+		var returnData={
+		result:'success'
+	};
+	return JSON.stringify(returnData);
 	
 
 }
@@ -367,15 +467,19 @@ function addEmployee(body)
 	if(!validateIdentifier(body))
 	{
 		console.log("Invalid user detected "+body.identifier);
-		return "false";
+			var returnData={
+		error: 'Invalid user '+body.identifier
+		};
+		return JSON.stringify(returnData);
 	}
-	var id=body.id;
-	var dob=body.dob;
-	var addr=body.addr;
-	var cellnum=body.cellnum;
-	var gen=body.gen;
-	var idnum=body.idnum;
-	var userName=body.name;
+	//console.log(body);
+	var id=body.plumberID;
+	var dob=body.DateOfBirth;
+	var addr=body.address;
+	var cellnum=body.cellNumber;
+	var gen=body.gender;
+	var idnum=body.idNumber;
+	var userName=body.fullName;
 	
 
 	db.collection("employeesDetails").doc(id).set(
@@ -391,7 +495,10 @@ function addEmployee(body)
 
 	}
 	);
-	return "true";
+		var returnData={
+		result:'success'
+	};
+	return JSON.stringify(returnData);
 }
 /*
 request: 
@@ -407,11 +514,17 @@ function removeEmployee(body)
 	if(!validateIdentifier(body))
 	{
 		console.log("Invalid user detected "+body.identifier);
-		return "false";
+			var returnData={
+		error: 'Invalid user'
+	};
+	return JSON.stringify(returnData);
 	}
 	var id=body.id;
-	db.collection("employeesDetails").doc(id).delete();
-	return "true";
+	db.collection("users").doc(id).delete();
+		var returnData={
+		result:'success'
+	};
+	return JSON.stringify(returnData);
 
 }
 /*
@@ -429,7 +542,10 @@ function updateEmployee(body)
 	if(!validateIdentifier(body))
 	{
 		console.log("Invalid user detected "+body.identifier);
-		return "false";
+			var returnData={
+		error: 'Invalid user'
+	};
+	return JSON.stringify(returnData);
 	}
 	var param=body.param;
 	var id=body.id;
@@ -437,7 +553,10 @@ function updateEmployee(body)
 	db.collection("employeesDetails").doc(id).update({
 		[param]:val
 	});
-	return "true";
+		var returnData={
+		result:'success'
+	};
+	return JSON.stringify(returnData);
 
 }
 /*
@@ -445,10 +564,10 @@ request:
 {
 	identifier: identifier,
 	type: addGeyser,
-	num: geyser number,
+	barcode: geyser number,
 	cap: geyser capacity,
 	caseid: case id,
-	path: image path,
+	geyserTemp: temp,
 	insure: insured?,
 	manu: manufacturer,
 	mod: model number
@@ -460,27 +579,34 @@ function addGeyser(body)
 	if(!validateIdentifier(body))
 	{
 		console.log("Invalid user detected "+body.identifier);
-		return "false";
+			var returnData={
+		error: 'Invalid user'
+	};
+	return JSON.stringify(returnData);
 	}
-	var geysernum=body.num;
+	var code=body.barcode;
 	var cap=body.cap;
 	var caseid=body.caseid;
-	var path=body.path;
+	var temp=body.geyserTemp;
 	var insure=body.insure;
 	var manu=body.manu;
 	var mod=body.mod;
-	var firstName=body.firstName;
-	var secondName=body.secondName;
+	var geysernum=code+"-"+caseid;
 	db.collection("geyser").doc(geysernum).set({
+		barcode: code,
 		capacity:cap,
 		caseID:caseid,
-		imagePath:path,
 		insurance:insure,
 		manufacturer:manu,
-		model:mod
+		model:mod,
+		geyserTemp:temp
 
 	});
-	return "true";
+	var returnData={
+		result:'success'
+	};
+	console
+	return JSON.stringify(returnData);
 
 }
 /*
@@ -496,11 +622,17 @@ function removeGeyser(body)
 	if(!validateIdentifier(body))
 	{
 		console.log("Invalid user detected "+body.identifier);
-		return "false";
+			var returnData={
+		error: 'Invalid user'
+	};
+	return JSON.stringify(returnData);
 	}
 	var number=body.number;
 	db.collection("geyser").doc(number).delete();
-	return "true";
+		var returnData={
+		result:'success'
+	};
+	return JSON.stringify(returnData);
 
 }
 /*
@@ -518,7 +650,10 @@ function updateGeyser(body)
 	if(!validateIdentifier(body))
 	{
 		console.log("Invalid user detected "+body.identifier);
-		return "false";
+		var returnData={
+		error:'Invalid user'
+	};
+	return JSON.stringify(returnData);
 	}
 	var param=body.param;
 	var id=body.id;
@@ -526,7 +661,10 @@ function updateGeyser(body)
 	db.collection("geyser").doc(id).update({
 		[param]:val
 	});
-	return "true";
+		var returnData={
+		result:'success'
+	};
+	return JSON.stringify(returnData);
 
 }
 
@@ -554,18 +692,23 @@ function addCase(body)
 	if(!validateIdentifier(body))
 	{
 		console.log("Invalid user detected "+body.identifier);
-		return "false";
+		var returnData={
+		error:'Invalid user'
+	};
+	return JSON.stringify(returnData);
 	}
-	var id=body.id;
-	var addr=body.addr;
-	var caller=body.caller;
-	var closedby=body.closedby;
-	var closeddate=body.closeddate;
-	var description=body.description;
-	var openedby=body.openedby;
-	var status=body.status;
-	var date=body.date;
-	var plumid=body.plumid;
+
+	console.log(body);
+	var id=body.caseID;
+	var addr=body.addressOfIncident;
+	var caller=body.callerID;
+	var closedby=body.caseClosedBy;
+	var closeddate=body.caseClosedDate;
+	var description=body.caseDescription;
+	var openedby=body.caseOpenedBy;
+	var status=body.caseStatus;
+	var date=body.incidentDate;
+	var plumid=body.plumberID;
 	db.collection("caseDetails").doc(id).set({
 		addressOfIncident:addr,
 		callerID:caller,
@@ -579,7 +722,10 @@ function addCase(body)
 		plumberID:plumid
 		
 	});
-	return "true";
+		var returnData={
+		result:'success'
+	};
+	return JSON.stringify(returnData);
 }
 /*
 request:
@@ -594,11 +740,17 @@ function removeCase(body)
 	if(!validateIdentifier(body))
 	{
 		console.log("Invalid user detected "+body.identifier);
-		return "false";
+		var returnData={
+		error:'Invalid user'
+	};
+	return JSON.stringify(returnData);
 	}
 	var id=body.id;
 	db.collection("caseDetails").doc(id).delete();
-	return "true";
+		var returnData={
+		result:'success'
+	};
+	return JSON.stringify(returnData);
 }
 /*
 request:
@@ -615,7 +767,10 @@ function updateCase(body)
 	if(!validateIdentifier(body))
 	{
 		console.log("Invalid user detected "+body.identifier);
-		return "false";
+		var returnData={
+		error:'Invalid user'
+	};
+	return JSON.stringify(returnData);
 	}
 	var param=body.param;
 	var id=body.id;
@@ -623,7 +778,10 @@ function updateCase(body)
 	db.collection("caseDetails").doc(id).update({
 		[param]:val
 	});
-	return "true";
+		var returnData={
+		result:'success'
+	};
+	return JSON.stringify(returnData);
 }
 
 /*
@@ -648,17 +806,21 @@ function addCaller(body)
 	if(!validateIdentifier(body))
 	{
 		console.log("Invalid user detected "+body.identifier);
-		return "false";
+		var returnData={
+		error:'Invalid user'
+	};
+	return JSON.stringify(returnData);
 	}
-	var id=body.id;
-	var addr=body.addr;
-	var callback=body.callback;
-	var cellnum=body.cellnum;
-	var client=body.client;
-	var callername=body.callername;
-	var callreason=body.callreason;
-	var servtype=body.servtype;
-	var callersurname=body.callersurname;
+	console.log(body);
+	var id=body.callerID;
+	var addr=body.address;
+	var callback=body.callBackNumber;
+	var cellnum=body.cellNumber;
+	var client=body.clientType;
+	var callername=body.name;
+	var callreason=body.reason;
+	var servtype=body.serviceType;
+	var callersurname=body.surname;
 	db.collection("callerDetails").doc(id).set({
 		address:addr,
 		callBackNumber:callback,
@@ -667,9 +829,13 @@ function addCaller(body)
 		clientType:client,
 		name:callername,
 		serviceType:servtype,
-		surname:callersurname
+		surname:callersurname,
+		reason:callreason
 	});
-	return "true";
+		var returnData={
+		result:'success'
+	};
+	return JSON.stringify(returnData);
 }
 /*
 request:
@@ -684,12 +850,17 @@ function removeCaller(body)
 	if(!validateIdentifier(body))
 	{
 		console.log("Invalid user detected "+body.identifier);
-		return "false";
+		var returnData={
+		error:'Invalid user'
+	};
+	return JSON.stringify(returnData);
 	}
 	var id=body.id;
 	db.collection("callerDetails").doc(id).delete();
-	return "true";
-}
+		var returnData={
+		result:'success'
+	};
+	return JSON.stringify(returnData);}
 /*
 request:
 {
@@ -705,7 +876,10 @@ function updateCaller(body)
 	if(!validateIdentifier(body))
 	{
 		console.log("Invalid user detected "+body.identifier);
-		return "false";
+		var returnData={
+		error:'Invalid user'
+	};
+	return JSON.stringify(returnData);
 	}
 	var param=body.param;
 	var id=body.id;
@@ -713,7 +887,10 @@ function updateCaller(body)
 	db.collection("callerDetails").doc(id).update({
 		[param]:val
 	});
-	return "true";	
+		var returnData={
+		result:'success'
+	};
+	return JSON.stringify(returnData);	
 }
 /*
 request: 
@@ -730,23 +907,24 @@ function addAgent(body)
 	if(!validateIdentifier(body))
 	{
 		console.log("Invalid user detected "+body.identifier);
-		return "false";
+		var returnData={
+		error:'Invalid user'
+	};
+
+		return JSON.stringify(returnData);
 	}
-	var id=body.id;
-	var agentname=body.agentname;
-	var agentpass=body.agentpass;
-	var userIdentifier=generateIdentifier();
-	var passSalt=genSalt();
-	agentpass=agentpass+passSalt;
-	agentpass=hash(agentpass);
+
+	var id=body.agentID;
+	var agentname=body.agentName;
+	
 	db.collection("agentCredentials").doc(id).set({
-		identifier:userIdentifier,
 		agentID:id,
 		name:agentname,
-		password:agentpass,
-		salt:passSalt
 	});
-	return "true";
+		var returnData={
+		result:'success'
+	};
+	return JSON.stringify(returnData);
 }
 /*
 request:
@@ -761,11 +939,17 @@ function removeAgent(body)
 	if(!validateIdentifier(body))
 	{
 		console.log("Invalid user detected "+body.identifier);
-		return "false";
+		var returnData={
+		error:'Invalid user'
+	};
+	return JSON.stringify(returnData);
 	}
 	var id=body.id;
 	db.collection("agentCredentials").doc(id).delete();
-	return "true";
+		var returnData={
+		result:'success'
+	};
+	return JSON.stringify(returnData);
 
 }
 /*
@@ -783,7 +967,10 @@ function updateAgent(body)
 	if(!validateIdentifier(body))
 	{
 		console.log("Invalid user detected "+body.identifier);
-		return "false";
+		var returnData={
+		error:'Invalid user'
+	};
+	return JSON.stringify(returnData);
 	}
 	var param=body.param;
 	var id=body.id;
@@ -791,7 +978,10 @@ function updateAgent(body)
 	db.collection("agentCredentials").doc(id).update({
 		[param]:val
 	});
-	return "true";
+		var returnData={
+		result:'success'
+	};
+	return JSON.stringify(returnData);
 }
 
 /*
@@ -805,11 +995,12 @@ for both login functions
 function login(body)
 {
 	var user=body.userName;
+	user=user.toLowerCase();
 	console.log(user);
 	return db.collection('users').doc(user).get().then(doc=>{
 
 		
-	console.log(doc.exists);
+	//console.log(doc.exists);
 	if(!doc.exists)
 	{
 		var returnData={
@@ -821,9 +1012,12 @@ function login(body)
 		var data=doc.data();
 		var pass=body.password;
 		pass=pass+data.salt;
-		pass=hash(pass);
+		var hash=crypto.createHash("sha256");
+		hash.update(pass);
+		pass= hash.digest('hex');
+	//for now
 		pass=pass.toUpperCase();
-		if(pass==data.password)
+		if(pass==data.password.toUpperCase())
 		{
 			var returnData={
 				identifier:data.identifier,
@@ -838,39 +1032,59 @@ function login(body)
 			return JSON.stringify(returnData);
 		}
 	}
-});
+	});
 }
 
 
-function agentLogin(body)
+function appLogin(body)
 {
 	var user=body.userName;
-	var record=db.collection('agentCredentials').doc(user);
-	if(!record.exists)
+	console.log(user);
+	return db.collection('users').doc(user).get().then(doc=>{
+
+		
+	//console.log(doc.exists);
+	if(!doc.exists)
 	{
 		var returnData={
-			Error: 'User does not exist'
+			result: 'failed'
 		}
 		return JSON.stringify(returnData);
 	}else
 	{
-		var data=record.data();
+		var data=doc.data();
 		var pass=body.password;
 		pass=pass+data.salt;
-		pass=hash(pass);
-		if(pass==data.password)
+		var hash=crypto.createHash("sha256");
+		hash.update(pass);
+		pass= hash.digest('hex');
+	//for now
+		pass=pass.toUpperCase();
+		if(pass==data.password.toUpperCase())
 		{
 			var returnData={
+				result: 'success',
 				identifier:data.identifier,
-				userType: 'agent'
+				caseToBeWorkedOn: data.caseToWorkOn
 			}
 			return JSON.stringify(returnData);
 		}
+		else{
+			var res= 'Incorrect password';
+			var nada ='';
+			var returnData={
+				result: res,
+				identifier:nada,
+				caseToBeWorkedOn:nada			}
+			return JSON.stringify(returnData);
+		}
 	}
+	});
 }
 
 function validateIdentifier(body)
 {
+
 	var id=body.identifier;
 	console.log(id);
 	
@@ -883,7 +1097,7 @@ function validateIdentifier(body)
 		}
 	}
 	
-return false;	
+	return false;	
 }
 
 /*
@@ -926,6 +1140,7 @@ function retrieveCaseID(body)
 {
 	identifier: identifier,
 	type:retrieveGraph
+	should
 }*/
 function retrieveGraphData(body)
 {
@@ -973,10 +1188,10 @@ function retrieveGraphData(body)
 					end=j;
 				}
 			}
-			console.log(m);
+			//console.log(m);
 
 			month=m.slice(start+1,end);
-			console.log(month);
+			//console.log(month);
 			if(month=="1")
 			{
 				Jan++;
@@ -1027,7 +1242,7 @@ function retrieveGraphData(body)
 			}
 
 		});
-		console.log(Jan);
+		//console.log(Jan);
 			var returnData={
 		January:Jan,
 		February:Feb,
@@ -1073,12 +1288,12 @@ function retrieveCaseSearch(body)
 	{
 		querySnapshot.forEach(function(doc)
 		{
-			console.log(doc.data());
+			//console.log(doc.data());
 			if(id == doc.data().plumberID){
 				console.log("entry found");
 				var row={
 					caseID:doc.data().caseID,
-					incidentDat:doc.data().incidentDate,
+					incidentDate:doc.data().incidentDate,
 					caseStatus: doc.data().caseStatus,
 					caseDescription:doc.data().caseDescription,
 					addressOfIncident:doc.data().addressOfIncident,
@@ -1112,12 +1327,12 @@ function retrieveAgentSearch(body)
 	{
 		querySnapshot.forEach(function(doc)
 		{
-			console.log(doc.data());
+			//console.log(doc.data());
 			if(id == doc.data().caseOpenedBy){
 				console.log("entry found");
 				var row={
 					caseID:doc.data().caseID,
-					incidentDat:doc.data().incidentDate,
+					incidentDate:doc.data().incidentDate,
 					caseStatus: doc.data().caseStatus,
 					caseDescription:doc.data().caseDescription,
 					addressOfIncident:doc.data().addressOfIncident,
@@ -1151,7 +1366,7 @@ function retrieveCapacitySearch(body)
 	{
 		querySnapshot.forEach(function(doc)
 		{
-			console.log(doc.data());
+			//console.log(doc.data());
 			if(id == doc.data().capacity){
 				console.log("entry found");
 				var row={
@@ -1187,7 +1402,7 @@ function retrieveBrandSearch(body)
 	{
 		querySnapshot.forEach(function(doc)
 		{
-			console.log(doc.data());
+			//console.log(doc.data());
 			if(id == doc.data().manufacturer){
 				console.log("entry found");
 				var row={
@@ -1204,3 +1419,590 @@ function retrieveBrandSearch(body)
 		return JSON.stringify(returnData);
 	});
 }
+/*
+{
+	type:sendImages,
+	identifier: userid,
+	caseID: id,
+    geyser: any;
+    pressureControlValve: any;
+    vacuumBreaker: any;
+    dripTray: any;
+    safety: any;
+}*/
+function sendImages(body)
+{
+	if(!validateIdentifier(body))
+	{
+		console.log("Invalid user");
+		var returnData={
+			Error: "Invalid User"
+		}
+		return JSON.stringify(returnData);
+	}
+	var geyserImage="geyser.jpg";
+	var pressureImage="pressureControlValve.jpg";
+	var vacuumImage="vacuumBreaker.jpg";
+	var dripImage="dripTray.jpg";
+	var safetyImage="saftey.jpg";
+	base64decode(body.geyser,geyserImage);
+	base64decode(body.pressureControlValve,pressureImage);
+	base64decode(body.vacuumBreaker,vacuumImage);
+	base64decode(body.dripTray,dripImage);
+	base64decode(body.safety,safetyImage);
+	var geyserOpts={
+		destination:'images/'+body.caseID+'/'+geyserImage,
+		metadata:{
+			contentType:'image/jpeg'
+		}
+
+	};
+	var pressureOpts={
+		destination:'images/'+body.caseID+'/'+pressureImage,
+		metadata:{
+			contentType:'image/jpeg'
+		}
+
+	};
+	var vacuumOpts={
+		destination:'images/'+body.caseID+'/'+vacuumImage,
+		metadata:{
+			contentType:'image/jpeg'
+		}
+
+	};
+	var dripOpts={
+		destination:'images/'+body.caseID+'/'+dripImage,
+		metadata:{
+			contentType:'image/jpeg'
+		}
+
+	};
+	var safetyOpts={
+		destination:'images/'+body.caseID+'/'+safetyImage,
+		metadata:{
+			contentType:'image/jpeg'
+		}
+
+	};
+	bucket.upload(geyserImage,geyserOpts,function(err,file){
+		if(err)
+		{
+			console.log(err);
+			returnData={
+				error: "failed"
+			};
+			return JSON.stringify(returnData);
+		}
+	});
+	bucket.upload(pressureImage,pressureOpts,function(err,file){
+		if(err)
+		{
+			console.log(err);
+			returnData={
+				error: "failed"
+			};
+			return JSON.stringify(returnData);
+		}
+	});
+	bucket.upload(vacuumImage,vacuumOpts,function(err,file){
+		if(err)
+		{
+			console.log(err);
+			returnData={
+				error: "failed"
+			};
+			return JSON.stringify(returnData);
+		}
+	});
+	bucket.upload(dripImage,dripOpts,function(err,file){
+		if(err)
+		{
+			console.log(err);
+			returnData={
+				error: "failed"
+			};
+			return JSON.stringify(returnData);
+		}
+	});
+	bucket.upload(safetyImage,safetyOpts,function(err,file){
+		if(err)
+		{
+			console.log(err);
+			returnData={
+				error: "failed"
+			};
+			return JSON.stringify(returnData);
+		}
+	});
+	/*
+	storage.bucket().upload(geyserImage,geyserOpts);
+	storage.bucket().upload(pressureImage,pressureOpts);
+	storage.bucket().upload(vacuumImage,vacuumOpts);
+	storage.bucket().upload(dripImage,dripOpt);
+	storage.bucket().upload(safetyImage,safetyOpts);*/
+
+
+	returnData=
+	{
+		result: 'completed'
+	};
+	return JSON.stringify(returnData);
+}
+/*
+{
+	type:retrieveImages,
+	identifier: userid,
+	caseID: id
+}
+*/
+async function retrieveImages(body)
+{
+	if(!validateIdentifier(body))
+	{
+		console.log("Invalid user");
+		var returnData={
+			Error: "Invalid User"
+		}
+		return JSON.stringify(returnData);
+	}
+	var geyserImage="images/"+body.caseID+"/geyser.jpg";
+	var pressureImage="images/"+body.caseID+"/pressureControlValve.jpg";
+	var vacuumImage="images/"+body.caseID+"/vacuumBreaker.jpg";
+	var dripImage="images/"+body.caseID+"/dripTray.jpg";
+	var safetyImage="images/"+body.caseID+"/saftey.jpg";
+	var geyserOpts={destination:"geyser.jpg"};
+	var pressureOpts={destination:"pressureControlValve.jpg"};
+	var vacuumOpts={destination:"vacuumBreaker.jpg"};
+	var dripOpts={destination:"dripTray.jpg"};
+	var safetyOpts={destination:"safety.jpg"};
+	await bucket.file(geyserImage).download(geyserOpts);
+	await bucket.file(pressureImage).download(pressureOpts);
+	await bucket.file(vacuumImage).download(vacuumOpts);
+	await bucket.file(dripImage).download(dripOpts);
+	await bucket.file(safetyImage).download(safetyOpts);
+	var geyser64=base64encode("geyser.jpg");
+	var pressure64=base64encode("pressureControlValve.jpg");
+	var vacuum64=base64encode("vacuumBreaker.jpg");
+	var drip64=base64encode("dripTray.jpg");
+	var safety64=base64encode("safety.jpg");
+	var returnData={
+		geyser:geyser64,
+		pressure:pressure64,
+		vacuum:vacuum64,
+		drip:drip64,
+		safety:safety64
+	}
+	return JSON.stringify(returnData);
+}
+
+function base64decode(decodeString,filename)
+{
+	var buff=new Buffer(decodeString,'base64');
+	fs.writeFileSync(filename,buff);
+}
+
+function base64encode(filename)
+{
+	var buff=fs.readFileSync(filename);
+	return new Buffer(buff).toString('base64');
+}
+
+function updateID()
+{
+	idc=0;
+	db.collection("users").get().then(querySnapshot=>
+	{
+		querySnapshot.forEach(function(doc)
+		{
+			var ID=doc.data().identifier;
+			array[idc]=ID;
+			idc++;
+		});
+
+		
+	});
+}
+
+function closeCases(body)
+{
+	if(!validateIdentifier(body))
+	{
+		console.log("Invalid user");
+		var returnData={
+			Error: "Invalid User"
+		}
+		return JSON.stringify(returnData);
+	}
+	var id=body.identifier;
+	var casea=body.case1;
+	var com = "completed";
+	var agent;
+	var date=body.date;
+	  var u="unknown";
+	  db.collection("users").get().then(function(querySnapshot)
+	{
+		querySnapshot.forEach(function(doc)
+		{
+			if(id==doc.data().identifier)
+			{
+			   
+				agent=doc.id;
+			}
+	   });
+		
+	});
+	  var c=0;
+	db.collection("caseDetails").get().then(function(querySnapshot)
+	{
+		querySnapshot.forEach(function(doc)
+		{
+			if(com==doc.data().caseStatus&& u==doc.data().caseClosedBy &&casea==doc.data().caseID)
+			{
+			   c++;
+				db.collection("caseDetails").doc(doc.id).update({caseClosedBy: agent, caseClosedDate :date, caseStatus : "closed"  });
+			}
+	   });
+		
+	});
+	if(c!=0)
+	{
+		var returnData={
+		result:'success'
+		};
+		return JSON.stringify(returnData);
+	}
+	else
+	{
+		var returnData={
+		result:'failed'
+		};
+		return JSON.stringify(returnData + ' '+ agent);
+	}
+
+}
+
+function addReview(body)
+{
+	if(!validateIdentifier(body))
+	{
+		console.log("Invalid user detected "+body.identifier);
+		var returnData={
+			Error: "Invalid User"
+		}
+		return JSON.stringify(returnData);
+	}
+	var id=body.id;
+	var rate=body.rating;
+	var fb=body.feedback;
+	var cn = body.caseNumber;
+	var un=body.userName;
+	
+	db.collection("feedback").doc(cn).set({
+		rating : rate,
+		feedback : fb,
+		caseNumber : cn,
+		userName : un
+	});
+	var returnData={
+		result:'success'
+		};
+		return JSON.stringify(returnData);
+}
+
+function searchReview(body)
+{
+
+	if(!validateIdentifier(body))
+	{
+		console.log("Invalid user");
+		var returnData={
+			Error: "Invalid User"
+		}
+		return JSON.stringify(returnData);
+	}
+	var id=body.id;
+	var returnData={
+		data:[]
+	};
+	if(id!="all"){
+	return db.collection("feedback").get().then(function(querySnapshot)
+	{
+		querySnapshot.forEach(function(doc)
+		{
+			//console.log(doc.data());
+			if(id == doc.data().rating){
+				console.log("entry found");
+				var row={
+					userName:doc.data().userName,
+					feedback:doc.data().feedback,
+					rating: doc.data().rating
+					
+
+				}
+				returnData.data.push(row);
+			}
+		});
+		return JSON.stringify(returnData);
+	});
+	}
+	else
+	{
+
+
+   
+		  return db.collection("feedback").get().then(function(querySnapshot)
+		{
+		  querySnapshot.forEach(function(doc){
+		    console.log(doc.data());
+		    
+		    console.log("entry found");
+					var row={
+						userName:doc.data().userName,
+						feedback:doc.data().feedback,
+						rating: doc.data().rating
+					}
+					returnData.data.push(row);
+		    
+		  });
+		  return JSON.stringify(returnData);
+		  });
+	}
+}
+
+function closeCasesSearch(body)
+{
+	
+	if(!validateIdentifier(body))
+	{
+		console.log("Invalid user");
+		var returnData={
+			Error: "Invalid User"
+		}
+		return JSON.stringify(returnData);
+	}
+	
+	var returnData={
+		data:[]
+	};
+	 var com = "completed";
+ 		var u="unknown";
+	return db.collection("caseDetails").get().then(function(querySnapshot)
+	{
+		querySnapshot.forEach(function(doc)
+		{
+			//console.log(doc.data());
+			if(com==doc.data().caseStatus &&u==doc.data().caseClosedBy){
+				console.log("entry found");
+				var row={
+					caseID:doc.data().caseID,
+					caseStatus:doc.data().caseStatus,
+					incidentDate: doc.data().incidentDate,
+					
+
+				}
+				returnData.data.push(row);
+			}
+		});
+		return JSON.stringify(returnData);
+	});
+}
+
+function updatePlumberCase(body)
+{
+
+	if(!validateIdentifier(body))
+	{
+		console.log("Invalid user detected "+body.identifier);
+		var returnData={
+		error:'Invalid user'
+	};
+	return JSON.stringify(returnData);
+	}
+
+	console.log(body);
+	var id=body.caseID;
+
+	var plumid=body.plumberID;
+var returnData={
+		data:[]
+	};
+
+	return  db.collection("users").get().then(function(querySnapshot)
+                          {
+                            querySnapshot.forEach(function(doc)
+                            {
+                            
+                                //console.log(doc.id[0]);
+                              //i++;
+                              if(doc.id==plumid)
+                              {
+                                 db.collection("users").doc(doc.id).update({caseToWorkOn: id  });
+                                  
+								
+                              }
+                              
+                              
+                             });
+                            
+                          });
+								var returnData={
+										result:'success'
+									};
+									return JSON.stringify(returnData);
+	}
+
+
+
+ function specificCase(body)
+     {
+
+      if(!validateIdentifier(body))
+        {
+          console.log("Invalid user");
+          var returnData={
+            Error: "Invalid User"
+          }
+          return JSON.stringify(returnData);
+        }
+        console.log("ATTEMPT");
+        var returnData={
+		data:[]
+	};
+        var value=body.caseID;
+        return db.collection("caseDetails").get().then(function(querySnapshot)
+        {
+        	 console.log("Aentered");
+          querySnapshot.forEach(function(doc)
+          {
+            console.log(doc.data());
+            if(value==doc.data().caseID){
+              console.log("entry found");
+              var row={
+                caseID:doc.data().caseID,
+                incidentDate:doc.data().incidentDate,
+                address:doc.data().addressOfIncident,
+                plumberID:doc.data().plumberID,
+                CaseAgent:doc.data().caseClosedBy
+                
+
+              }
+              returnData.data.push(row);
+            }
+          });
+          return JSON.stringify(returnData);
+        });
+
+    }
+
+     function specificCaseGeyser(body)
+     {
+
+      if(!validateIdentifier(body))
+        {
+          console.log("Invalid user");
+          var returnData={
+            Error: "Invalid User"
+          }
+          return JSON.stringify(returnData);
+        }
+        var value=body.caseID;
+        var returnData={
+		data:[]
+	};
+        return db.collection("geyser").get().then(function(querySnapshot)
+        {
+          querySnapshot.forEach(function(doc)
+          {
+            //console.log(doc.data());
+            if(value==doc.data().caseID){
+              console.log("entry found");
+              var row={
+                geyserTemp:doc.data().geyserTemp,
+                insurance:doc.data().insurance
+                
+
+              }
+              returnData.data.push(row);
+            }
+          });
+          return JSON.stringify(returnData);
+        });
+
+     }
+
+      function specificCaseReview(body)
+     {
+
+      if(!validateIdentifier(body))
+        {
+          console.log("Invalid user");
+          var returnData={
+            Error: "Invalid User"
+          }
+          return JSON.stringify(returnData);
+        }
+         var value=body.caseID;
+         var returnData={
+		data:[]
+	};
+        return db.collection("feedback").get().then(function(querySnapshot)
+        {
+          querySnapshot.forEach(function(doc)
+          {
+            //console.log(doc.data());
+            if(value==doc.data().caseNumber)
+            {
+              console.log("entry found");
+              var row={
+                feedback:doc.data().feedback,
+               
+                rating: doc.data().rating
+               
+                
+
+              }
+              returnData.data.push(row);
+            }
+          });
+          return JSON.stringify(returnData);
+        });
+
+     }
+
+      function addressCount(body)
+      {
+
+        if(!validateIdentifier(body))
+        {
+          console.log("Invalid user");
+          var returnData={
+            Error: "Invalid User"
+          }
+          return JSON.stringify(returnData);
+        }
+        var value=body.address;
+        var count=0;
+        var returnData={
+		data:[]
+	};
+        return db.collection("caseDetails").get().then(function(querySnapshot)
+        {
+          querySnapshot.forEach(function(doc)
+          {
+            //console.log(doc.data());
+            if(value==doc.data().addressOfIncident){
+              console.log("entry found");
+              count++;
+            }
+          });
+          var row={
+                countTimes:count
+               
+                
+
+              }
+              returnData.data.push(row);
+          return JSON.stringify(returnData);
+        });
+      }
