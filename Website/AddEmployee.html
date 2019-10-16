@@ -26,7 +26,7 @@
 </head>
 <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-app.js"></script>
- <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-firestore.js"></script>
 <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-storage.js"></script>
 
@@ -43,7 +43,7 @@
             <!-- Header -->
             <header id="header">
               <div class="logo">
-                <a href="home.html">IPA</a>
+                <a href="adminhome.html">WorkFlow-IO</a>
               </div>
             </header>
 
@@ -153,7 +153,7 @@
             <!-- Menu -->
            <nav id="menu">
               <ul>
-                <li><a href="home.html">Homepage</a></li>
+                <li><a href="adminhome.html">Homepage</a></li>
             
                 <li>
                   <span class="opener">Cases</span>
@@ -168,6 +168,8 @@
                   <ul>
                     <li><a href="graph.html">Graph stats</a></li>
                     <li><a href="search.html">Search enquiries</a></li>
+                    <li><a href="graph2.html">Risk Analysis</a></li>
+                    <li><a href="viewCase.html">Inpect Case</a></li>
                   </ul>
                 </li>
                 <li><a href="AddEmployee.html">Add Plumber</a></li>
@@ -200,201 +202,229 @@
     <script src="assets/js/custom.js"></script>
  
   
-          <script>
-          //////////////////////////////////////////////////
-          var firebaseConfig = {
-              apiKey: "AIzaSyDibg-oYRpVXU9HqCAOLdxIpYXcZUPpAGM",
-              authDomain: "geyser-74ddf.firebaseapp.com",
-              databaseURL: "https://geyser-74ddf.firebaseio.com",
-              projectId: "geyser-74ddf",
-              storageBucket: "geyser-74ddf.appspot.com",
-              messagingSenderId: "1001903322970",
-              appId: "1:1001903322970:web:a904b91e99d67b22"
-            };
-            // Initialize Firebase
-            firebase.initializeApp(firebaseConfig);
-            var db = firebase.firestore();
-            //////////////////////////////////////////////////
-            
-            var fileButton1 = document.getElementById("fileButton1");
-           fileButton1.addEventListener('change', function(e){
-           var file1 = e.target.files[0];
-           
-           var storageRef1 = firebase.storage().ref("Workers Details");
-           var secondref1 = storageRef1.child(document.getElementById("textbox9").value);
-           var imagesRef1 = secondref1.child(file1.name);
-           imagesRef1.put(file1);
-           }); 
-           
-           
-           
-            var fileButton2 = document.getElementById("fileButton2");
-           fileButton2.addEventListener('change', function(f){
-           var file2 = f.target.files[0];
-           
-           var storageRef = firebase.storage().ref("Workers Details");
-           var secondref = storageRef.child(document.getElementById("textbox9").value);
-           var imagesRef = secondref.child(file2.name);
-           imagesRef.put(file2);
-           }); 
-           
-           
-            var fileButton3 = document.getElementById("fileButton3");
-           fileButton3.addEventListener('change', function(g){
-           var file3 = g.target.files[0];
-           
-           var storageRef3 = firebase.storage().ref("Workers Details");
-           var secondref3 = storageRef3.child(document.getElementById("textbox9").value);
-           var imagesRef3 = secondref3.child(file3.name);
-           imagesRef3.put(file3);
-           }); 
-            
-             /*
-          * @author : Janaki Patil
-          *@purpose of [genPlumberID] is generate a random value for a plumber
-          */
-          function genPlumberID()
-           {
-                  var text = "24";
-                  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-                     for(var i = 0; i < 8; i++) 
-                    {
-                       text += possible.charAt(Math.floor(Math.random() * possible.length));
-                     }
-                  document.getElementById("textbox9").value = text;
-                    
-           }
-           
-           /*
-          * @author : Janaki Patil
-          *@purpose of [genPlumberPassword] is generate a random value for a plumber password
-          */
-           function genPlumberPassword()
-           {
-                  var text = " ";
-                  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789#@&*";
-                    for(var i = 0; i < 8; i++) 
-                    {
-                       text += possible.charAt(Math.floor(Math.random() * possible.length));
-                    }
-                  document.getElementById("textbox10").value = text;
-                    
-           }
-           
-           /*
-          * @author : Janaki Patil
-          *@purpose of [idNumber] is to extract the 
-          */
-            // gets the birth date only
-           function idNumber()
-          {
-            var id = document.getElementById("textbox6").value;
-            
-            var date = id.slice(0,6);
-            var finalDate = date[0]+date[1]+"/"+date[2]+date[3]+"/"+date[4]+date[5];
-            return finalDate;
+<script>
 
-          } 
-           /*
-                  * @author : Janaki Patil
-                  *@purpose of [send] is used to populate the corrosponding fields with correct info
-                  */
-            function send()
-            {
-                      var emptyArray = []; // create an empty array
-                     
+var firebaseConfig = 
+{
+    apiKey: "AIzaSyDibg-oYRpVXU9HqCAOLdxIpYXcZUPpAGM",
+    authDomain: "geyser-74ddf.firebaseapp.com",
+    databaseURL: "https://geyser-74ddf.firebaseio.com",
+    projectId: "geyser-74ddf",
+    storageBucket: "geyser-74ddf.appspot.com",
+    messagingSenderId: "1001903322970",
+    appId: "1:1001903322970:web:a904b91e99d67b22"
+};
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  var db = firebase.firestore();
+  
+  
+var fileButton1 = document.getElementById("fileButton1");
+fileButton1.addEventListener('change', function(e)
+{
+ 	var file1 = e.target.files[0];
+ 	var storageRef1 = firebase.storage().ref("Workers Details");
+	var secondref1 = storageRef1.child(document.getElementById("textbox9").value);
+	var imagesRef1 = secondref1.child(file1.name);
+ 	imagesRef1.put(file1);
+ }); 
+ 
+ 
+ 
+  var fileButton2 = document.getElementById("fileButton2");
+fileButton2.addEventListener('change', function(f)
+{
+ 	var file2 = f.target.files[0];
+ 	var storageRef = firebase.storage().ref("Workers Details");
+ 	var secondref = storageRef.child(document.getElementById("textbox9").value);
+ 	var imagesRef = secondref.child(file2.name);
+ 	imagesRef.put(file2);
+ }); 
+ 
+ 
+  var fileButton3 = document.getElementById("fileButton3");
+fileButton3.addEventListener('change', function(g)
+{
+ 	var file3 = g.target.files[0];
+	var storageRef3 = firebase.storage().ref("Workers Details");
+ 	var secondref3 = storageRef3.child(document.getElementById("textbox9").value);
+ 	var imagesRef3 = secondref3.child(file3.name);
+ 	imagesRef3.put(file3);
+ }); 
+  
+  
+function genPlumberID()
+ {
+  	var text = "24";
+        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+           for(var i = 0; i < 8; i++) 
+           {
+            	text += possible.charAt(Math.floor(Math.random() * possible.length));
+           }
+        document.getElementById("textbox9").value = text;
+          
+ }
+ 
+ 
+ function genPlumberPassword()
+ {
+        var text = " ";
+        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789#@&*";
+          for(var i = 0; i < 8; i++) 
+          {
+          	text += possible.charAt(Math.floor(Math.random() * possible.length));
+          }
+        document.getElementById("textbox10").value = text;
+          
+ }
+ 
+  // gets the birth date only
+ function idNumber()
+{
+  	var id = document.getElementById("textbox6").value;
+  	var date = id.slice(0,6);
+  	var finalDate = date[0]+date[1]+"/"+date[2]+date[3]+"/"+date[4]+date[5];
+  	return finalDate;
+
+} 
+ 
+function send()
+{
+	var emptyArray = []; // create an empty array
+        var lines = $('#comment').val().split('\n');
+        for(var i = 0;i < lines.length;i++)
+        {
+        	var str = lines[i]; 
+         	var index = str.search(":");
+                var res = str.slice(index+1, str.length);
+                emptyArray[i] = res;
+        }
+           
+        document.getElementById("textbox3").value = emptyArray[0];
+        document.getElementById("textbox6").value = emptyArray[1];
+        document.getElementById("textbox7").value = emptyArray[2];
+        document.getElementById("textbox8").value = emptyArray[3];
+      
+}
+
+function idGender()
+{
+  
+	var x = document.getElementById("textbox6").value;
+  	var str = x.slice(6,10);
+  	var gender= "";
+ 	if(str > 0000 && str < 4999) 
+  	{
+      		gender = "female";
+  	}
+  	else
+  	{
+   		 gender = "male";
+  	}
+  	return gender;
+
+
+}
+  
+ function storeData()
+{
+	var id=getCookie("Identifier");
+	var name1 = document.getElementById('textbox3').value;
+	var DateOfBirth1 = idNumber();
+	var gender1 = idGender();
+	var idNumber1 = document.getElementById('textbox6').value;
+	var cellNumber1 = document.getElementById('textbox7').value;
+	var address1 = document.getElementById('textbox8').value;
+	var plumberID1 = document.getElementById('textbox9').value;
+	var plumberPassword = document.getElementById('textbox10').value;
+
+
+
+  $.ajax
+  ({
+   	 url: "https://workflow-io.herokuapp.com/",
+    	type: "POST",
+    	contentType: "application/json; charset=utf-8",
+    	dataType: "json",
+    	data: JSON.stringify({
+   	identifier:id,
+        type: "addEmployee",
+      	fullName: name1,
+        DateOfBirth :DateOfBirth1,
+   	gender:gender1,
+    	idNumber:idNumber1,
+    	cellNumber:cellNumber1,
+    	address : address1,
+    	plumberID : plumberID1,
+	userType:"plumber"
+
+        
+ }),
+      success:function(res)
+      {
+      	console.log("Success: "+res) ;
+      	alert("Plumber added Successfully");
+      	$.ajax
+      	({
+        	url: "https://workflow-io.herokuapp.com/",
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify({
+                identifier:id,
+                type: "addUser",
+                user: plumberID1,
+                pass: plumberPassword,
+                userType:"plumber"
+
                       
-                      var lines = $('#comment').val().split('\n');
-                      for(var i = 0;i < lines.length;i++)
-                      {
-                            var str = lines[i]; 
-                            var index = str.search(":");
-                             var res = str.slice(index+1, str.length);
-                            emptyArray[i] = res
-                }
-                     
-                      document.getElementById("textbox3").value = emptyArray[0];
-                document.getElementById("textbox6").value = emptyArray[1];
-                      document.getElementById("textbox7").value = emptyArray[2];
-                document.getElementById("textbox8").value = emptyArray[3];
-                
-            }
+     	 }),
+      	success:function(res)
+      	{
+          	console.log("Success: "+res) ;
+                alert("Plumber added Successfully");
+      	},
+     	fail:function(data)
+     	{
+          	console.log("Fail: "+data);
+        },
+        error: function (jqXHR, textStatus, errorThrown) 
+        { 
+          	console.log(jqXHR)
+      	  	console.log(textStatus)
+      	  	console.log(errorThrown)
+      	}
+      });
 
-          /*
-                  * @author : Janaki Patil
-                  *@purpose of [idGender] is used to extract the numbers and determine the gender
-                  */
-
-            function idGender()
-          {
-            
-            var x = document.getElementById("textbox6").value;
-            
-            var str = x.slice(6,10);
-            
-            
-            var gender= "";
-            if(str > 0000 && str < 4999) 
-            {
-                gender = "female";
-            }
-            else
-            {
-              gender = "male";
-            
-            }
-            
-           
-          return gender;
+      },
+      fail:function(data)
+      {
+      	      console.log("Fail: "+data);
+      },
+     error: function (jqXHR, textStatus, errorThrown) 
+     { 
+      	     console.log(jqXHR)
+      	     console.log(textStatus)
+      	     console.log(errorThrown)
+     }
+});
 
 
-          }
-           /*
-                  * @author : Janaki Patil
-                  *@purpose of [storeData] is stored the information gatehered from webpage and store in fitrebase
-                  */ 
-           function storeData()
-          {
-          var name1 = document.getElementById('textbox3').value;
-          var DateOfBirth1 = idNumber();
-          var gender1 = idGender();
-          var idNumber1 = document.getElementById('textbox6').value;
-          var cellNumber1 = document.getElementById('textbox7').value;
-          var address1 = document.getElementById('textbox8').value;
-          var plumberID1 = document.getElementById('textbox9').value;
 
-          var plumberPassword = document.getElementById('textbox10').value;
+ 
 
-          db.collection("employeesDetails").doc(plumberID1).set(
-          {
-          fullName: name1,
-          DateOfBirth :DateOfBirth1,
-          gender:gender1,
-          idNumber:idNumber1,
-          cellNumber:cellNumber1,
-          address : address1,
-          plumberID : plumberID1
 
-          }
-          )
+}
 
-          db.collection("users").doc(plumberID1).set(
-          {
 
-          password : plumberPassword,
-          userType : "plumber"
-
-          }
-          )
-          alert("Plumber added Successfully");
-          //location.reload();
-          }
-          </script>
+</script>
+<script src="functions.js"></script>
+ 
 
   </div>
 </div>
   
-        <section class="contact-form">
+  <section class="contact-form">
               <div class="container-fluid">
                 <div class="row">
                   <div class="col-md-12">

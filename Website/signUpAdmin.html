@@ -15,14 +15,14 @@
     <link rel="stylesheet" href="assets/css/fontawesome.css">
     <link rel="stylesheet" href="assets/css/templatemo-style.css">
     <link rel="stylesheet" href="assets/css/owl.css">
-    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-firestore.js"></script>
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-firestore.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
    
  
 
  </head>
-  <body class="is-preload">
+<body class="is-preload">
 
   <!-- Wrapper -->
     <div id="wrapper">
@@ -34,7 +34,7 @@
             <!-- Header -->
             <header id="header">
               <div class="logo">
-                <a href=#>IPA</a>
+                <a href="home.html">WorkFlow-IO</a>
               </div>
             </header>
 
@@ -64,10 +64,10 @@
                          <div class="row">
                           <div class="col-md-6">
                            
-                              <label>Agent ID</label>
-                          	<p><strong>Note: please click the generate button to create an ID.</p>
+                              <label>Username</label>
+                          	
                               <input type="text" name="textbox1" id="textbox1" />
-                          	<p><button type="button" onclick = genAgentID()>Generate Agent ID</button></p>
+                          	
                             </div>
                           </div>
                           <div class="row">
@@ -83,7 +83,7 @@
                           </div>
                         </div>
                           	<!-- <input type="checkbox" onclick="myFunction()">Show Password -->
-                          	<p><button type="button" onclick = genAgentPassword()>Generate Agent Password</button></p>
+                          	<p><button type="button" onclick = genAgentPassword()>Generate Password</button></p>
                           	</div>
                           </div>
                           <div class="row">
@@ -96,11 +96,20 @@
                           	<br>
                           	
                           	<button type="button" onclick = send()>Signup</button>
-                            <button type="button" onclick = log()>Login</button>
+                           
                           </div>
                         </div>
                       </div>
                       </section>
+
+                     
+
+            <!-- Footer -->
+            <footer id="footer">
+              <p class="copyright">Copyright &copy; 2019 COS 301 HighTech
+              <br>Designed by <a rel="nofollow" href="https://www.facebook.com/templatemo">Template Mo</a></p>
+            </footer>
+            
           </div>
         </div>
 
@@ -115,123 +124,136 @@
     <script src="assets/js/transition.js"></script>
     <script src="assets/js/owl-carousel.js"></script>
     <script src="assets/js/custom.js"></script>
-
+<script src="functions.js"></script>
 	
  <script>
-  //////////////////////////////////////
- var firebaseConfig = {
-    apiKey: "AIzaSyDibg-oYRpVXU9HqCAOLdxIpYXcZUPpAGM",
-    authDomain: "geyser-74ddf.firebaseapp.com",
-    databaseURL: "https://geyser-74ddf.firebaseio.com",
-    projectId: "geyser-74ddf",
-    storageBucket: "geyser-74ddf.appspot.com",
-    messagingSenderId: "1001903322970",
-    appId: "1:1001903322970:web:a904b91e99d67b22"
-  };
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-  var db = firebase.firestore();
- ////////////////////////////////////////////
- 
- /*
-* @author : Janaki PAtil
-*@purpose of [genAgentID] is to create a random agentID from provided characters 
-*/
 
- function genAgentID()
- {
-        var text = "A";
-        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-           for(var i = 0; i < 8; i++) 
-          {
-             text += possible.charAt(Math.floor(Math.random() * possible.length));
-           }
-        document.getElementById("textbox1").value = text;
-          
- }
  
- /*
-* @author : Janaki Patil
-*@purpose of [genAgentPassword] is to create a random agent password from provided characters 
-*/
-
+ 
+ 
+ 
+ 
  function genAgentPassword()
  {
         var text = " ";
         var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789#@&*";
-          for(var i = 0; i < 8; i++) 
-          {
+         for(var i = 0; i < 8; i++) 
+         {
              text += possible.charAt(Math.floor(Math.random() * possible.length));
-          }
+         }
         document.getElementById("textbox2").value = text;
           
  }
-
- /*
-* @author : Janaki Patil
-*@purpose of [send] is stored the information gatehered from webpage and store in fitrebase
-*/
-
+ 
  // this function confirms the password 
  function send()
  {
-      var name1 = document.getElementById('textbox4').value;
-     var id1 = document.getElementById('textbox1').value;
-     var pass1 = document.getElementById('textbox2').value;
-  	var confirm1 = document.getElementById('textbox3').value;
-    var check=0;
-  if(pass1 == confirm1)
-  { 
-    check++;
+	 var name1 = document.getElementById('textbox4').value;
+	 var id1 = document.getElementById('textbox1').value;
+	 id1=id1.toLowerCase();
+	 var pass1 = document.getElementById('textbox2').value;
+	 var confirm1 = document.getElementById('textbox3').value;
+	 var check=0;
+	 var ids=getCookie("Identifier");
+ 	 if(pass1 == confirm1)
+  	{ 
+    		check++;
+    		$.ajax
+		({
+    			url: "https://workflow-io.herokuapp.com/",
+		    	type: "POST",
+		    	contentType: "application/json; charset=utf-8",
+		    	dataType: "json",
+		    	data: JSON.stringify
+			({
+				type: "addAgent",
+				 identifier:'admin',
+				 agentName : name1,
+				  agentID: id1
+            
+        
+   			 }),
+			 success:function(res)
+			 {
+				 console.log("Success: "+res) ;
+				 alert("Agent added Successfully");
+			 },
+			 fail:function(data)
+			 {
+			         console.log("Fail: "+data);
+			  },
+			  error: function (jqXHR, textStatus, errorThrown) 
+			  { 
+			      console.log(jqXHR)
+			      console.log(textStatus)
+			      console.log(errorThrown)
+			  }
+                 });
 
-				db.collection("agentCredentials").doc(id1).set
-				(
-					{
-						agentName : name1,
-						agentID: id1,
-						agentPass: pass1
-					}
-				)
 
-				db.collection("users").doc(id1).set
-				(
-					{
-					  password : pass1,
-					  userType : "agent"
-
-
-					}
-				)
+        	$.ajax
+		({
+    			url: "https://workflow-io.herokuapp.com/",
+		       type: "POST",
+		       contentType: "application/json; charset=utf-8",
+		       dataType: "json",
+		    	data: JSON.stringify
+			({
+		     	 	type: "addUser",
+			 	identifier:'admin',
+			  	user:id1,
+			    	pass:pass1,
+			  	userType:"agent"
+            
+        
+   			 }),
+			  success:function(res)
+			  {
+				      console.log("Success: "+res) ;
+				      alert("User added Successfully");
+				      window.location.href='signUpUser.html';
+			   },
+			   fail:function(data)
+			   {
+				      console.log("Fail: "+data);
+			   },
+			    error: function (jqXHR, textStatus, errorThrown) 
+			   { 
+				      console.log(jqXHR)
+				      console.log(textStatus)
+				      console.log(errorThrown)
+			   }
+		});
 	}
 	else
 	{
 			alert("Your password doesn't match. Please enter the password again.");
 	}
-  if(check!=0){
+  if(check!=0)
+  {
    
   }
  }
  
- function log(){
-   window.location.href='index.html';
- }
- function myFunction() {
-  var x = document.getElementById("textbox2");
-  if (x.type === "password") {
-    x.type = "text";
-  } else {
-    x.type = "password";
-  }
+function log()
+{
+   	window.location.href='login.html';
 }
  
-
-
-
-
-
-
+function myFunction() 
+{
+	  var x = document.getElementById("textbox2");
+	  if (x.type === "password") 
+	  {
+	    	x.type = "text";
+	  } 
+	  else 
+	  {
+	    	x.type = "password";
+	  }
+}
  
-
+ 
  
  </script>
 </div></div>

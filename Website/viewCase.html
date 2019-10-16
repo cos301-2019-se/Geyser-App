@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
+
+ <title>View a case</title>
+<!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="assets/css/fontawesome.css">
+    <link rel="stylesheet" href="assets/css/templatemo-style.css">
+    <link rel="stylesheet" href="assets/css/owl.css">
+
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+   
+ 
+ 
+
+</head>
+<script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-app.js"></script>
+ <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-storage.js"></script>
+
+
+
+
+
+<body class="is-preload">
+
+  <!-- Wrapper -->
+    <div id="wrapper">
+
+      <!-- Main -->
+        <div id="main">
+          <div class="inner">
+          	<!-- Header -->
+            <header id="header">
+              <div class="logo">
+                <a href="home.html">WorkFlow-IO</a>
+              </div>
+            </header>
+            <!-- Page Heading -->
+            <div class="page-heading">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-md-12">
+                    <br>
+                    <h2>Select case to View</h2>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Page Heading -->
+           
+	
+	 <section class="forms">
+	 	<div class="container-fluid">
+                  <div class="row">
+                  	<div class="col-md-12">
+						
+						<p id = "testing"></p>
+					</div>
+				  </div>
+				  <div class="row">
+					<div class="col-md-6">
+						
+				
+						<label>Enter Case ID to view</label>
+						<input type="text" name="textbox19" list="exampleList" id = "test" required>
+							<button onclick= search()>View a case </button>
+					</div>
+				
+			</div>
+</section>
+
+<!-- Tables -->
+            <section class="tables">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="section-heading">
+                      <h2>Case Details</h2>
+                    </div>
+                    <div class="default-table">
+                      <table id="itemList">
+                        <thead>
+                          <tr>
+                            <th>Case ID</th>
+                            <th>Incidente Date</th>
+                            <th>PlumberID</th>
+                            <th>Case Closed By</th>
+                            <th>Number of cases for caller</th>
+                            <th>Review</th>
+                            <th>Review Score</th>
+                            <th>Insurance status</th>
+                            <th>Geyser Tempture</th>
+
+                          </tr>
+                        </thead>
+                        <tbody>
+                          
+                        </tbody>
+                      </table>
+         </div>
+  </div>
+</div>
+</div>
+</section>
+
+
+				</div>
+			</div>
+		</div>
+	</div>
+<section class="tables">
+   <div class="container-fluid">
+      <div class="row">
+          <div class="col-md-12">
+             <div class="section-heading">
+                      <h2>Images</h2>
+                    </div>
+                    <div class="default-table">
+                      <table id="itemList">
+                        <div class="row">
+                           <div class="col-md-6">
+                        <img id="geyser" src="geyser" alt="Geyser" height="400px" width="200px"/> 
+                        <p>Geyser</p>
+                      </div>
+                       <div class="col-md-6">
+                        <img id="pressure"src="pressureControlValve" alt="Pressure Control Valve" height="400px" width="200px"/>
+                         <p>Pressure Control Valve</p>
+                       </div>
+                     </div>
+                       <div class="row">
+                           <div class="col-md-6">
+                        <img id="vacuum"src="vacuumBreaker" alt="Vacuum Breaker" height="400px" width="200px"/>
+                         <p>Vacuum Breaker</p>
+                       </div>
+                           <div class="col-md-6">
+                        <img id="drip"src="dripTray" alt="Drip Tray" height="400px" width="200px"/>
+                         <p>Drip Tray</p>
+                       </div>
+                     </div>
+                       <div class="row">
+                           <div class="col-md-6">
+                        <img id="safe"src="saftey" alt="Safety" height="400px" width="200px"/>
+                         <p>Safety</p>
+                       </div>
+                     </div>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+   
+  
+<!-- Sidebar -->
+        <div id="sidebar">
+
+          <div class="inner">
+
+            <!-- Search Box -->
+            <!-- <section id="search" class="alt">
+              <form method="get" action="#">
+                <input type="text" name="search" id="search" placeholder="Search..." />
+              </form>
+            </section> -->
+              
+            <!-- Menu -->
+           <nav id="menu">
+              <ul>
+                <li><a href="home.html">Homepage</a></li>
+            
+                <li>
+                  <span class="opener">Cases</span>
+                  <ul>
+                    <li><a href="callerAndcase.html">New Case</a></li>
+                    <li><a href="search.html">Close case</a></li>
+                
+                  </ul>
+                </li>
+                <li>
+                  <span class="opener">Statistics</span>
+                  <ul>
+                    <li><a href="graph.html">Graph stats</a></li>
+                    <li><a href="closecase.html">Search enquiries</a></li>
+			             <li><a href="graph2.html">Risk Analysis</a></li>
+                   <li><a href="viewCase.html">Inpect Case</a></li>
+                  </ul>
+                </li>
+                <li><a href="AddEmployee.html">Add Plumber</a></li>
+                  <li><a href="removePlumber.html">Remove Plumber</a></li>
+                <li><a href="https://www.google.com">External Link</a></li>
+                <li><a href="index.html">Logout</a></li>
+              </ul>
+            </nav>
+
+            <!-- Footer -->
+            <footer id="footer">
+              <p class="copyright">Copyright &copy; 2019 COS 301 HighTech
+              <br>Designed by <a rel="nofollow" href="https://www.facebook.com/templatemo">Template Mo</a></p>
+            </footer>
+            
+          </div>
+        </div>
+
+    </div>
+    <!-- Scripts -->
+  <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/transition.js"></script>
+    <script src="assets/js/owl-carousel.js"></script>
+    <script src="assets/js/custom.js"></script>
+<script src="functions.js"></script>
+<script type="text/javascript">
+
+
+  function search()
+{
+var casea = document.getElementById("test").value;
+console.log(casea);
+var ids=getCookie("Identifier");;
+//getCookie("Identifier");
+var date;
+var cid;
+var pid;
+var review;
+var rs;
+var count;
+var add;
+var ins;
+var tem;
+var CA;
+   $.ajax({
+              url: "https://workflow-io.herokuapp.com/",
+              type: "POST",
+              contentType: "application/json; charset=utf-8",
+              dataType: "json",
+              data: JSON.stringify({
+                  type: "specificCase",
+                  caseID: casea,
+                  identifier:ids
+              }),
+              success:function(res)
+            {
+                console.log("Success: "+res);
+                var convertedObj= JSON.parse(res);
+                    cid=convertedObj.data[0].caseID;
+                    date=convertedObj.data[0].incidentDate;
+                    add=convertedObj.data[0].address;
+                    pid=convertedObj.data[0].plumberID;
+                    CA=convertedObj.data[0].CaseAgent;
+                     $.ajax({
+                              url: "https://workflow-io.herokuapp.com/",
+                              type: "POST",
+                              contentType: "application/json; charset=utf-8",
+                              dataType: "json",
+                              data: JSON.stringify({
+                                  type: "specificCaseGeyser",
+                                  caseID: casea,
+                                  identifier:ids
+                              }),
+                              success:function(res)
+                            {
+                                console.log("Success: "+res) ;
+                                var convertedObj= JSON.parse(res);
+                                     tem=convertedObj.data[0].geyserTemp;
+                                    ins=convertedObj.data[0].insurance;
+
+                                     $.ajax({
+                                            url: "https://workflow-io.herokuapp.com/",
+                                            type: "POST",
+                                            contentType: "application/json; charset=utf-8",
+                                            dataType: "json",
+                                            data: JSON.stringify({
+                                                type: "specificCaseReview",
+                                                caseID: casea,
+                                                identifier:ids
+                                            }),
+                                            success:function(res)
+                                          {
+                                              console.log("Success: "+res) ;
+                                              var convertedObj= JSON.parse(res);
+                                                   review=convertedObj.data[0].feedback;
+                                                  rs=convertedObj.data[0].rating;
+
+                                                      $.ajax({
+                                                                    url: "https://workflow-io.herokuapp.com/",
+                                                                    type: "POST",
+                                                                    contentType: "application/json; charset=utf-8",
+                                                                    dataType: "json",
+                                                                    data: JSON.stringify({
+                                                                        type: "addressCount",
+                                                                        adress: add,
+                                                                        identifier:ids
+                                                                    }),
+                                                                    success:function(res)
+                                                                  {
+                                                                      console.log("Success: "+res) ;
+                                                                      var convertedObj= JSON.parse(res);
+                                                                           cout=convertedObj.data[0].countTimes;
+                                                                          var rows = "";
+                                                                          rows= "<tr><td>"+cid+"</td><td>"+date+"</td><td>"+pid+"</td><td>"+CA+"</td><td>"+count+"</td><td>"+review+"</td><td>"+rs+"</td><td>"+ins+"</td><td>"+tem+"</td><td>"+"</td></tr>";
+                                                                          $( rows ).appendTo( "#itemList tbody" );
+                                                                       $.ajax({
+                                                                                url: "https://workflow-io.herokuapp.com/",
+                                                                                type: "POST",
+                                                                                contentType: "application/json; charset=utf-8",
+                                                                                dataType: "json",
+                                                                                data: JSON.stringify({
+                                                                                    type: "retrieveImages",
+                                                                                    caseID: casea,
+                                                                                    identifier:ids
+                                                                                }),
+                                                                                success:function(res)
+                                                                              {
+                                                                                  console.log("Success: "+res) ;
+                                                                                  var convertedObj= JSON.parse(res);
+                                                                                 console.log(convertedObj.geyser);
+                                                                                 console.log(convertedObj.pressure);  
+                                                                                 console.log(convertedObj.vacuum);  
+                                                                                 console.log(convertedObj.drip);  
+                                                                                 console.log(convertedObj.safety);    
+
+                                                                                     document.getElementById("geyser").src ="data:image/gif;base64,"+convertedObj.geyser;
+                                                                                     document.getElementById("pressure").src ="data:image/gif;base64,"+convertedObj.pressure;
+                                                                                     document.getElementById("vacuum").src ="data:image/gif;base64,"+convertedObj.vacuum;
+                                                                                     document.getElementById("drip").src ="data:image/gif;base64,"+convertedObj.drip;
+                                                                                     document.getElementById("safe").src ="data:image/gif;base64,"+convertedObj.safety;
+                                                                                        
+                                                                                    
+                                                                                //to calculate the average, plz double check 
+                                                                                
+
+                                                                                },
+                                                                                fail:function(data){
+                                                                                  console.log("Fail: "+data);
+                                                                                },
+                                                                                error: function (jqXHR, textStatus, errorThrown) { 
+                                                                                  console.log(jqXHR)
+                                                                                  console.log(textStatus)
+                                                                                  console.log(errorThrown)
+                                                                                }
+                                                                            }); 
+                                                                      
+                                                                    },
+                                                                    fail:function(data){
+                                                                      console.log("Fail: "+data);
+                                                                    },
+                                                                    error: function (jqXHR, textStatus, errorThrown) { 
+                                                                      console.log(jqXHR)
+                                                                      console.log(textStatus)
+                                                                      console.log(errorThrown)
+                                                                    }
+                                                                });
+
+                                              
+                                            },
+                                            fail:function(data){
+                                              console.log("Fail: "+data);
+                                            },
+                                            error: function (jqXHR, textStatus, errorThrown) { 
+                                              console.log(jqXHR)
+                                              console.log(textStatus)
+                                              console.log(errorThrown)
+                                            }
+                                        });
+                                
+                              },
+                              fail:function(data){
+                                console.log("Fail: "+data);
+                              },
+                              error: function (jqXHR, textStatus, errorThrown) { 
+                                console.log(jqXHR)
+                                console.log(textStatus)
+                                console.log(errorThrown)
+                              }
+                          }); 
+              },
+              fail:function(data){
+                console.log("Fail: "+data);
+              },
+              error: function (jqXHR, textStatus, errorThrown) { 
+                console.log(jqXHR)
+                console.log(textStatus)
+                console.log(errorThrown)
+              }
+          }); 
+
+
+
+
+
+   
+             
+            
+ 
+ 
+
+
+
+
+}
+</script>
+
+
+</body>
+
+</html>

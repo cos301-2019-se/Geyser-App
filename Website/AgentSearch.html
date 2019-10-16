@@ -8,7 +8,7 @@
     <meta name="author" content="">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
 
- <title>Search</title>
+ <title>Agent Search</title>
 <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -35,7 +35,7 @@
             <!-- Header -->
             <header id="header">
               <div class="logo">
-                <a href="home.html">IPA</a>
+                <a href="home.html">WorkFlow-IO</a>
               </div>
             </header>
 			<!-- Page Heading -->
@@ -58,7 +58,8 @@
                       <label>Cases added by agent: </label>
                       <input name="search" type="text" class="form-control" id="plumber" placeholder="Agent ID..." required>
                       <button type="button" onclick = agentSearch()>Search</button>
-                      <a href="agentSearch.html">clear</a>
+                      <!-- <button type="button" onclick = clear()>clear</button> -->
+                     <button type="button" onclick="location.href='AgentSearch.html';" value="Jobs per agent" >Clear</button>
 
                     </fieldset>
            		</div>
@@ -130,11 +131,11 @@
                   <ul>
                     <li><a href="graph.html">Graph stats</a></li>
                     <li><a href="search.html">Search enquiries</a></li>
+                    <li><a href="graph2.html">Risk Analysis</a></li>
+                     <li><a href="viewCase.html">Inpect Case</a></li>
                   </ul>
                 </li>
-                <li><a href="AddEmployee.html">Add Plumber</a></li>
-                <li><a href="removePlumber.html">Remove Plumber</a></li>
-                <li><a href="signUpUser.html">Add new Agent</a></li>
+                
                 <li><a href="https://www.google.com">External Link</a></li>
                 <li><a href="index.html">Logout</a></li>
               </ul>
@@ -153,69 +154,62 @@
 
 
 
-
 <script >
-  /////////////////////////////////////////////////////////////////
-	var firebaseConfig = {
-    apiKey: "AIzaSyDibg-oYRpVXU9HqCAOLdxIpYXcZUPpAGM",
-    authDomain: "geyser-74ddf.firebaseapp.com",
-    databaseURL: "https://geyser-74ddf.firebaseio.com",
-    projectId: "geyser-74ddf",
-    storageBucket: "geyser-74ddf.appspot.com",
-    messagingSenderId: "1001903322970",
-    appId: "1:1001903322970:web:a904b91e99d67b22"
-  };
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-  var database = firebase.firestore();
-/////////////////////////////////////////////////////////////////
- /*
-        * @author : Theo Naidu
-        *@purpose of [agentSearch] is to retrieve all records that have the required field provided
-        */
-
-	function agentSearch() {
-var agentID=document.getElementById("plumber").value;
-const display=document.querySelector("#display");
-var c=0;
 
 
-$.ajax({
-    url: "http://127.0.0.1:4000/",
-    type: "POST",
-    contentType: "application/json; charset=utf-8",
-    dataType: "json",
-    data: JSON.stringify({
-        type: "retrieveAgentSearch",
-        id: agentID,
-        identifier:"abcdefghij"
-    }),
-    success:function(res){
-      console.log("Success: "+res) ;
-      var convertedObj= JSON.parse(res);
-      console.log(convertedObj.userType);  
-       //alert("Correct");
-       for(var co=0;co<convertedObj.data.length;co++){
-      var rows = "";
-      rows= "<tr><td>"+convertedObj.data[co].caseID+"</td><td>"+convertedObj.data[i].incidentDat
-      +"</td><td>"+convertedObj.data[co].addressOfIncident+"</td><td>"+convertedObj.data[co].caseStatus+"</td><td>"+convertedObj.data[co].caseDescription
-      +"</td><td>"+convertedObj.data[co].callerID+"</td><td>"+convertedObj.data[co].caseOpenedBy +"</td><td>"+convertedObj.data[co].caseClosedBy+"</td></tr>";
-      $( rows ).appendTo( "#itemList tbody" );
-    }
 
+
+function agentSearch()
+{
+
+	var agentID=document.getElementById("plumber").value;
+	const display=document.querySelector("#display");
+	var c=0;
+	var ids=getCookie("Identifier");
+
+	$.ajax
+	({
+    		url: "https://workflow-io.herokuapp.com/",
+   		type: "POST",
+    		contentType: "application/json; charset=utf-8",
+    		dataType: "json",
+    		data: JSON.stringify({
+        	type: "retrieveAgentSearch",
+        	id: agentID,
+        	identifier:ids
+        }),
+       success:function(res)
+      {
+               console.log("Success: "+res) ;
+     	       var convertedObj= JSON.parse(res);
+               console.log(convertedObj.userType);  
+       	       for(var co=0;co<convertedObj.data.length;co++)
+	       {
+     			var rows = "";
+     			rows= "<tr><td>"+convertedObj.data[co].caseID+"</td><td>"+convertedObj.data[co].incidentDate
+      			+"</td><td>"+convertedObj.data[co].addressOfIncident+"</td><td>"+convertedObj.data[co].caseStatus+"</td><td>"+convertedObj.data[co].caseDescription
+      			+"</td><td>"+convertedObj.data[co].callerID+"</td><td>"+convertedObj.data[co].caseOpenedBy +"</td><td>"+convertedObj.data[co].caseClosedBy+"</td></tr>";
+      			$( rows ).appendTo( "#itemList tbody" );
+   	      }
     },
-    fail:function(data){
-      console.log("Fail: "+data);
+    fail:function(data)
+    {
+      		console.log("Fail: "+data);
     },
-    error: function (jqXHR, textStatus, errorThrown) { 
-      console.log(jqXHR)
-      console.log(textStatus)
-      console.log(errorThrown)
+    error: function (jqXHR, textStatus, errorThrown)
+   { 
+      		console.log(jqXHR)
+      		console.log(textStatus)
+      		console.log(errorThrown)
     }
-}); 
+   }); 
+
+/////////////////////////////
+
 }
-
 </script>
+<script src="functions.js"></script>
+
 
 <!-- Scripts -->
   <!-- Bootstrap core JavaScript -->
@@ -227,9 +221,7 @@ $.ajax({
     <script src="assets/js/transition.js"></script>
     <script src="assets/js/owl-carousel.js"></script>
     <script src="assets/js/custom.js"></script>
-    <script>
-    	
-</script>
+    
 	
 
   
